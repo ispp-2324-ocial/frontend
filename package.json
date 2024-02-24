@@ -61,7 +61,6 @@
     "eslint-plugin-jsdoc": "48.2.0",
     "eslint-plugin-jsonc": "2.13.0",
     "eslint-plugin-no-secrets": "0.8.9",
-    "eslint-plugin-no-unsanitized": "4.0.2",
     "eslint-plugin-optimize-regex": "1.2.1",
     "eslint-plugin-promise": "6.1.1",
     "eslint-plugin-sonarjs": "0.24.0",

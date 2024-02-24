@@ -3,7 +3,7 @@ import type {
   RouteLocationNormalized,
   RouteLocationRaw,
   RouteMeta
-} from 'vue-router/auto';
+} from 'vue-router';
 import { defuSchema } from '@/utils/data-manipulation';
 
 const defaultMeta: RouteMeta = {

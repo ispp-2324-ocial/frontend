@@ -29,7 +29,6 @@ module.exports = {
   extends: [
     'eslint:recommended',
     'plugin:jsonc/recommended-with-json',
-    'plugin:no-unsanitized/DOM',
     'plugin:optimize-regex/recommended',
     'plugin:@typescript-eslint/recommended',
     'plugin:promise/recommended',
@@ -48,7 +47,6 @@ module.exports = {
     '@stylistic',
     'jsdoc',
     'jsonc',
-    'no-unsanitized',
     'optimize-regex',
     'no-secrets',
     '@typescript-eslint',

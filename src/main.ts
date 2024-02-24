@@ -5,7 +5,9 @@
  */
 
 import { createApp } from 'vue';
-import { routes } from 'vue-router/auto/routes';
+/* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
+// @ts-expect-error - Comprobar si se puede hacer PR para resolver este error
+import { routes } from 'vue-router/auto-routes';
 import Root from '@/App.vue';
 import { hideDirective } from '@/plugins/directives';
 import { vuePlugin as i18n } from '@/plugins/i18n';
@@ -28,6 +30,7 @@ const app = createApp(Root);
  * Aquí ya estamos seguros de que todas las dependencias de las rutas estan instanciadas.
  */
 for (const route of routes) {
+  /* eslint-disable-next-line @typescript-eslint/no-unsafe-argument */
   router.addRoute(route);
 }
 

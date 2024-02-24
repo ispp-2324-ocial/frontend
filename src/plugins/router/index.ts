@@ -4,7 +4,6 @@ import {
   createRouter,
   createWebHistory
 } from 'vue-router';
-import type { RouterTyped } from 'vue-router/auto';
 /**
  * TODO: Implementar cuando el login esté terminado
  */
@@ -21,7 +20,7 @@ export const router = createRouter({
   scrollBehavior(_to, _from, savedPosition) {
     return savedPosition ?? { top: 0 };
   }
-}) as RouterTyped;
+});
 
 /**
  * Lógica de middlewares: El orden ES IMPORTANTE (meta siempre debe ir primero)
