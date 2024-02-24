@@ -1,0 +1,32 @@
+.splashBackground {
+  background: var(--o-color-theme);
+  position: absolute;
+  padding: 0;
+  margin: 0;
+  top: 0;
+  left: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-size: 400% 400%;
+  z-index: 99999999;
+}
+
+.splashLogo {
+  width: 30%;
+  height: 30%;
+  /* Este archivo se encuentra en la carpeta 'public', por lo que se colocará en la raíz del directorio cuando el
+  bundler construya el cliente*/
+  background-image: url(/icon.png);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+
+/* Aquí se define la transición a aplicar cuando el cliente termine de cargar */
+.loadFinished {
+  opacity: 0;
+  transition: opacity .2s linear;
+}

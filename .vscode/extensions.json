@@ -11,7 +11,9 @@
     "lokalise.i18n-ally",
     "ryanluker.vscode-coverage-gutters",
     "yoavbls.pretty-ts-errors",
-    "SonarSource.sonarlint-vscode"
+    "SonarSource.sonarlint-vscode",
+    "Selemondev.shadcn-vue",
+    "antfu.unocss"
   ],
   "unwantedRecommendations": [
     "octref.vetur",

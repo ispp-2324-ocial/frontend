@@ -1,0 +1,15 @@
+/**
+  * @file - En este archivo declaramos todas las variables CSS que 
+    queramos utilizar para representar nuestra paleta de colores.
+*/
+:root {
+  --o-color-primary: #3e80d7;
+}
+
+html.dark {
+  --o-color-theme: #0e4781;
+}
+
+html.light {
+  --o-color-theme: #aacfff;
+}

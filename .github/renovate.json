@@ -57,8 +57,7 @@
   ],
   "enabledManagers": [
     "npm",
-    "github-actions",
-    "cargo"
+    "github-actions"
   ],
   "labels": [
     "dependencies"
@@ -72,11 +71,9 @@
     ]
   },
   "assignees": [
-    "ferferga",
-    "ThibaultNocchi"
+    "ferferga"
   ],
   "reviewers": [
-    "ferferga",
-    "ThibaultNocchi"
+    "ferferga"
   ]
 }
