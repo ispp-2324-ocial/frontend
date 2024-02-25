@@ -1,5 +1,17 @@
 # Frontend de Ocial
 
+[![Security Rating](https://sonarcloud.io/api/project_badges/measure?project=ispp-2324-ocial_frontend&metric=security_rating)](https://sonarcloud.io/summary/new_code?id=ispp-2324-ocial_frontend)
+[![Bugs](https://sonarcloud.io/api/project_badges/measure?project=ispp-2324-ocial_frontend&metric=bugs)](https://sonarcloud.io/summary/new_code?id=ispp-2324-ocial_frontend)
+[![Vulnerabilities](https://sonarcloud.io/api/project_badges/measure?project=ispp-2324-ocial_frontend&metric=vulnerabilities)](https://sonarcloud.io/summary/new_code?id=ispp-2324-ocial_frontend)
+[![Duplicated Lines (%)](https://sonarcloud.io/api/project_badges/measure?project=ispp-2324-ocial_frontend&metric=duplicated_lines_density)](https://sonarcloud.io/summary/new_code?id=ispp-2324-ocial_frontend)
+[![Reliability Rating](https://sonarcloud.io/api/project_badges/measure?project=ispp-2324-ocial_frontend&metric=reliability_rating)](https://sonarcloud.io/summary/new_code?id=ispp-2324-ocial_frontend)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=ispp-2324-ocial_frontend&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=ispp-2324-ocial_frontend)
+[![Technical Debt](https://sonarcloud.io/api/project_badges/measure?project=ispp-2324-ocial_frontend&metric=sqale_index)](https://sonarcloud.io/summary/new_code?id=ispp-2324-ocial_frontend)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=ispp-2324-ocial_frontend&metric=coverage)](https://sonarcloud.io/summary/new_code?id=ispp-2324-ocial_frontend)
+[![Lines of Code](https://sonarcloud.io/api/project_badges/measure?project=ispp-2324-ocial_frontend&metric=ncloc)](https://sonarcloud.io/summary/new_code?id=ispp-2324-ocial_frontend)
+[![Code Smells](https://sonarcloud.io/api/project_badges/measure?project=ispp-2324-ocial_frontend&metric=code_smells)](https://sonarcloud.io/summary/new_code?id=ispp-2324-ocial_frontend)
+[![Maintainability Rating](https://sonarcloud.io/api/project_badges/measure?project=ispp-2324-ocial_frontend&metric=sqale_rating)](https://sonarcloud.io/summary/new_code?id=ispp-2324-ocial_frontend)
+
 ## Entorno de desarrollo
 
 ### Local
