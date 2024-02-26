@@ -81,3 +81,20 @@ function getLayoutComponent(layout: RouteMeta['layout']): VueComponent {
   return layout === 'login' ? LoginLayout as VueComponent : DefaultLayout;
 }
 </script>
+
+<style scoped>
+@font-face {
+    font-family: "OSR";
+    src: url('~@/assets/fonts/OpenSans-Regular.ttf');
+}
+
+@font-face {
+    font-family: "OSI";
+    src: url('~@/assets/fonts/OpenSans-Italic.ttf');
+}
+
+@font-face {
+    font-family: "OSB";
+    src: url('~@/assets/fonts/OpenSans-Bold.ttf');
+}
+</style>
