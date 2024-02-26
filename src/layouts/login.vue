@@ -2,9 +2,9 @@
 <template>
   <div class="logo-container">
     <img
-      alt="Ocial Logo"
+      alt="Ocial Name Logo"
       class="mt-25 mb-8"
-      src="@/assets/Texto_Ocial.png"
+      src="@/assets/images/Texto_Ocial.png"
       style="width:70%; height: auto;" />
   </div>
 
@@ -48,6 +48,14 @@
         </p>
       </form>
     </div>
+  </div>
+
+  <div class="container3">
+    <img
+      alt="Ocial Logo"
+      class="mt-10"
+      src="@/assets/images/Logo_Ocial.png"
+      style="width:20%; height: auto;" />
   </div>
 
   <svg
@@ -153,4 +161,10 @@ body {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
+.container3 {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 1%;
+  }
 </style>
