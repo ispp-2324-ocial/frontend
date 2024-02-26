@@ -18,6 +18,7 @@ import { router } from '@/plugins/router';
  */
 import '@/assets/styles/global.css';
 import '@fontsource/inter';
+import 'uno.css';
 
 /**
  * - PLUGINS DE VUE Y DIRECTIVAS -
