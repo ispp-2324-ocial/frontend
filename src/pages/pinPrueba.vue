@@ -6,7 +6,6 @@
  </template>
  
  <script setup lang="ts">
- import Pin from '@/components/Pin.vue';
  </script>
  
  
