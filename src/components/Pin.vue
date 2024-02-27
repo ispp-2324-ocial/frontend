@@ -3,28 +3,27 @@
        @mouseover="isHovered = true"
        @mouseout="isHovered = false"
        @click="changeImage">
-    <img :src="pinUrl" alt="Pin" :style="{ transform: isHovered ? 'scale(0.9)' : 'scale(1)', transition: 'transform 0.3s ease', width: '75px', height: '100px' }">
+       <img :src="pinImgs[pinImgsIndex]" alt="Pin" class="pin-image" :class="{ 'scaled': isHovered }">
   </div>
 </template>
 
 <script setup lang="ts">
 import { ref } from 'vue';
+import Azul from '@/assets/pin/Pin_Azul.png';
+import Verde from '@/assets/pin/Pin_Verde.png'; 
+import Amarillo from '@/assets/pin/Pin_Amarillo.png'; 
+import Marron from '@/assets/pin/Pin_Marron.png'; 
+import Morado from '@/assets/pin/Pin_Morado.png'; 
+import Rojo from '@/assets/pin/Pin_Rojo.png';
 
-const pinUrls = ['src/assets/pin/Pin_Azul.png', 
-                'src/assets/pin/Pin_Verde.png', 
-                'src/assets/pin/Pin_Amarillo.png', 
-                'src/assets/pin/Pin_Marron.png', 
-                'src/assets/pin/Pin_Morado.png', 
-                'src/assets/pin/Pin_Rojo.png'];
-const pinUrlIndex = ref(0);
-const pinUrl = ref(pinUrls[pinUrlIndex.value]);
+const pinImgs = [Azul, Amarillo, Verde, Marron, Morado, Rojo];
+const pinImgsIndex = ref(0);
 
-const changeImage = () => {
-  pinUrlIndex.value = (pinUrlIndex.value + 1) % pinUrls.length;
-  pinUrl.value = pinUrls[pinUrlIndex.value];
+function changeImage(): void {
+  pinImgsIndex.value = (pinImgsIndex.value + 1) % pinImgs.length;
 };
 
-let isHovered = ref(false);
+const isHovered = ref(false);
 </script>
 
 <style scoped>
@@ -32,6 +31,14 @@ let isHovered = ref(false);
   width: 50vw; 
   height: 50vh;
   overflow: hidden;
+}
+.pin-image{
+  width: 75px;
+  height: 100px;
+}
+.scaled {
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
 }
 </style>
 
