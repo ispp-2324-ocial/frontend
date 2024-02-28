@@ -4,12 +4,11 @@
     <input
       type="text"
       :value="modelValue"
-      @input="$emit('update:modelValue', $event.target.value)" />
+      @input="emit('update:modelValue', ($event.target as HTMLInputElement).value)" />
   </div>
 </template>
 
 <script setup lang="ts">
-
 defineProps({
   label: {
     type: String,
@@ -21,6 +20,7 @@ defineProps({
   }
 });
 
+const emit = defineEmits(['update:modelValue']);
 </script>
 
 <style scoped>
