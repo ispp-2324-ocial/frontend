@@ -1,29 +1,31 @@
 <template>
-  <div
-    class="pin-container"
+  <button
+    class="checkbox-class"
+    :class="{ 'scaled': isHovered }"
     @mouseover="isHovered = true"
     @mouseout="isHovered = false">
-    <button
-      class="checkbox-class"
-      :class="{ 'scaled': isHovered }"
-      @click="handleClick">
-      <CarbonFaceCool class="text-yellow text-3xl" />Texto
-    </button>
-  </div>
+    <slot />
+  </button>
 </template>
 
+<script setup lang = 'ts'>
 
-<script>
-import { ref } from 'vue';
+import { watch , ref } from 'vue';
 
-export default {
-  methods: {
-    handleClick() {
-      console.log('Button clicked!');
-    }
-  }
-};
 const isHovered = ref(true);
+
+/**
+ * Gestiona clicado
+ */
+function handleClick(params:type) {
+  console.log('Button clicked!');
+}
+
+watch(isHovered, ()=> {
+  console.log('isHovered', isHovered.value);
+});
+
+
 </script>
 
 <style scoped>
@@ -32,4 +34,12 @@ const isHovered = ref(true);
     transform: scale(0.9);
     transition: transform 0.3s ease;
   }
-  </style>
+
+  /**
+ * Color
+ */
+ .checkbox-class {
+  background-color: #0e4781;
+  color: #aacfff;
+  }
+</style>
