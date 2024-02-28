@@ -1,7 +1,9 @@
 <template>
   <slot />
-  <Boton
-    :label="'<CarbonFaceCool/>'" />
+  <Boton @click>
+    Cuando tu usas a Pepito en otro componentes:
+  </Boton>
+  <Button>wasdasda</Button>
 </template>
 
 <script setup lang="ts">
