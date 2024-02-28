@@ -47,7 +47,7 @@ export default defineConfig(({ mode }): UserConfig => {
          * {prefix}-{collection}-{icon} e.g. <i-mdi-thumb-up />
          */
         resolvers: [
-          IconsResolver(),
+          IconsResolver({ prefix: '' }),
           VueUseComponentsResolver(),
           VueUseDirectiveResolver(),
           /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
@@ -66,7 +66,8 @@ export default defineConfig(({ mode }): UserConfig => {
        * See: https://github.com/antfu/unplugin-icons
        */
       Icons({
-        compiler: 'vue3'
+        compiler: 'vue3',
+        autoInstall: true
       }),
       VueI18nPlugin({
         runtimeOnly: true,
