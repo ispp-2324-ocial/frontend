@@ -3,7 +3,8 @@
     <slot />
     <BaseInput
       v-model="firstName"
-      label="username" />
+      label="username"
+      :validators="[(v)=>v==='Francis']" />
     <p>{{ firstName }}</p>
   </div>
 </template>
