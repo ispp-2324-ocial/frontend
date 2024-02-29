@@ -1,9 +1,8 @@
 <template>
   <slot />
-  <Boton @click>
+  <Boton>
     Cuando tu usas a Pepito en otro componentes:
   </Boton>
-  <Button>wasdasda</Button>
 </template>
 
 <script setup lang="ts">
