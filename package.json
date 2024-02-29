@@ -44,14 +44,14 @@
     "vue-router": "4.3.0"
   },
   "devDependencies": {
-    "@iconify/json": "2.2.186",
+    "@iconify/json": "2.2.188",
     "@intlify/eslint-plugin-vue-i18n": "3.0.0-next.7",
     "@intlify/unplugin-vue-i18n": "2.0.0",
     "@rollup/plugin-virtual": "3.0.2",
     "@stylistic/eslint-plugin": "1.6.2",
-    "@types/node": "20.11.20",
-    "@typescript-eslint/eslint-plugin": "7.0.2",
-    "@typescript-eslint/parser": "7.0.2",
+    "@types/node": "20.11.22",
+    "@typescript-eslint/eslint-plugin": "7.1.0",
+    "@typescript-eslint/parser": "7.1.0",
     "@vitejs/plugin-vue": "5.0.4",
     "browserslist": "4.23.0",
     "confusing-browser-globals": "1.0.11",
