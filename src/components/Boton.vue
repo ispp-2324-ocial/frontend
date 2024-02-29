@@ -10,21 +10,9 @@
 
 <script setup lang = 'ts'>
 
-import { watch , ref } from 'vue';
+import {ref} from 'vue';
 
 const isHovered = ref(true);
-
-/**
- * Gestiona clicado
- */
-function handleClick(params:type) {
-  console.log('Button clicked!');
-}
-
-watch(isHovered, ()=> {
-  console.log('isHovered', isHovered.value);
-});
-
 
 </script>
 
