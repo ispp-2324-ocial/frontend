@@ -11,7 +11,7 @@
 <script setup lang = 'ts'>
 import { ref } from 'vue';
 
-const isHovered = ref(true);
+const isHovered = ref(false);
 </script>
 
 <style scoped>
