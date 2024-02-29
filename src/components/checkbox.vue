@@ -1,39 +1,31 @@
 <template>
-    <div class="pin-container"
+    <div class="checkbox-container"
        @mouseover="isHovered = true"
        @mouseout="isHovered = false"
     >
-    <input type="checkbox" v-model="model" :value="value" class="checkbox-class" :class="{ 'scaled': isHovered, 'selected':value }" />
-    <span>{{ label }}</span>
+    <input type="checkbox" v-model="value"  class="checkbox-class" :class="{ 'scaled': isHovered }"  >
+      <span> 
+        <slot />
+      </span>
+    </input>
     </div>
   </template>
   
 <script setup lang="ts">
-import { computed, defineEmits, ref } from "vue";
-const props = defineProps({
-  modelValue: { type: [Array, Boolean] },
-  value: { type: [Boolean, Object] },
-  label: { type: String }
-});
-const emit = defineEmits(["update:modelValue"]);
-const model = computed({
-  get() {
-    return props.modelValue;
-  },
-  set(value) {
-    emit("update:modelValue", value);
-  }
-});
+import { ref } from "vue";
+
+const value = defineModel<Boolean>()
 
 const isHovered = ref(false);
 </script>
   
   <style scoped>
-  .selected {
-    cursor: pointer;
+  .checkbox-class {
+    
   }
   .scaled {
     transform: scale(0.9);
     transition: transform 0.3s ease;
+    cursor: pointer;
   }
   </style>
