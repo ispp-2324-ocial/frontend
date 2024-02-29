@@ -4,6 +4,7 @@
     <BaseInput
       v-model="firstName"
       label="username"
+      placeholder="username"
       :validators="[(v)=>v==='Francis']" />
     <p>{{ firstName }}</p>
   </div>

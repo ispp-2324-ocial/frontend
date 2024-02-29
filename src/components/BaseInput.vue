@@ -4,7 +4,7 @@
     <input
       v-model="value"
       type="text"
-      class="validate-style" />
+      class="validate-style rounded-xl border placeholder:text-slate-400 focus-visible:outline-none" />
   </div>
 </template>
 
@@ -31,7 +31,7 @@ const validate = computed(()=>{
     return i===true;
   });
 });
-const cssColor = computed(()=>validate.value? undefined : 'red');
+const cssColor = computed(()=>validate.value || value.value===''? 'var(--o-color-theme)': 'red');
 </script>
 
 <style scoped>
