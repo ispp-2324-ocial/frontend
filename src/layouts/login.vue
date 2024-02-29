@@ -35,11 +35,6 @@
         <input
           type="password"
           placeholder="contraseña" />
-        <p
-          class="message"
-          style="text-align:right;">
-          <a href="#">Recuperar contraseña</a>
-        </p>
         <button>iniciar sesión</button>
         <p
           class="message"
