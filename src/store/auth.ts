@@ -2,6 +2,7 @@ import {
   useStorage,
   type RemovableRef
 } from '@vueuse/core';
+import { computed } from 'vue';
 import { defuSchema } from '@/utils/data-manipulation';
 
 /**
@@ -46,21 +47,13 @@ class AuthStore {
    * == GETTERS AND SETTERS ==
    */
 
-  public readonly name = (): string | undefined => {
-    return this._state.value.name;
-  };
+  public readonly name = computed(() => this._state.value.name);
 
-  public readonly id = (): number | undefined => {
-    return this._state.value.id;
-  };
+  public readonly id = computed(() => this._state.value.id);
 
-  public readonly isClient = (): boolean | undefined => {
-    return this._state.value.isClient;
-  };
+  public readonly isClient = computed(() => this._state.value.isClient);
 
-  public readonly token = (): string | undefined => {
-    return this._state.value.token;
-  };
+  public readonly token = computed(() => this._state.value.token);
 
   public authenticate = (): void => {
     // Todo: lógica de login call backend
