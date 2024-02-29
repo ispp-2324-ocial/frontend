@@ -10,8 +10,8 @@
 </template>
 
 <script setup lang="ts">
-import type { Fn } from '@vueuse/core';
 import { computed } from 'vue';
+import { isStr } from '@/utils/validation';
 
 const props = defineProps({
   label: {
@@ -19,7 +19,7 @@ const props = defineProps({
     default: ''
   },
   validators: {
-    type: Array<Fn>,
+    type: Array<(i: string) => boolean>,
     default: []
   },
   placeholder: {
@@ -31,20 +31,20 @@ const props = defineProps({
 const value = defineModel<string>();
 const validate = computed(()=>{
   return props.validators.map((fn)=>{
-    return Boolean (fn(value.value));
+    return isStr(value.value) && Boolean(fn(value.value));
   }).every((i)=>{
-    return i===true;
+    return i === true;
   });
 });
-const cssColor = computed(()=>validate.value || value.value===''? 'var(--o-color-theme)': 'red');
+const cssColor = computed(()=> validate.value || value.value === '' ? 'var(--o-color-theme)' : 'red');
 </script>
 
 <style scoped>
 
 .validate-style {
   border-color: v-bind(cssColor);
-
 }
+
 .input-wrap {
     display: flex;
     flex-direction: column;
