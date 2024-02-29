@@ -9,11 +9,9 @@
 </template>
 
 <script setup lang = 'ts'>
-
-import {ref} from 'vue';
+import { ref } from 'vue';
 
 const isHovered = ref(true);
-
 </script>
 
 <style scoped>
@@ -23,11 +21,8 @@ const isHovered = ref(true);
     transition: transform 0.3s ease;
   }
 
-  /**
- * Color
- */
  .checkbox-class {
-  background-color: #0e4781;
+  background-color: var(--o-color-theme);
   color: #aacfff;
   }
 </style>
