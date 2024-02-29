@@ -57,7 +57,8 @@
   },
   "ignoreDeps": [
     "npm",
-    "node"
+    "node",
+    "@intlify/eslint-plugin-vue-i18n"
   ],
   "enabledManagers": [
     "npm",
