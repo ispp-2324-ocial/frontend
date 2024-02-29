@@ -4,7 +4,8 @@
     <input
       v-model="value"
       type="text"
-      class="validate-style rounded-xl border placeholder:text-slate-400 focus-visible:outline-none" />
+      class="validate-style rounded-xl border focus-visible:outline-none"
+      :placeholder="placeholder" />
   </div>
 </template>
 
@@ -20,6 +21,10 @@ const props = defineProps({
   validators: {
     type: Array<Fn>,
     default: []
+  },
+  placeholder: {
+    type: String,
+    default:''
   }
 });
 
