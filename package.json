@@ -45,7 +45,7 @@
   },
   "devDependencies": {
     "@iconify/json": "2.2.188",
-    "@intlify/eslint-plugin-vue-i18n": "3.0.0-next.7",
+    "@intlify/eslint-plugin-vue-i18n": "3.0.0-next.4",
     "@intlify/unplugin-vue-i18n": "2.0.0",
     "@rollup/plugin-virtual": "3.0.2",
     "@stylistic/eslint-plugin": "1.6.2",
@@ -74,7 +74,6 @@
     "lightningcss": "1.24.0",
     "rollup-plugin-visualizer": "5.12.0",
     "typescript": "5.3.3",
-    "typescript-eslint-parser-for-extra-files": "0.6.0",
     "unocss": "0.58.5",
     "unplugin-icons": "0.18.5",
     "unplugin-vue-components": "0.26.0",

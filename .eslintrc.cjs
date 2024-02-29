@@ -262,9 +262,8 @@ module.exports = {
     },
     {
       files: ['*.ts', '*.tsx'],
-      parser: 'typescript-eslint-parser-for-extra-files',
+      parser: '@typescript-eslint/parser',
       parserOptions: {
-        parser: '@typescript-eslint/parser',
         sourceType: 'module',
         project: 'tsconfig.json',
         extraFileExtensions: ['.vue']
@@ -275,9 +274,10 @@ module.exports = {
       files: ['*.vue'],
       parser: 'vue-eslint-parser',
       parserOptions: {
-        parser: 'typescript-eslint-parser-for-extra-files',
+        parser: '@typescript-eslint/parser',
         project: 'tsconfig.json',
-        sourceType: 'module'
+        sourceType: 'module',
+        extraFileExtensions: ['.vue']
       },
       ...commonTSAndVueConfig
     },

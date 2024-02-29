@@ -24,6 +24,7 @@ import 'virtual:uno.css';
  * - PLUGINS DE VUE Y DIRECTIVAS -
  * El orden en el que se declaran es IMPORTANTE y es el mismo orden en el que se instancian.
  */
+/* eslint-disable-next-line @typescript-eslint/no-unsafe-argument */
 const app = createApp(Root);
 
 /**
