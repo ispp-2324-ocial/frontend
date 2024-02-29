@@ -3,6 +3,7 @@
     <label>{{ label }}</label>
     <input
       v-model="value"
+      v-bind="$attrs"
       type="text"
       class="validate-style rounded-xl border focus-visible:outline-none"
       :placeholder="placeholder" />
