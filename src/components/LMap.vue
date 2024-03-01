@@ -6,6 +6,7 @@
 import { onMounted, onBeforeUnmount } from 'vue';
 import 'leaflet/dist/leaflet.css';
 import L from 'leaflet';
+import Azul from '@/assets/pin/Pin_Azul.png'; 
 
 interface MapMarker {
   description: string;
@@ -42,8 +43,13 @@ const createMapLayer = (): void => {
 };
 
 const setMarkers = (): void => {
-  props.markers.map((marker) => {
-    return L.marker([marker.latitud, marker.longitud]).addTo(map)
+  props.markers.forEach((marker) => {
+      const customIcon = L.icon({
+      iconUrl: Azul,
+      iconSize: [30, 35], 
+      iconAnchor: [16, 16],});
+
+    return L.marker([marker.latitud, marker.longitud], { icon: customIcon }).addTo(map)
       .bindPopup("Evento:"+marker.description);
   });
 };
