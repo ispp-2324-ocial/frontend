@@ -1,5 +1,5 @@
 <template>
-  <div class="mapContainer" />
+  <div id="mapContainer"/>
 </template>
 
 <script setup lang="ts">
@@ -11,6 +11,7 @@ interface MapMarker {
   description: string;
   latitud: number;
   longitud: number;
+  category: string;
 }
 
 const props = defineProps<{ markers: Array<MapMarker> }>();
@@ -27,6 +28,7 @@ onBeforeUnmount(() => {
   }
 });
 
+
 const createMapLayer = (): void => {
   map = L.map('mapContainer').setView([37.388_63, -5.982_18], 13); // Coordenadas de Sevilla
   L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
@@ -42,13 +44,13 @@ const createMapLayer = (): void => {
 const setMarkers = (): void => {
   props.markers.map((marker) => {
     return L.marker([marker.latitud, marker.longitud]).addTo(map)
-      .bindPopup(marker.description);
+      .bindPopup("Evento:"+marker.description);
   });
 };
 </script>
 
 <style scoped>
-  .mapContainer {
+  #mapContainer {
     width: 95%;
     height: 90vh;
     margin: 2% 2%;
