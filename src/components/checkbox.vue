@@ -3,11 +3,10 @@
        @mouseover="isHovered = true"
        @mouseout="isHovered = false"
     >
-    <input type="checkbox" v-model="value"  class="checkbox-class" :class="{ 'scaled': isHovered }"  >
+    <input type="checkbox" v-model="value" :class="{ 'scaled': isHovered }"  />
       <span> 
         <slot />
       </span>
-    </input>
     </div>
   </template>
   
@@ -20,9 +19,6 @@ const isHovered = ref(false);
 </script>
   
   <style scoped>
-  .checkbox-class {
-    
-  }
   .scaled {
     transform: scale(0.9);
     transition: transform 0.3s ease;
