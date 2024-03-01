@@ -1,17 +1,19 @@
 <template>
-   <p>  Using the custom checkbox as stand alone </p>
-   <Checkbox v-model="isSelected">
-    I am checked: {{ isSelected }}
-   </Checkbox>
-  </template>
-  
-  <script setup lang="ts">
-  import { ref } from 'vue'
-  
-  const isSelected= ref(false);
-  </script>
+  <p>  {{ string2 }} </p>
+  <Checkbox v-model="isSelected">
+    {{ string + isSelected }}
+  </Checkbox>
+</template>
+
+<script setup lang="ts">
+import { ref } from 'vue';
+
+const isSelected= ref(false);
+let string = 'I am checked: ';
+let string2 = 'Using the custom checkbox as stand alone ';
+</script>
 
 
  <style scoped>
- 
+
  </style>
