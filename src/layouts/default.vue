@@ -41,12 +41,6 @@
 </template>
 
 <script lang="ts">
-import Boton from '@/components/Boton.vue';
-
-export default {
-  name: 'FooterComponent',
-  components: {Boton}
-};
 </script>
 
 <style scoped>
