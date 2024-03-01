@@ -1,14 +1,14 @@
 <template>
-  <LMap :markers="markers"/>
+  <LMap :markers="markers" />
 </template>
 
 <script setup lang="ts">
-  const markers = [
-    {
-      description: 'Concierto Nuevo Berlin',
-      latitud: 37.40869627313789,
-      longitud: -5.99000733820976,
-      category: 'Música',
-    }
-  ];
+const markers = [
+  {
+    description: 'Concierto Nuevo Berlin',
+    latitud: 37.408_696_273_137_89,
+    longitud: -5.990_007_338_209_76,
+    category: 'Música'
+  }
+];
 </script>
