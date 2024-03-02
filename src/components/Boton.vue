@@ -22,7 +22,8 @@ const isHovered = ref(false);
   }
 
  .checkbox-class {
+  height: auto;
   background-color: var(--o-color-theme);
-  color: #aacfff;
+  color: #000;
   }
 </style>
