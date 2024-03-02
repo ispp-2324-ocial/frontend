@@ -1,39 +1,42 @@
 <template>
+  <div
+    class="slot mt-4 bgcolor">
+    <slot />
+  </div>
 
   <div>
-    <div class="footer">
+    <div
+      class="footer"
+      style="background-color: #deecff; justify-content: center;">
       <div>
-        <Boton>
-          <div>
+        <Boton class="h-10vh">
+          <div @click="redirectTo('/client')">
             <img
               alt="Logo Ocial"
-              class="mt-10"
               src="@/assets/images/Ocial_Clear.png"
-              style="padding: 7%; width: 40%;" />
+              style="padding: 7%;" />
           </div>
         </Boton>
       </div>
 
       <div>
-        <Boton>
-          <div>
+        <Boton class="h-10vh">
+          <div @click="redirectTo('/client/map')">
             <img
               alt="Mapa Claro"
-              class="mt-10"
               src="@/assets/images/Map_Clear.png"
-              style="padding: 7%; width: 40%;" />
+              style="padding: 7%;" />
           </div>
         </Boton>
       </div>
 
       <div>
-        <Boton>
-          <div>
+        <Boton class="h-10vh">
+          <div @click="redirectTo('/client/profile')">
             <img
               alt="Human Blue"
-              class="mt-10"
               src="@/assets/images/Human_Clear.png"
-              style="padding: 7%; width: 40%;" />
+              style="padding: 7%;" />
           </div>
         </Boton>
       </div>
@@ -42,23 +45,40 @@
 </template>
 
 <script lang="ts">
+import { useRouter } from 'vue-router';
 import Boton from '@/components/Boton.vue';
 
 export default {
   name: 'FooterComponent',
   components: {Boton}
 };
+
+
+</script>
+<script setup lang="ts">
+
+
+const router = useRouter();
+
+/**
+ *
+ */
+function redirectTo(path: string) {
+  router.push(path);
+}
 </script>
 
 <style scoped>
+.slot {
+  height: 100%;
+  width: 100%;
+  background-color: #deecff;
+}
 .footer {
   position: fixed;
   bottom: 0;
   left: 0;
   width: 100%;
-  background-color: #f8f8f800;
-  padding-left: 0%;
-  padding-right: 50%;
   display: flex;
   justify-content: space-around;
 }
