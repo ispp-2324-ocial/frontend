@@ -2,7 +2,8 @@
   <h1>Create Event</h1>
 </template>
 
-<script setup lang="ts">
+<script lang="ts">
+
 
 </script>
 
