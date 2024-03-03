@@ -1,6 +1,6 @@
 <template>
   <slot />
-  <Alert />
+  <AlertWarning />
 </template>
 
 <script setup lang="ts">
