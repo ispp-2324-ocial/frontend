@@ -36,14 +36,16 @@ onBeforeUnmount(() => {
  */
 function setMarkers(): void {
   if (mapInstance) {
-    for (const mapMarker of props.markers) {
       const customIcon = icon({
         iconUrl: Azul,
         iconSize: [22, 30],
         iconAnchor: [11, 6]
       });
 
-      marker([mapMarker.latitud, mapMarker.longitud], { icon: customIcon }).addTo(mapInstance).bindPopup(`Evento: ${mapMarker.description}`);
+    for (const mapMarker of props.markers) {
+      marker([mapMarker.latitud, mapMarker.longitud], { icon: customIcon })
+        .addTo(mapInstance)
+        .bindPopup(`Evento: ${mapMarker.description}`);
     }
   }
 };
