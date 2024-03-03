@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, ref, watch } from 'vue';
 import 'leaflet/dist/leaflet.css';
-import { map, icon, marker } from 'leaflet';
+import { map, icon, marker} from 'leaflet';
 import Azul from '@/assets/pin/Pin_Azul.png';
 import Dot from '@/assets/pin/dot.png';
 
@@ -37,7 +37,7 @@ onBeforeUnmount(() => {
 function setMarkers(): void {
   if (mapInstance) {
     for (const mapMarker of props.markers) {
-      const customIcon = L.icon({
+      const customIcon = icon({
         iconUrl: Azul,
         iconSize: [22, 30],
         iconAnchor: [11, 6]
@@ -53,25 +53,29 @@ function setMarkers(): void {
  */
 function createMapLayer(): void {
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
+    watchId = navigator.geolocation.watchPosition(
       (position) => {
+        console.log(position);
+
         const { latitude, longitude } = position.coords;
 
-        mapInstance = map('mapContainer');
-        mapInstance.setView([latitude, longitude], 15);
+        if (!mapInstance && mapContainer.value) {
+          mapInstance = map(mapContainer.value);
+          mapInstance.setView([latitude, longitude], 15);
 
-        const userIcon = icon({
-          iconUrl: Dot,
-          iconSize: [20, 20],
-          iconAnchor: [10, 10]
-        });
+          const userIcon = icon({
+            iconUrl: Dot,
+            iconSize: [20, 20],
+            iconAnchor: [10, 10]
+          });
 
-        const userLocationMarker = marker([latitude, longitude], { icon: userIcon }).addTo(mapInstance);
+          const userLocationMarker = marker([latitude, longitude], { icon: userIcon }).addTo(mapInstance);
 
-        userLocationMarker.bindPopup('Tu ubicación');
+          userLocationMarker.bindPopup('Tu ubicación');
 
-        if (props.markers.length > 0) {
-          setMarkers();
+          if (props.markers.length > 0) {
+            setMarkers();
+          }
         }
       },
       (error) => {
@@ -99,6 +103,8 @@ function disposeMap(): void {
  * solo en mount, pero es posible que en un futuro, dependiendo del dispositivo, cambiemos el objeto DOM
  * al que haga referencia con un `<component :is="" ....>`)
  */
+
+
 watch(mapContainer, () => {
   disposeMap();
   createMapLayer();
