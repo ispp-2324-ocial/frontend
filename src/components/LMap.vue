@@ -1,11 +1,13 @@
 <template>
-  <div id="mapContainer" />
+  <div
+    ref="mapContainer"
+    class="mapContainer" />
 </template>
 
 <script setup lang="ts">
-import { onMounted, onBeforeUnmount } from 'vue';
+import { onBeforeUnmount, ref, watch } from 'vue';
 import 'leaflet/dist/leaflet.css';
-import L from 'leaflet';
+import { map, icon, marker } from 'leaflet';
 import Azul from '@/assets/pin/Pin_Azul.png';
 import Dot from '@/assets/pin/dot.png';
 
@@ -16,46 +18,56 @@ interface MapMarker {
   category: string;
 }
 
-const props = defineProps<{ markers: Array<MapMarker> }>();
-let map: ReturnType<typeof L> ;
-let userLocationMarker: ReturnType<typeof L.marker>;
-let watchId: number | null = null;
-
-onMounted(() => {
-  console.log(props.markers);
-  createMapLayer();
-});
+const props = defineProps<{ markers: MapMarker[] }>();
+const mapContainer = ref<HTMLDivElement>();
+let mapInstance: ReturnType<typeof map> | undefined;
+let watchId: number | undefined;
 
 onBeforeUnmount(() => {
-  if (map) {
-    map.remove();
-  }
+  disposeMap();
 
-  if (watchId !== null) {
+  if (watchId !== undefined) {
     navigator.geolocation.clearWatch(watchId);
   }
 });
 
+/**
+ * Coloca los marcadores en el mapa
+ */
+function setMarkers(): void {
+  if (mapInstance) {
+    for (const mapMarker of props.markers) {
+      const customIcon = L.icon({
+        iconUrl: Azul,
+        iconSize: [22, 30],
+        iconAnchor: [11, 6]
+      });
 
-const createMapLayer = (): void => {
+      marker([mapMarker.latitud, mapMarker.longitud], { icon: customIcon }).addTo(mapInstance).bindPopup(`Evento: ${mapMarker.description}`);
+    }
+  }
+};
+
+/**
+ * Crea la instancia de Leaflet e inicia la geolocalización
+ */
+function createMapLayer(): void {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
 
-        map = L.map('mapContainer').setView([latitude, longitude], 13);
-        L.tileLayer('https://{s}.tile.osm.org/{z}/{x}/{y}.png', {
-          attribution:
-        '&copy; <a href="https://osm.org/copyright">OpenStreetMap</a> contributors'
-        }).addTo(map);
+        mapInstance = map('mapContainer');
+        mapInstance.setView([latitude, longitude], 15);
 
-        const userIcon = L.icon({
+        const userIcon = icon({
           iconUrl: Dot,
           iconSize: [20, 20],
           iconAnchor: [10, 10]
         });
 
-        userLocationMarker = L.marker([latitude, longitude], { icon: userIcon }).addTo(map);
+        const userLocationMarker = marker([latitude, longitude], { icon: userIcon }).addTo(mapInstance);
+
         userLocationMarker.bindPopup('Tu ubicación');
 
         if (props.markers.length > 0) {
@@ -72,23 +84,31 @@ const createMapLayer = (): void => {
   }
 };
 
-const setMarkers = (): void => {
-  for (const marker of props.markers) {
-    const customIcon = L.icon({
-      iconUrl: Azul,
-      iconSize: [22, 30],
-      iconAnchor: [11, 6]});
-
-    L.marker([marker.latitud, marker.longitud], { icon: customIcon }).addTo(map)
-      .bindPopup('Evento:'+marker.description);
+/**
+ * Dispose the map instance
+ */
+function disposeMap(): void {
+  if (mapInstance) {
+    mapInstance.remove();
+    mapInstance = undefined;
   }
-};
+}
+
+/**
+ * Este watcher trackea cuando el elemento div cambia para crear el mapa (ahora mismo no cambia nunca
+ * solo en mount, pero es posible que en un futuro, dependiendo del dispositivo, cambiemos el objeto DOM
+ * al que haga referencia con un `<component :is="" ....>`)
+ */
+watch(mapContainer, () => {
+  disposeMap();
+  createMapLayer();
+});
 </script>
 
 <style scoped>
-  #mapContainer {
-    width: 95%;
-    height: 90vh;
-    margin: 2% 2%;
-  }
-  </style>
+.mapContainer {
+  width: 95%;
+  height: 90vh;
+  margin: 2% 2%;
+}
+</style>
