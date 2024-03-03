@@ -10,6 +10,7 @@ declare module 'vue' {
     BaseInput: typeof import('./../../src/components/BaseInput.vue')['default']
     Boton: typeof import('./../../src/components/Boton.vue')['default']
     Checkbox: typeof import('./../../src/components/checkbox.vue')['default']
+    LMap: typeof import('./../../src/components/LMap.vue')['default']
     Pin: typeof import('./../../src/components/Pin.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
