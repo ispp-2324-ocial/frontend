@@ -7,7 +7,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, ref, watch } from 'vue';
 import 'leaflet/dist/leaflet.css';
-import { map, icon, marker} from 'leaflet';
+import { map, icon, marker, tileLayer} from 'leaflet';
 import Azul from '@/assets/pin/Pin_Azul.png';
 import Dot from '@/assets/pin/dot.png';
 
@@ -36,11 +36,11 @@ onBeforeUnmount(() => {
  */
 function setMarkers(): void {
   if (mapInstance) {
-      const customIcon = icon({
-        iconUrl: Azul,
-        iconSize: [22, 30],
-        iconAnchor: [11, 6]
-      });
+    const customIcon = icon({
+      iconUrl: Azul,
+      iconSize: [22, 30],
+      iconAnchor: [11, 6]
+    });
 
     for (const mapMarker of props.markers) {
       marker([mapMarker.latitud, mapMarker.longitud], { icon: customIcon })
@@ -64,6 +64,11 @@ function createMapLayer(): void {
         if (!mapInstance && mapContainer.value) {
           mapInstance = map(mapContainer.value);
           mapInstance.setView([latitude, longitude], 15);
+          tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: '© OpenStreetMap contributors'
+          }).addTo(mapInstance);
+          console.log(mapInstance);
+          console.log(mapContainer.value);
 
           const userIcon = icon({
             iconUrl: Dot,
@@ -105,7 +110,6 @@ function disposeMap(): void {
  * solo en mount, pero es posible que en un futuro, dependiendo del dispositivo, cambiemos el objeto DOM
  * al que haga referencia con un `<component :is="" ....>`)
  */
-
 
 watch(mapContainer, () => {
   disposeMap();
