@@ -24,7 +24,13 @@ curl -fsSL https://deb.nodesource.com/setup_lts.x | sudo -E bash -
 sudo apt install -y nodejs
 ```
 
-* Clonamos el repositorio con `git clone` y accedemos a él
+* Clonamos el repositorio con `git clone --recursive` y accedemos a él.
+  - Si ya teníamos el repositorio clonado o lo hemos clonado sin ``--recursive``, ejecutamos lo siguiente para
+  lograr el mismo estado:
+  ```
+  git submodule init
+  git submodule update
+  ```
 * Ejecutamos `npm ci` para instalar todas las dependencias (esto hay que hacerlo cada vez que se mergee un PR de `renovate`)
 * Iniciamos el servidor de desarrollo con `npm start`.
 
