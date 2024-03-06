@@ -16,7 +16,7 @@ import UnoCSS from 'unocss/vite';
 import Components from 'unplugin-vue-components/vite';
 import VueRouter from 'unplugin-vue-router/vite';
 import { defineConfig, type UserConfig } from 'vite';
-import { entrypoints, localeFilesFolder, srcRoot } from './scripts/paths';
+import { apiRoot, entrypoints, localeFilesFolder, srcRoot } from './scripts/paths';
 import virtualModules from './scripts/virtual-modules';
 
 export default defineConfig(({ mode }): UserConfig => {
@@ -55,11 +55,7 @@ export default defineConfig(({ mode }): UserConfig => {
           RadixVueResolver({
             prefix: 'R'
           })
-        ],
-        types: [{
-          from: 'vue-router/auto',
-          names: ['RouterLink', 'RouterView']
-        }]
+        ]
       }),
       /**
        * Este plugin permite usar todos los iconos de Iconify como componentes de Vue
@@ -148,7 +144,8 @@ export default defineConfig(({ mode }): UserConfig => {
     },
     resolve: {
       alias: {
-        '@/': srcRoot
+        '@/': srcRoot,
+        '@/api': apiRoot
       }
     },
     worker: {
