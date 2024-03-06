@@ -17,7 +17,9 @@
     "verbatimModuleSyntax": true,
     "baseUrl": ".",
     "paths": {
-      "@/*": ["src/*"]
+      "@/*": ["src/*"],
+      "@/api": ["api/src/index.ts"],
+      "@/api/*": ["api/src/*"]
     },
     "types": [
       "axios",

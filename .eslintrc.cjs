@@ -24,7 +24,8 @@ module.exports = {
   ignorePatterns: [
     'types/global/routes.d.ts',
     'types/global/components.d.ts',
-    '*.md'
+    '*.md',
+    'api/**'
   ],
   extends: [
     'eslint:recommended',
