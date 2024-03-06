@@ -10,8 +10,8 @@ declare module 'vue' {
     BaseInput: typeof import('./../../src/components/BaseInput.vue')['default']
     Boton: typeof import('./../../src/components/Boton.vue')['default']
     Pin: typeof import('./../../src/components/Pin.vue')['default']
-    RouterLink: typeof import('vue-router/auto')['RouterLink']
-    RouterView: typeof import('vue-router/auto')['RouterView']
+    RouterLink: typeof import('vue-router')['RouterLink']
+    RouterView: typeof import('vue-router')['RouterView']
     TransitionView: typeof import('./../../src/components/TransitionView.vue')['default']
   }
 }
