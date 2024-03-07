@@ -16,7 +16,7 @@ import { router } from '@/plugins/router';
 /**
  * - ESTILOS GLOBALES -
  */
-import '@fontsource-variable/inter';
+import 'inter-ui/inter-variable.css';
 import '@/assets/styles/global.css';
 import 'virtual:uno.css';
 
