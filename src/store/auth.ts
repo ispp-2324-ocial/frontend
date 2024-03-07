@@ -2,7 +2,8 @@ import {
   useStorage,
   type RemovableRef
 } from '@vueuse/core';
-import { computed } from 'vue';
+import { computed, watchEffect } from 'vue';
+import AxiosPlugin from '@/plugins/remote/axios';
 import { defuSchema } from '@/utils/data-manipulation';
 
 /**
@@ -53,7 +54,7 @@ class AuthStore {
 
   public readonly isClient = computed(() => this._state.value.isClient);
 
-  public readonly token = computed(() => this._state.value.token);
+  public readonly isLoggedIn = computed(() => Boolean(this._state.value.token));
 
   public authenticate = (): void => {
     // Todo: lógica de login call backend
@@ -71,11 +72,14 @@ class AuthStore {
   };
 
   public logout = (): void => {
-    this._state.value.name = undefined;
-    this._state.value.id = undefined;
-    this._state.value.isClient = undefined;
-    this._state.value.token = undefined;
+    Object.assign(this._state.value, this._defaultState);
   };
+
+  public constructor() {
+    watchEffect(() => {
+      AxiosPlugin.setToken(this._state.value.token);
+    });
+  }
 }
 
 export const auth = new AuthStore();
