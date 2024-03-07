@@ -25,7 +25,7 @@ jobs:
           submodules: recursive
 
       - name: Scan
-        uses: actions/dependency-review-action@v4.0.0
+        uses: actions/dependency-review-action@v4.1.3
         with:
           ## Workaround from https://github.com/actions/dependency-review-action/issues/456
           ## TODO: Remove when necessary
@@ -44,7 +44,7 @@ jobs:
           submodules: recursive
 
       - name: Setup node environment ⚙️
-        uses: actions/setup-node@v4.0.1
+        uses: actions/setup-node@v4.0.2
         with:
           node-version: 20
           check-latest: true
@@ -67,7 +67,7 @@ jobs:
           submodules: recursive
 
       - name: Setup node environment ⚙️
-        uses: actions/setup-node@v4.0.1
+        uses: actions/setup-node@v4.0.2
         with:
           node-version: 20
           check-latest: true
@@ -90,7 +90,7 @@ jobs:
           submodules: recursive
 
       - name: Setup node environment ⚙️
-        uses: actions/setup-node@v4.0.1
+        uses: actions/setup-node@v4.0.2
         with:
           node-version: 20
           check-latest: true
@@ -113,7 +113,7 @@ jobs:
           submodules: recursive
 
       - name: Configure Docker Buildx ⚙️
-        uses: docker/setup-buildx-action@v3.0.0
+        uses: docker/setup-buildx-action@v3.1.0
 
       - name: Build Docker images 🛠️
         uses: docker/build-push-action@v5.1.0
@@ -131,7 +131,7 @@ jobs:
           docker rm ocial
 
       - name: Upload artifact (Docker image) ⬆️📦
-        uses: actions/upload-artifact@v4.2.0
+        uses: actions/upload-artifact@v4.3.1
         with:
           compression-level: 0
           name: docker_image
@@ -139,7 +139,7 @@ jobs:
             docker_image.tar
 
       - name: Upload artifact (Client) ⬆️💻
-        uses: actions/upload-artifact@v4.2.0
+        uses: actions/upload-artifact@v4.3.1
         with:
           compression-level: 0
           name: frontend
@@ -166,7 +166,7 @@ jobs:
           echo $PR_SHA > PR_sha
 
       - name: Upload PR number as artifact
-        uses: actions/upload-artifact@v4.2.0
+        uses: actions/upload-artifact@v4.3.1
         with:
           compression-level: 0
           name: PR_context
@@ -187,7 +187,7 @@ jobs:
           submodules: recursive
 
       - name: Check if all commits comply with the specification
-        uses: webiny/action-conventional-commits@v1.2.0
+        uses: webiny/action-conventional-commits@v1.3.0
 
   no_merge_commits:
     name: No merge commits check 🚫
