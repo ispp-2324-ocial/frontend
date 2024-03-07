@@ -14,9 +14,10 @@
     "editor.defaultFormatter": "dbaeumer.vscode-eslint"
   },
   "editor.defaultFormatter": "dbaeumer.vscode-eslint",
-  "i18n-ally.keystyle": "flat",
   "i18n-ally.sortKeys": true,
-  "i18n-ally.sourceLanguage": "en",
+  "i18n-ally.extract.keygenStrategy": "source",
+  "i18n-ally.keystyle": "flat",
+  "i18n-ally.sourceLanguage": "es",
   "i18n-ally.localesPaths": [
     "locales"
   ],
