@@ -52,13 +52,17 @@
       "dependencies"
     ]
   },
+  "git-submodules": {
+    "enabled": true
+  },
   "ignoreDeps": [
     "npm",
     "node"
   ],
   "enabledManagers": [
     "npm",
-    "github-actions"
+    "github-actions",
+    "git-submodules"
   ],
   "labels": [
     "dependencies"
