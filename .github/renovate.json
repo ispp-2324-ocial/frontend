@@ -58,7 +58,8 @@
   ],
   "enabledManagers": [
     "npm",
-    "github-actions"
+    "github-actions",
+    "git-submodules"
   ],
   "labels": [
     "dependencies"
