@@ -1,6 +1,6 @@
 html {
   overscroll-behavior: none;
-  font-family: 'Inter Variable', sans-serif;
+  font-family: 'InterVariable', system-ui;
 }
 
 html.no-forced-scrollbar {
