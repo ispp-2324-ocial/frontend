@@ -1,9 +1,9 @@
 <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
-<template>
+<template style="display: block; justify-content: center">
   <div class="logo-container">
     <img
       alt="Ocial Name Logo"
-      class="mt-25 mb-8"
+      class="mt-15 mb-8"
       src="@/assets/images/Texto_Ocial.png"
       style="width:70%; height: auto;" />
   </div>
@@ -48,9 +48,8 @@
   <div class="container3">
     <img
       alt="Ocial Logo"
-      class="mt-10"
       src="@/assets/images/Logo_Ocial.png"
-      style="width:20%; height: auto;" />
+      style="width:20%; height: auto; margin-top: -5vh;" />
   </div>
 
   <svg
@@ -65,14 +64,14 @@
       rx="600"
       ry="600"
       fill="currentColor"
-      style="color:#c5deff; opacity:0.3" />
+      style="color:#c5deff; opacity:0.4" />
     <ellipse
       cx="700"
       cy="100"
       rx="520"
       ry="550"
       fill="currentColor"
-      style="color:#c5deff; opacity:0.6" />
+      style="color:#c5deff; opacity:0.7" />
     <ellipse
       cx="700"
       cy="100"
@@ -95,6 +94,8 @@
   width: 100%;
   margin: 0 auto;
   text-align: center;
+display: flex;
+  justify-content: center;
 }
 .login-page {
   width: 90%;
