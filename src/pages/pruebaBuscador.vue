@@ -2,7 +2,7 @@
   <div class="centered-image">
     <BaseInput v-model="firstName" />
     <Boton class="transparente">
-      <IwwaSearch />
+      <IIwwaSearch class="size-6 text-muted-foreground" />
     </Boton>
   </div>
 </template>
@@ -24,4 +24,5 @@ const firstName = ref('');
   border-color: transparent;
   margin-left: 0.5%;
 }
+
 </style>
