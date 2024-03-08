@@ -6,11 +6,11 @@
 export {}
 
 declare module 'vue' {
-  export interface GlobalComponents {
+  export interface GlobalComponents {'(feat(buscador)': Comienzo buscador del mapa)
     BaseInput: typeof import('./../../src/components/BaseInput.vue')['default']
     Boton: typeof import('./../../src/components/Boton.vue')['default']
     Checkbox: typeof import('./../../src/components/checkbox.vue')['default']
-    IMdiImageBrokenVariant: typeof import('~icons/mdi/image-broken-variant')['default']
+    IwwaSearch: typeof import('~icons/iwwa/search')['default']
     LMap: typeof import('./../../src/components/LMap.vue')['default']
     Ondas: typeof import('./../../src/components/Ondas.vue')['default']
     Pin: typeof import('./../../src/components/Pin.vue')['default']
