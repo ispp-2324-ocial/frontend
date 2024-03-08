@@ -11,14 +11,14 @@ const markers = [
     category: 'Música'
   },{
     description: 'Clase Yoga en Alamillo',
-    latitud: 37.4154742332577,
-    longitud: -5.997796824409255,
+    latitud: 37.415_474_233_257_7,
+    longitud: -5.997_796_824_409_255,
     category: 'Deporte'
   },{
     description: 'Partido Fútbol Casa Félix',
-    latitud: 37.35830745786976, 
-    longitud: -5.98612527513324,
-    category: 'Deporte'
+    latitud: 37.358_307_457_869_76,
+    longitud: -5.986_125_275_133_24,
+    category: 'Ocio'
   }
 ];
 </script>

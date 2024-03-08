@@ -9,6 +9,8 @@ import { onBeforeUnmount, ref, watch } from 'vue';
 import 'leaflet/dist/leaflet.css';
 import { map, icon, marker, tileLayer} from 'leaflet';
 import Azul from '@/assets/pin/Pin_Azul.png';
+import Verde from '@/assets/pin/Pin_Verde.png';
+import Rojo from '@/assets/pin/Pin_Rojo.png';
 import Dot from '@/assets/pin/dot.png';
 
 interface MapMarker {
@@ -23,6 +25,12 @@ const mapContainer = ref<HTMLDivElement>();
 let mapInstance: ReturnType<typeof map> | undefined;
 let watchId: number | undefined;
 
+const categoryIconMap : { [key: string]: string } = {
+  'Música': Azul,
+  'Deporte': Verde,
+  'Ocio': Rojo
+};
+
 onBeforeUnmount(() => {
   disposeMap();
 
@@ -36,13 +44,13 @@ onBeforeUnmount(() => {
  */
 function setMarkers(): void {
   if (mapInstance) {
-    const customIcon = icon({
-      iconUrl: Azul,
-      iconSize: [22, 30],
-      iconAnchor: [11, 6]
-    });
-
     for (const mapMarker of props.markers) {
+      const customIcon = icon({
+        iconUrl: categoryIconMap[mapMarker.category] || Dot,
+        iconSize: [22, 30],
+        iconAnchor: [11, 6]
+      });
+
       marker([mapMarker.latitud, mapMarker.longitud], { icon: customIcon })
         .addTo(mapInstance)
         .bindPopup(`Evento: ${mapMarker.description}`);
@@ -57,8 +65,6 @@ function createMapLayer(): void {
   if (navigator.geolocation) {
     watchId = navigator.geolocation.watchPosition(
       (position) => {
-        console.log(position);
-
         const { latitude, longitude } = position.coords;
 
         if (!mapInstance && mapContainer.value) {
