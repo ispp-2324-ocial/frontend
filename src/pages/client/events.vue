@@ -1,8 +1,6 @@
 <template>
   <div>
-    <ul
-      class="-ml-7"
-      style="list-style-type:none;">
+    <ul style="list-style-type:none; margin-top: 1vh;">
       <li
         v-for="(item, index) in eventDetail"
         :key="index">
@@ -11,28 +9,28 @@
             <div
               class="ml-3"
               style="text-align: left; width: 100%;">
-              <p style="text-align: center;font-size: clamp(15px, 7vw, 40px); font-weight: bold; justify-content: center;">
+              <Title>
                 {{ item.name }}
-              </p>
+              </Title>
               <img
                 alt="Event image"
                 src="@/assets/images/temp/yoga.png"
                 class="center"
                 style="display: block; width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px" />
-              <p style="font-size: clamp(15px, 6vw, 30px); font-weight: bold">
-                {{ item.event }}
+              <p class="elemento">
+                <b>{{ item.event }}</b>
               </p>
-              <p style="font-size: clamp(15px, 6vw, 30px); font-weight: normal">
-                <b>Lugar:</b> {{ item.place }}
+              <p class="elemento">
+                <b>{{ $t('lugar:') }}</b>&nbsp;{{ $t('lugar', {place: item.place} ) }}
               </p>
-              <p style="font-size: clamp(15px, 6vw, 30px); font-weight: normal">
-                <b>Fecha: </b>{{ item.date }} a las {{ item.hour }}
+              <p class="elemento">
+                <b>{{ $t('fecha:') }}</b>&nbsp;{{ $t('fecha', {date: item.date, hour: item.hour } ) }}
               </p>
-              <p style="font-size: clamp(15px, 6vw, 30px); font-weight: normal">
-                <b>Capacidad:</b> {{ item.capacity }}
+              <p class="elemento">
+                <b>{{ $t('capacidad:') }}</b>&nbsp;{{ item.capacity }}
               </p>
-              <p style="font-size: clamp(15px, 6vw, 30px); font-weight: normal">
-                <b>Categoría:</b> {{ item.category }}
+              <p class="elemento">
+                <b>{{ $t('categoria:') }}</b>&nbsp;{{ item.category }}
               </p>
             </div>
           </div>
@@ -42,17 +40,18 @@
   </div>
   <div
     class="mb-7"
-    style="background-color: #deecff; width: 100%;">
+    style="width: 100%;">
     <div
       style="justify-content: center; display: flex;"
-      @click="redirectTo('/client/subscription')">
-      <Boton class="ocial-button">
+      @click="redirectTo('/client/editEvent')">
+      <BotonOcial
+        style="width: 80%; padding-top: 1vh; padding-bottom: 1vh;">
         <div>
-          <p style="color:#0e4791; font-size: 60%;">
-            Comprobar suscripciones
+          <p>
+            {{ $t('editarEvento') }}
           </p>
         </div>
-      </Boton>
+      </BotonOcial>
     </div>
   </div>
 </template>
@@ -60,14 +59,19 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
+import { useI18n } from 'vue-i18n';
+
+const {t} = useI18n();
+
+t('');
 
 const router = useRouter();
 
 /**
- *
+ * Esta función redirige a otra vista
  */
-function redirectTo(path: string) {
-  router.push(path);
+async function redirectTo(path: string) : Promise<void> {
+  await router.push(path);
 }
 
 const eventDetail = [
@@ -92,16 +96,11 @@ const eventDetail = [
   margin-right: auto;
   width: 50%;
 }
-.ocial-button {
-  text-transform: uppercase;
-  background: #aacfff;
-  width: 80%;
-  border: 2px solid #3e80d7;
-  border-radius: 20px;
-  font-size: 200%;
-  font-weight: bold;
-  margin: auto;
-  text-align: center;
-  justify-content: center;
+.elemento {
+  font-size: clamp(15px, 5.5vw, 30px);
+  font-weight: normal;
+  width: 90%;
+  margin-left: 4vw;
+  margin-bottom: 1vh;
 }
 </style>

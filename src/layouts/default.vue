@@ -1,12 +1,8 @@
 <template>
-  <div
-    class="slot mt-4 bgcolor">
-    <slot />
-  </div>
-
+  <slot />
   <div>
     <div
-      class="footer"
+      class="footer -mb-1.6"
       style="background-color: #deecff; justify-content: center;">
       <div>
         <Boton class="h-10vh">
@@ -46,13 +42,6 @@
 
 <script lang="ts">
 import { useRouter } from 'vue-router';
-import Boton from '@/components/Boton.vue';
-
-export default {
-  name: 'FooterComponent',
-  components: {Boton}
-};
-
 
 </script>
 <script setup lang="ts">
@@ -61,19 +50,14 @@ export default {
 const router = useRouter();
 
 /**
- *
+ * Esta función redirige a otra vista
  */
-function redirectTo(path: string) {
-  router.push(path);
+async function redirectTo(path: string) : Promise<void> {
+  await router.push(path);
 }
 </script>
 
 <style scoped>
-.slot {
-  height: 100%;
-  width: 100%;
-  background-color: #deecff;
-}
 .footer {
   position: fixed;
   bottom: 0;
