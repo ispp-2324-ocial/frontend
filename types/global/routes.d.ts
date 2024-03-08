@@ -22,12 +22,12 @@ declare module 'vue-router/auto-routes' {
     '/checboxPrueba': RouteRecordInfo<'/checboxPrueba', '/checboxPrueba', Record<never, never>, Record<never, never>>,
     '/client/': RouteRecordInfo<'/client/', '/client', Record<never, never>, Record<never, never>>,
     '/client/createEvent': RouteRecordInfo<'/client/createEvent', '/client/createEvent', Record<never, never>, Record<never, never>>,
+    '/client/editEvent': RouteRecordInfo<'/client/editEvent', '/client/editEvent', Record<never, never>, Record<never, never>>,
     '/client/events': RouteRecordInfo<'/client/events', '/client/events', Record<never, never>, Record<never, never>>,
     '/client/profile': RouteRecordInfo<'/client/profile', '/client/profile', Record<never, never>, Record<never, never>>,
     '/client/subscription': RouteRecordInfo<'/client/subscription', '/client/subscription', Record<never, never>, Record<never, never>>,
     '/login/': RouteRecordInfo<'/login/', '/login', Record<never, never>, Record<never, never>>,
     '/map': RouteRecordInfo<'/map', '/map', Record<never, never>, Record<never, never>>,
     '/prueba': RouteRecordInfo<'/prueba', '/prueba', Record<never, never>, Record<never, never>>,
-    '/pruebaBoton': RouteRecordInfo<'/pruebaBoton', '/pruebaBoton', Record<never, never>, Record<never, never>>,
   }
 }

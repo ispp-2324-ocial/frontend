@@ -22,6 +22,7 @@ import '@/store/clientSettings';
  * - ESTILOS GLOBALES -
  */
 import 'inter-ui/inter-variable.css';
+import '@unocss/reset/tailwind.css';
 import '@/assets/styles/global.css';
 import 'virtual:uno.css';
 
