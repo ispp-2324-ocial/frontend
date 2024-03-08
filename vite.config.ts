@@ -48,7 +48,7 @@ export default defineConfig(({ mode }): UserConfig => {
          * {prefix}-{collection}-{icon} e.g. <i-mdi-thumb-up />
          */
         resolvers: [
-          IconsResolver({prefix: ''}),
+          IconsResolver(),
           VueUseComponentsResolver(),
           VueUseDirectiveResolver(),
           /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
