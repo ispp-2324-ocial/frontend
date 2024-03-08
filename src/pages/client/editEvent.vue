@@ -1,42 +1,35 @@
-<!-- eslint-disable vue/require-v-for-key -->
 <template>
   <Title>
-    {{ $t('nuevoEvento') }}
+    {{ $t('editarEvento') }}
   </Title>
   <div style="justify-content: center; display: flex;">
-    <div v-for="(event, index) in eventDetail">
+    <div
+      v-for="event in eventDetail">
       <BaseInput
-        :key="index"
         v-model="event.name"
         class="input-box"
         placeholder="Nombre del evento" />
       <BaseInput
-        :key="index"
         v-model="event.place"
         class="input-box"
         placeholder="Lugar" />
       <BaseInput
-        :key="index"
         v-model="event.event"
         class="input-box"
         placeholder="Descripción" />
       <BaseInput
-        :key="index"
         v-model="event.date"
         class="input-box"
         placeholder="dd/mm/yy" />
       <BaseInput
-        :key="index"
         v-model="event.hour"
         class="input-box"
         placeholder="hh:mm" />
       <BaseInput
-        :key="index"
         v-model="event.capacity"
         class="input-box"
         placeholder="Capacidad" />
       <BaseInput
-        :key="index"
         v-model="event.category"
         class="input-box"
         placeholder="Categoría" />
@@ -44,8 +37,8 @@
   </div>
   <BotonOcial
     style="display: flex;"
-    @click="createE('/client')">
-    {{ $t('crearEvento') }}
+    @click="editE('/client')">
+    {{ $t('guardarCambios') }}
   </BotonOcial>
 </template>
 
@@ -62,13 +55,14 @@ const router = useRouter();
 
 const eventDetail = ref([
   {
-    name: '',
-    place: '',
-    event: '',
-    date: '',
-    hour: '',
-    capacity: '',
-    category: ''
+    name: 'Yoga Outdoor',
+    place: 'Parque del Alamillo',
+    event: 'Clase de yoga al aire libre.',
+    date: '16/03/24',
+    hour: '16:00',
+    capacity: '60',
+    category: 'Deporte',
+    image: '@/assets/images/temp/yoga.png'
   }]);
 
 /**
@@ -76,7 +70,7 @@ const eventDetail = ref([
  * Cuando se fusione con back hay que añadir en la primera línea este código
  * This.finds.push({ value: '' });
  */
-async function createE(path:string) : Promise<void> {
+async function editE(path:string) : Promise<void> {
   await router.push(path);
 };
 
