@@ -1,7 +1,11 @@
 {
+  "Tu ubicación": "Tu ubicación",
+  "Evento": "Evento",
   "¡Notificación Exitosa!" : "¡Notificación Exitosa!",
   "¡Notificación de Errónea!" : "¡Notificación de Errónea!",
   "¡Notificación de Advertencia!" : "¡Notificación de Advertencia!",
   "¡Notificación de Información!" : "¡Notificación de Información!",
-  "Notificación" : "Notificación"
+  "Notificación" : "Notificación",
+  "Error al obtener la ubicación" : "Error al obtener la ubicación",
+  "La geolocalización no es soportada por tu navegador" : "La geolocalización no es soportada por tu navegador"
 }
