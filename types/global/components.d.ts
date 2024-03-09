@@ -7,7 +7,6 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    AlertWarning: typeof import('./../../src/components/AlertWarning.vue')['default']
     BaseInput: typeof import('./../../src/components/BaseInput.vue')['default']
     Boton: typeof import('./../../src/components/Boton.vue')['default']
     Checkbox: typeof import('./../../src/components/checkbox.vue')['default']
