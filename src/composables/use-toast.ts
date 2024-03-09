@@ -1,13 +1,10 @@
 import { toast } from 'vue3-toastify';
 import { useI18n } from 'vue-i18n';
 
-const { t } = useI18n();
-
-
 type NotificationTypes = 'warning' | 'success' | 'error' | 'info';
 
-
 export const notify = (message?:string, type?: NotificationTypes): void => {
+  const { t } = useI18n();
   switch (type) {
     case 'success': {
       toast.success(message ?? t('Success Notification !') , {
