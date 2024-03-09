@@ -6,31 +6,31 @@ type NotificationTypes = 'warning' | 'success' | 'error' | 'info';
 export const notify = (message?:string, type?: NotificationTypes): void => {
   switch (type) {
     case 'success': {
-      toast.success('Success Notification !' ?? message, {
+      toast.success(message ?? 'Success Notification !' , {
         position: toast.POSITION.TOP_CENTER
       });
       break;
     }
     case 'error': {
-      toast.error('Error Notification !' ?? message, {
+      toast.error(message ?? 'Error Notification !', {
         position: toast.POSITION.TOP_LEFT
       });
       break;
     }
     case 'warning': {
-      toast.warn('Warning Notification !' ?? message, {
+      toast.warn(message ?? 'Warning Notification !', {
         position: toast.POSITION.BOTTOM_LEFT
       });
       break;
     }
     case 'info': {
-      toast.info('Info Notification !' ?? message, {
+      toast.info(message ?? 'Info Notification !', {
         position: toast.POSITION.BOTTOM_CENTER
       });
       break;
     }
     default: {
-      toast('Notification' ?? message, {
+      toast(message ?? 'Notification', {
         position: toast.POSITION.BOTTOM_RIGHT
       });
     }
