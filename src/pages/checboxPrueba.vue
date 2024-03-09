@@ -12,8 +12,3 @@ const isSelected= ref(false);
 let string = 'I am checked: ';
 let string2 = 'Using the custom checkbox as stand alone ';
 </script>
-
-
- <style scoped>
-
- </style>

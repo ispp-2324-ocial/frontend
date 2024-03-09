@@ -21,10 +21,10 @@ const value = defineModel<boolean>();
 const isHovered = ref(false);
 </script>
 
-  <style scoped>
-  .scaled {
-    transform: scale(0.9);
-    transition: transform 0.3s ease;
-    cursor: pointer;
-  }
-  </style>
+<style scoped>
+.scaled {
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+  cursor: pointer;
+}
+</style>
