@@ -13,6 +13,7 @@ import { hideDirective } from '@/plugins/directives';
 import { vuePlugin as i18n } from '@/plugins/i18n';
 import { router } from '@/plugins/router';
 
+
 /**
  * - ESTILOS GLOBALES -
  */
