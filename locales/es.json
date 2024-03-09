@@ -1,1 +1,7 @@
-{}
+{
+  "Success Notification !" : "¡Notificación Exitosa!",
+  "Error Notification !" : "¡Notificación de Errónea!",
+  "Warning Notification !" : "¡Notificación de Advertencia!",
+  "Info Notification !" : "¡Notificación de Información",
+  "Notification" : "Notificación"
+}
