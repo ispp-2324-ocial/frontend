@@ -26,8 +26,7 @@
       "@intlify/unplugin-vue-i18n/messages",
       "unplugin-icons/types/vue",
       "vite/client",
-      "vue",
-      "vue3-toastify/global"
+      "vue"
     ]
   },
   "vueCompilerOptions": {
