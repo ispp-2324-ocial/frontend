@@ -1,7 +1,11 @@
 {
+  "Tu ubicación": "Your location",
+  "Evento": "Event",
   "¡Notificación Exitosa!" : "Success Notification!",
   "¡Notificación de Errónea!" : "Error Notification!",
   "¡Notificación de Advertencia!" : "Warning Notification!",
   "¡Notificación de Información!" : "Info Notification!",
-  "Notificación" : "Notification"
+  "Notificación" : "Notification",
+  "Error al obtener la ubicación" : "Error at finding your location",
+  "La geolocalización no es soportada por tu navegador" : "Geolocation is not supported by your browser"
 }

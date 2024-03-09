@@ -8,10 +8,15 @@
 import { onBeforeUnmount, ref, watch } from 'vue';
 import 'leaflet/dist/leaflet.css';
 import { map, icon, marker, tileLayer} from 'leaflet';
+import { useI18n } from 'vue-i18n';
 import Azul from '@/assets/pin/Pin_Azul.png';
 import Verde from '@/assets/pin/Pin_Verde.png';
 import Rojo from '@/assets/pin/Pin_Rojo.png';
 import Dot from '@/assets/pin/dot.png';
+
+const props = defineProps<{ markers: MapMarker[] }>();
+
+const { t } = useI18n();
 
 interface MapMarker {
   description: string;
@@ -20,7 +25,6 @@ interface MapMarker {
   category: string;
 }
 
-const props = defineProps<{ markers: MapMarker[] }>();
 const mapContainer = ref<HTMLDivElement>();
 let mapInstance: ReturnType<typeof map> | undefined;
 let watchId: number | undefined;
@@ -53,7 +57,7 @@ function setMarkers(): void {
 
       marker([mapMarker.latitud, mapMarker.longitud], { icon: customIcon })
         .addTo(mapInstance)
-        .bindPopup(`Evento: ${mapMarker.description}`);
+        .bindPopup(t('Evento')+`: ${mapMarker.description}`);
     }
   }
 };
@@ -84,13 +88,14 @@ function createMapLayer(): void {
 
           const userLocationMarker = marker([latitude, longitude], { icon: userIcon }).addTo(mapInstance);
 
-          userLocationMarker.bindPopup('Tu ubicación');
+          userLocationMarker.bindPopup(t('Tu ubicación'));
 
           if (props.markers.length > 0) {
             setMarkers();
           }
         }
       },
+      // eslint-disable-next-line promise/prefer-await-to-callbacks
       (error) => {
         console.error('Error al obtener la ubicación:', error.message);
       }
