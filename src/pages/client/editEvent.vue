@@ -1,3 +1,4 @@
+<!-- eslint-disable vue/require-v-for-key -->
 <template>
   <Title>
     {{ $t('editarEvento') }}
@@ -35,21 +36,17 @@
         placeholder="Categoría" />
     </div>
   </div>
-  <BotonOcial
+  <Boton
+    type="rounded-blue"
     style="display: flex;"
     @click="editE('/client')">
     {{ $t('guardarCambios') }}
-  </BotonOcial>
+  </Boton>
 </template>
 
 <script setup lang="ts">
 import {ref} from 'vue';
 import { useRouter } from 'vue-router';
-import { useI18n } from 'vue-i18n';
-
-const {t} = useI18n();
-
-t('');
 
 const router = useRouter();
 

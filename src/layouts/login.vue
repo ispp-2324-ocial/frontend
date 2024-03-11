@@ -1,5 +1,6 @@
 <!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
 <template style="display: block; justify-content: center">
+  <Ondas />
   <div class="logo-container">
     <img
       alt="Ocial Name Logo"
@@ -25,7 +26,7 @@
           placeholder="confirmar contraseña" />
         <button>create</button>
         <p class="message">
-          ¿Ya tienes una cuenta? <a href="#">Inicia sesión</a>
+          {{ $t('tienesCuenta') }} <a href="#">{{ $t('iniciaSesion') }}</a>
         </p>
       </form>
       <form class="login-form">
@@ -35,11 +36,11 @@
         <input
           type="password"
           placeholder="contraseña" />
-        <button>iniciar sesión</button>
+        <button>{{ $t('iniciarSesion') }}</button>
         <p
           class="message"
           style="margin: 15px 0 0;">
-          ¿Aún no tienes cuenta? <a href="#">Regístrate</a>
+          {{ $t('noTienesCuenta') }} <a href="#">{{ $t('registrate') }}</a>
         </p>
       </form>
     </div>
@@ -51,35 +52,6 @@
       src="@/assets/images/Logo_Ocial.png"
       style="width:20%; height: auto; margin-top: -5vh;" />
   </div>
-
-  <svg
-    class="h-auto -mt-6 w-6/12 absolute right-0 top-0 z-[-1]"
-    style="min-width:400px"
-    xmlns="http://www.w3.org/2000/svg"
-    preserveAspectRatio="none"
-    viewBox="0 0 800 800">
-    <ellipse
-      cx="700"
-      cy="100"
-      rx="600"
-      ry="600"
-      fill="currentColor"
-      style="color:#c5deff; opacity:0.4" />
-    <ellipse
-      cx="700"
-      cy="100"
-      rx="520"
-      ry="550"
-      fill="currentColor"
-      style="color:#c5deff; opacity:0.7" />
-    <ellipse
-      cx="700"
-      cy="100"
-      rx="450"
-      ry="500"
-      fill="currentColor"
-      style="color:#c5deff" />
-  </svg>
   <slot />
 </template>
 
@@ -94,11 +66,11 @@
   width: 100%;
   margin: 0 auto;
   text-align: center;
-display: flex;
+  display: flex;
   justify-content: center;
 }
 .login-page {
-  width: 90%;
+  width: 100%;
   padding: 8% 0 0;
   margin: auto;
 }
@@ -106,7 +78,7 @@ display: flex;
   position: relative;
   z-index: 1;
   background: #deecff;
-  width: 70%;
+  width: 80%;
   margin: 0 auto 100px;
   padding: 45px;
   text-align: center;
@@ -114,7 +86,6 @@ display: flex;
   border: 2px solid #ffffff;
 }
 .form input {
-  font-family: "OSR", sans-serif;
   outline: 0;
   background: #ffffff;
   width: 100%;
@@ -126,7 +97,6 @@ display: flex;
   font-size: 16px;
 }
 .form button {
-  font-family: "OSR", sans-serif;
   text-transform: uppercase;
   background: #aacfff;
   width: 100%;
@@ -139,7 +109,6 @@ display: flex;
 }
 
 .form .message {
-  font-family: "OSR", sans-serif;
   color: #3e80d7;
   font-size: 14px;
 }
@@ -153,7 +122,6 @@ display: flex;
 
 body {
   background: #3e80d7;
-  font-family: "OSR", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
