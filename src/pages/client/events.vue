@@ -44,14 +44,15 @@
     <div
       style="justify-content: center; display: flex;"
       @click="router.push('/client/editEvent')">
-      <BotonOcial
+      <Boton
+        type="rounded-blue"
         style="width: 80%; padding-top: 1vh; padding-bottom: 1vh;">
         <div>
           <p>
             {{ $t('editarEvento') }}
           </p>
         </div>
-      </BotonOcial>
+      </Boton>
     </div>
   </div>
 </template>
@@ -59,11 +60,6 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { useI18n } from 'vue-i18n';
-
-const {t} = useI18n();
-
-t('');
 
 const router = useRouter();
 

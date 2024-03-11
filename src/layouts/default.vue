@@ -5,7 +5,9 @@
       class="footer -mb-1.6"
       style="background-color: #deecff; justify-content: center;">
       <div>
-        <Boton class="h-10vh">
+        <Boton
+          type="default"
+          class="h-10vh">
           <div @click="router.push('/client')">
             <img
               alt="Logo Ocial"
@@ -16,7 +18,9 @@
       </div>
 
       <div>
-        <Boton class="h-10vh">
+        <Boton
+          type="default"
+          class="h-10vh">
           <div @click="router.push('/client/map')">
             <img
               alt="Mapa Claro"
@@ -27,7 +31,9 @@
       </div>
 
       <div>
-        <Boton class="h-10vh">
+        <Boton
+          type="default"
+          class="h-10vh">
           <div @click="router.push('/client/profile')">
             <img
               alt="Human Blue"

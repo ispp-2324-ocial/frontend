@@ -3,13 +3,13 @@
     <div
       style="justify-content: center; display: flex; margin-top: 3vh;"
       @click="router.push('/client/createEvent')">
-      <BotonOcial>
+      <Boton type="rounded-blue">
         <div>
           <p>
             {{ $t('creaEvento') }}
           </p>
         </div>
-      </BotonOcial>
+      </Boton>
     </div>
 
     <div>
@@ -84,11 +84,6 @@ const tempEvents = [
 </script>
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { useI18n } from 'vue-i18n';
-
-const {t} = useI18n();
-
-t('');
 
 const router = useRouter();
 </script>
