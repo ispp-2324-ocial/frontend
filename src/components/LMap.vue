@@ -14,6 +14,7 @@ import Verde from '@/assets/pin/Pin_Verde.png';
 import Rojo from '@/assets/pin/Pin_Rojo.png';
 import Dot from '@/assets/pin/dot.png';
 import { useToast } from '@/composables/use-toast';
+import { isNumber } from '@/utils/validation';
 
 const props = defineProps<{ markers: MapMarker[] }>();
 const { t } = useI18n();
@@ -37,8 +38,14 @@ const categoryIconMap : { [key: string]: string } = {
   'Ocio': Rojo
 };
 
+const userIcon = icon({
+  iconUrl: Dot,
+  iconSize: [20, 20],
+  iconAnchor: [10, 10]
+});
+
 onBeforeUnmount(() => {
-  if (watchId !== undefined) {
+  if (isNumber(watchId)) {
     navigator.geolocation.clearWatch(watchId);
   }
 
@@ -70,24 +77,21 @@ function setMarkers(): void {
 function createMapLayer(): void {
   if (mapContainer.value) {
     mapInstance = map(mapContainer.value);
+    tileLayer(TILE_LAYER_URL, {
+      attribution: ATTRIBUTION
+    }).addTo(mapInstance);
+    /**
+     * Ubicación de sevilla
+     */
+    mapInstance.setView([37.3896, -5.9823], 13);
   }
 
   if (navigator.geolocation) {
-    navigator.geolocation.getCurrentPosition(
+    navigator.geolocation.watchPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
 
         mapInstance!.setView([latitude, longitude], 15);
-
-        tileLayer(TILE_LAYER_URL, {
-          attribution: ATTRIBUTION
-        }).addTo(mapInstance!);
-
-        const userIcon = icon({
-          iconUrl: Dot,
-          iconSize: [20, 20],
-          iconAnchor: [10, 10]
-        });
 
         const userLocationMarker = marker([latitude, longitude], { icon: userIcon }).addTo(mapInstance!);
 
@@ -98,13 +102,7 @@ function createMapLayer(): void {
         }
       },
       (error) => {
-        mapInstance!.setView([37.3896, -5.9823], 13); //Ubicación de Sevilla
-
-        tileLayer(TILE_LAYER_URL, {
-          attribution: ATTRIBUTION
-        }).addTo(mapInstance!);
-
-        useToast(t('Error al obtener la ubicación')+`: ${error.message}`, 'error');
+        useToast(`${t('Error al obtener la ubicación')}: ${error.message}`, 'error');
       },
       { enableHighAccuracy: true }
     );
