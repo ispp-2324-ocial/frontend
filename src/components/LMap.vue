@@ -13,10 +13,12 @@ import Azul from '@/assets/pin/Pin_Azul.png';
 import Verde from '@/assets/pin/Pin_Verde.png';
 import Rojo from '@/assets/pin/Pin_Rojo.png';
 import Dot from '@/assets/pin/dot.png';
+import { useToast } from '@/composables/use-toast';
 
 const props = defineProps<{ markers: MapMarker[] }>();
-
 const { t } = useI18n();
+const TILE_LAYER_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+const ATTRIBUTION = '© OpenStreetMap contributors';
 
 interface MapMarker {
   description: string;
@@ -71,13 +73,14 @@ function createMapLayer(): void {
   }
 
   if (navigator.geolocation) {
-    watchId = navigator.geolocation.watchPosition(
+    navigator.geolocation.getCurrentPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
 
         mapInstance!.setView([latitude, longitude], 15);
-        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-          attribution: '© OpenStreetMap contributors'
+
+        tileLayer(TILE_LAYER_URL, {
+          attribution: ATTRIBUTION
         }).addTo(mapInstance!);
 
         const userIcon = icon({
@@ -95,13 +98,19 @@ function createMapLayer(): void {
         }
       },
       (error) => {
-        console.error('Error al obtener la ubicación:', error.message);
+        mapInstance!.setView([37.3896, -5.9823], 13); //Ubicación de Sevilla
+
+        tileLayer(TILE_LAYER_URL, {
+          attribution: ATTRIBUTION
+        }).addTo(mapInstance!);
+
+        useToast(t('Error al obtener la ubicación')+`: ${error.message}`, 'error');
       },
       { enableHighAccuracy: true }
     );
 
   } else {
-    console.error('Geolocalización no es soportada por tu navegador');
+    useToast(t('La geolocalización no es soportada por tu navegador'), 'error');
   }
 };
 
