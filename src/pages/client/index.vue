@@ -2,7 +2,7 @@
   <div>
     <div
       style="justify-content: center; display: flex; margin-top: 3vh;"
-      @click="redirectTo('/client/createEvent')">
+      @click="router.push('/client/createEvent')">
       <BotonOcial>
         <div>
           <p>
@@ -24,7 +24,7 @@
           <div
             class="row mr-3"
             style="border-top: solid 1px #b0b0b0; padding: 0%;"
-            @click="redirectTo('/client/events')">
+            @click="router.push('/client/events')">
             <div style=" cursor: pointer;margin:auto; text-align: center;display: flex; align-items: center; justify-content: left;">
               <img
                 alt="Event image"
@@ -91,13 +91,6 @@ const {t} = useI18n();
 t('');
 
 const router = useRouter();
-
-/**
- * Esta función redirige a otra vista
- */
-async function redirectTo(path: string) : Promise<void> {
-  await router.push(path);
-}
 </script>
 
 <style scoped>
