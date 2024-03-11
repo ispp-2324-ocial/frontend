@@ -1,5 +1,6 @@
 import { toast } from 'vue3-toastify';
 import { i18n } from '@/plugins/i18n';
+import 'vue3-toastify/dist/index.css';
 
 type NotificationTypes = 'warning' | 'success' | 'error' | 'info';
 
