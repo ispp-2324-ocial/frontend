@@ -36,11 +36,11 @@ const categoryIconMap : { [key: string]: string } = {
 };
 
 onBeforeUnmount(() => {
-  disposeMap();
-
   if (watchId !== undefined) {
     navigator.geolocation.clearWatch(watchId);
   }
+
+  disposeMap();
 });
 
 /**
@@ -66,39 +66,38 @@ function setMarkers(): void {
  * Crea la instancia de Leaflet e inicia la geolocalización
  */
 function createMapLayer(): void {
+  if (mapContainer.value) {
+    mapInstance = map(mapContainer.value);
+  }
+
   if (navigator.geolocation) {
     watchId = navigator.geolocation.watchPosition(
       (position) => {
         const { latitude, longitude } = position.coords;
 
-        if (!mapInstance && mapContainer.value) {
-          mapInstance = map(mapContainer.value);
-          mapInstance.setView([latitude, longitude], 15);
-          tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-            attribution: '© OpenStreetMap contributors'
-          }).addTo(mapInstance);
-          console.log(mapInstance);
-          console.log(mapContainer.value);
+        mapInstance!.setView([latitude, longitude], 15);
+        tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+          attribution: '© OpenStreetMap contributors'
+        }).addTo(mapInstance!);
 
-          const userIcon = icon({
-            iconUrl: Dot,
-            iconSize: [20, 20],
-            iconAnchor: [10, 10]
-          });
+        const userIcon = icon({
+          iconUrl: Dot,
+          iconSize: [20, 20],
+          iconAnchor: [10, 10]
+        });
 
-          const userLocationMarker = marker([latitude, longitude], { icon: userIcon }).addTo(mapInstance);
+        const userLocationMarker = marker([latitude, longitude], { icon: userIcon }).addTo(mapInstance!);
 
-          userLocationMarker.bindPopup(t('Tu ubicación'));
+        userLocationMarker.bindPopup(t('Tu ubicación'));
 
-          if (props.markers.length > 0) {
-            setMarkers();
-          }
+        if (props.markers.length > 0) {
+          setMarkers();
         }
       },
-      // eslint-disable-next-line promise/prefer-await-to-callbacks
       (error) => {
         console.error('Error al obtener la ubicación:', error.message);
-      }
+      },
+      { enableHighAccuracy: true }
     );
 
   } else {
@@ -121,7 +120,6 @@ function disposeMap(): void {
  * solo en mount, pero es posible que en un futuro, dependiendo del dispositivo, cambiemos el objeto DOM
  * al que haga referencia con un `<component :is="" ....>`)
  */
-
 watch(mapContainer, () => {
   disposeMap();
   createMapLayer();
