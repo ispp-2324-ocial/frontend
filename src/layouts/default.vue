@@ -6,7 +6,7 @@
       style="background-color: #deecff; justify-content: center;">
       <div>
         <Boton class="h-10vh">
-          <div @click="redirectTo('/client')">
+          <div @click="router.push('/client')">
             <img
               alt="Logo Ocial"
               src="@/assets/images/Ocial_Clear.png"
@@ -17,7 +17,7 @@
 
       <div>
         <Boton class="h-10vh">
-          <div @click="redirectTo('/client/map')">
+          <div @click="router.push('/client/map')">
             <img
               alt="Mapa Claro"
               src="@/assets/images/Map_Clear.png"
@@ -28,7 +28,7 @@
 
       <div>
         <Boton class="h-10vh">
-          <div @click="redirectTo('/client/profile')">
+          <div @click="router.push('/client/profile')">
             <img
               alt="Human Blue"
               src="@/assets/images/Human_Clear.png"
@@ -48,13 +48,6 @@ import { useRouter } from 'vue-router';
 
 
 const router = useRouter();
-
-/**
- * Esta función redirige a otra vista
- */
-async function redirectTo(path: string) : Promise<void> {
-  await router.push(path);
-}
 </script>
 
 <style scoped>
