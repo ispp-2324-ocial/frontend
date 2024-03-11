@@ -43,7 +43,7 @@
     style="width: 100%;">
     <div
       style="justify-content: center; display: flex;"
-      @click="redirectTo('/client/editEvent')">
+      @click="router.push('/client/editEvent')">
       <BotonOcial
         style="width: 80%; padding-top: 1vh; padding-bottom: 1vh;">
         <div>
@@ -66,13 +66,6 @@ const {t} = useI18n();
 t('');
 
 const router = useRouter();
-
-/**
- * Esta función redirige a otra vista
- */
-async function redirectTo(path: string) : Promise<void> {
-  await router.push(path);
-}
 
 const eventDetail = [
   {
