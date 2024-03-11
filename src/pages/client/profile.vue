@@ -41,7 +41,8 @@
     <div
       style="justify-content: center; display: flex;"
       @click="router.push('/client/subscription')">
-      <BotonOcial
+      <Boton
+        type="rounded-blue"
         class="ocial-button"
         style="width: 80%; padding-top: 1vh; padding-bottom: 1vh;">
         <div>
@@ -49,7 +50,7 @@
             {{ $t('comprobarSuscripcion') }}
           </p>
         </div>
-      </BotonOcial>
+      </Boton>
     </div>
   </div>
 </template>
@@ -57,11 +58,6 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
-import { useI18n } from 'vue-i18n';
-
-const {t} = useI18n();
-
-t('');
 
 const router = useRouter();
 

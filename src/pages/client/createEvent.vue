@@ -42,21 +42,17 @@
         placeholder="Categoría" />
     </div>
   </div>
-  <BotonOcial
+  <Boton
+    type="rounded-blue"
     style="display: flex;"
     @click="createE('/client')">
     {{ $t('crearEvento') }}
-  </BotonOcial>
+  </Boton>
 </template>
 
 <script setup lang="ts">
 import {ref} from 'vue';
 import { useRouter } from 'vue-router';
-import { useI18n } from 'vue-i18n';
-
-const {t} = useI18n();
-
-t('');
 
 const router = useRouter();
 
