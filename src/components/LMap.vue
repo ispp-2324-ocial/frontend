@@ -161,7 +161,7 @@ watch(mapContainer, () => {
 /**
  * Este watch trackea los markers si cambian y se actualizan si es así.
  */
-watch([mapInstance, typeof props.markers], () => {
+watch([mapInstance, ():typeof props.markers => props.markers], () => {
   disposeMarkers();
   setMarkers();
 }, { deep: true }) ;
