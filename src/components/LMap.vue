@@ -5,18 +5,22 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, ref, watch } from 'vue';
+import { onBeforeUnmount, shallowRef, watch } from 'vue';
 import 'leaflet/dist/leaflet.css';
-import { map, icon, marker, tileLayer} from 'leaflet';
+import { map, icon, marker, tileLayer, type Marker} from 'leaflet';
 import { useI18n } from 'vue-i18n';
+import { usePermission } from '@vueuse/core';
 import Azul from '@/assets/pin/Pin_Azul.png';
 import Verde from '@/assets/pin/Pin_Verde.png';
 import Rojo from '@/assets/pin/Pin_Rojo.png';
 import Dot from '@/assets/pin/dot.png';
 import { useToast } from '@/composables/use-toast';
-import { isNumber } from '@/utils/validation';
+import { isNil, isNumber } from '@/utils/validation';
 
 const props = defineProps<{ markers: MapMarker[] }>();
+
+const locationAccess = usePermission('microphone');
+
 const { t } = useI18n();
 const TILE_LAYER_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const ATTRIBUTION = '© OpenStreetMap contributors';
@@ -28,9 +32,12 @@ interface MapMarker {
   category: string;
 }
 
-const mapContainer = ref<HTMLDivElement>();
-let mapInstance: ReturnType<typeof map> | undefined;
+const mapContainer = shallowRef<HTMLDivElement>();
+const mapInstance = shallowRef<ReturnType<typeof map>>();
 let watchId: number | undefined;
+let userMarker: Marker | undefined;
+const mapMarkers: Marker[] = [];
+let userLocationDetermined = false;
 
 const categoryIconMap : { [key: string]: string } = {
   'Música': Azul,
@@ -50,13 +57,14 @@ onBeforeUnmount(() => {
   }
 
   disposeMap();
+  disposeMarkers();
 });
 
 /**
  * Coloca los marcadores en el mapa
  */
 function setMarkers(): void {
-  if (mapInstance) {
+  if (mapInstance.value) {
     for (const mapMarker of props.markers) {
       const customIcon = icon({
         iconUrl: categoryIconMap[mapMarker.category] || Dot,
@@ -64,26 +72,40 @@ function setMarkers(): void {
         iconAnchor: [11, 6]
       });
 
-      marker([mapMarker.latitud, mapMarker.longitud], { icon: customIcon })
-        .addTo(mapInstance)
-        .bindPopup(t('Evento')+`: ${mapMarker.description}`);
+      mapMarkers.push(
+        marker([mapMarker.latitud, mapMarker.longitud], { icon: customIcon })
+          .addTo(mapInstance.value)
+          .bindPopup(`${t('Evento')}: ${mapMarker.description}`)
+      );
     }
   }
 };
+
+/**
+ * Elimina los marcadores del mapa
+ */
+function disposeMarkers(): void {
+  for (const marker of mapMarkers) {
+    marker.remove();
+  }
+
+  mapMarkers.length = 0;
+}
 
 /**
  * Crea la instancia de Leaflet e inicia la geolocalización
  */
 function createMapLayer(): void {
   if (mapContainer.value) {
-    mapInstance = map(mapContainer.value);
+    mapInstance.value = map(mapContainer.value);
+
     tileLayer(TILE_LAYER_URL, {
       attribution: ATTRIBUTION
-    }).addTo(mapInstance);
+    }).addTo(mapInstance.value);
     /**
      * Ubicación de sevilla
      */
-    mapInstance.setView([37.3896, -5.9823], 13);
+    mapInstance.value.setView([37.3896, -5.9823], 5);
   }
 
   if (navigator.geolocation) {
@@ -91,15 +113,19 @@ function createMapLayer(): void {
       (position) => {
         const { latitude, longitude } = position.coords;
 
-        mapInstance!.setView([latitude, longitude], 15);
-
-        const userLocationMarker = marker([latitude, longitude], { icon: userIcon }).addTo(mapInstance!);
-
-        userLocationMarker.bindPopup(t('Tu ubicación'));
-
-        if (props.markers.length > 0) {
-          setMarkers();
+        if (!isNil(userMarker)) {
+          userMarker.remove();
+          userMarker = undefined;
         }
+
+        if (!userLocationDetermined) {
+          mapInstance.value!.setView([latitude, longitude], 15);
+          userLocationDetermined = true;
+        }
+
+        userMarker = marker([latitude, longitude], { icon: userIcon }).addTo(mapInstance.value!);
+
+        userMarker.bindPopup(t('Tu ubicación'));
       },
       (error) => {
         useToast(`${t('Error al obtener la ubicación')}: ${error.message}`, 'error');
@@ -116,9 +142,9 @@ function createMapLayer(): void {
  * Dispose the map instance
  */
 function disposeMap(): void {
-  if (mapInstance) {
-    mapInstance.remove();
-    mapInstance = undefined;
+  if (mapInstance.value) {
+    mapInstance.value.remove();
+    mapInstance.value = undefined;
   }
 }
 
@@ -130,6 +156,24 @@ function disposeMap(): void {
 watch(mapContainer, () => {
   disposeMap();
   createMapLayer();
+});
+
+/**
+ * Este watch trackea los markers si cambian y se actualizan si es así.
+ */
+watch([mapInstance, typeof props.markers], () => {
+  disposeMarkers();
+  setMarkers();
+}, { deep: true }) ;
+
+/**
+ * Este watch trackea si el usuario ha dado permisos de ubicación y si los da resetea la vista
+ * a la ubicación del usuario
+ */
+watch(locationAccess, () => {
+  if (locationAccess.value === 'granted') {
+    createMapLayer();
+  }
 });
 </script>
 
