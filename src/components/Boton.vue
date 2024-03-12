@@ -2,7 +2,8 @@
   <button
     :class="{ 'scaled': isHovered,
               'checkbox-class': type === 'default',
-              'rounded-blue': type === 'rounded-blue' }"
+              'rounded-blue': type === 'rounded-blue',
+              'auth': type === 'auth' }"
     @mouseover="isHovered = true"
     @mouseout="isHovered = false">
     <slot />
@@ -13,7 +14,7 @@
 import { ref } from 'vue';
 
 defineProps<{
-  type?: 'rounded-blue'| 'default';
+  type?: 'rounded-blue'| 'default' | 'auth';
 }>();
 
 const isHovered = ref(false);
@@ -21,13 +22,13 @@ const isHovered = ref(false);
 </script>
 
 <style scoped>
-  .scaled {
+.scaled {
     cursor: pointer;
     transform: scale(0.9);
     transition: transform 0.3s ease;
   }
 
-  .rounded-blue {
+.rounded-blue {
   text-transform: uppercase;
   background-color: #aacfff;
   border: 2px solid #3e80d7;
@@ -42,9 +43,21 @@ const isHovered = ref(false);
   padding-bottom: 1%;
 }
 
- .checkbox-class {
+.checkbox-class {
   height: auto;
   background-color: var(--o-color-theme);
   color: #000;
   }
+
+.auth {
+  text-transform: uppercase;
+  background: #aacfff;
+  width: 100%;
+  border: 2px solid #3e80d7;
+  padding: 15px;
+  border-radius: 15px;
+  font-size: 16px;
+  margin: auto;
+  text-align: center;
+}
 </style>
