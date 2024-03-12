@@ -19,7 +19,7 @@ import { isNil, isNumber } from '@/utils/validation';
 
 const props = defineProps<{ markers: MapMarker[] }>();
 
-const locationAccess = usePermission('microphone');
+const locationAccess = usePermission('geolocation');
 
 const { t } = useI18n();
 const TILE_LAYER_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
@@ -38,6 +38,7 @@ let watchId: number | undefined;
 let userMarker: Marker | undefined;
 const mapMarkers: Marker[] = [];
 let userLocationDetermined = false;
+let mapInitialized = false;
 
 const categoryIconMap : { [key: string]: string } = {
   'Música': Azul,
@@ -96,7 +97,7 @@ function disposeMarkers(): void {
  * Crea la instancia de Leaflet e inicia la geolocalización
  */
 function createMapLayer(): void {
-  if (mapContainer.value) {
+  if (!mapInitialized && mapContainer.value) {
     mapInstance.value = map(mapContainer.value);
 
     tileLayer(TILE_LAYER_URL, {
@@ -106,6 +107,8 @@ function createMapLayer(): void {
      * Ubicación de sevilla
      */
     mapInstance.value.setView([37.3896, -5.9823], 5);
+
+    mapInitialized = true;
   }
 
   if (navigator.geolocation) {
@@ -173,6 +176,11 @@ watch([mapInstance, ():typeof props.markers => props.markers], () => {
 watch(locationAccess, () => {
   if (locationAccess.value === 'granted') {
     createMapLayer();
+  } else if (locationAccess.value === 'denied' || locationAccess.value === 'prompt') {
+    if (!isNil(userMarker)) {
+      userMarker.remove();
+      userMarker = undefined;
+    }
   }
 });
 </script>
