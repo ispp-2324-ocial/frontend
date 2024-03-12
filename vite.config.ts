@@ -144,8 +144,8 @@ export default defineConfig(({ mode }): UserConfig => {
     },
     resolve: {
       alias: {
-        '@/': srcRoot,
-        '@/api': apiRoot
+        '@/api': apiRoot,
+        '@/': srcRoot
       }
     },
     worker: {
