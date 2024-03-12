@@ -46,12 +46,8 @@
   </div>
 </template>
 
-<script lang="ts">
-import { useRouter } from 'vue-router';
-
-</script>
 <script setup lang="ts">
-
+import { useRouter } from 'vue-router';
 
 const router = useRouter();
 </script>
