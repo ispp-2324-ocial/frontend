@@ -12,7 +12,11 @@ import Root from '@/App.vue';
 import { hideDirective } from '@/plugins/directives';
 import { vuePlugin as i18n } from '@/plugins/i18n';
 import { router } from '@/plugins/router';
-
+/**
+ * TODO: Eliminar de aquí una vez se importe el store
+ * en alguna parte del código.
+ */
+import '@/store/clientSettings';
 
 /**
  * - ESTILOS GLOBALES -
