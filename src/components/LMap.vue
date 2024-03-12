@@ -176,11 +176,9 @@ watch([mapInstance, ():typeof props.markers => props.markers], () => {
 watch(locationAccess, () => {
   if (locationAccess.value === 'granted') {
     createMapLayer();
-  } else if (locationAccess.value === 'denied' || locationAccess.value === 'prompt') {
-    if (!isNil(userMarker)) {
-      userMarker.remove();
-      userMarker = undefined;
-    }
+  } else if ((locationAccess.value === 'denied' || locationAccess.value === 'prompt') && !isNil(userMarker)) {
+    userMarker.remove();
+    userMarker = undefined;
   }
 });
 </script>
