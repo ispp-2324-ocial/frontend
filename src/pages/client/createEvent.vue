@@ -1,54 +1,57 @@
 <!-- TODO: Arreglar -->
 <!-- eslint-disable vue/require-v-for-key -->
 <template>
-  <Title>
-    {{ $t('nuevoEvento') }}
-  </Title>
-  <div style="justify-content: center; display: flex;">
-    <div v-for="(event, index) in eventDetail">
-      <BaseInput
-        :key="index"
-        v-model="event.name"
-        class="input-box"
-        placeholder="Nombre del evento" />
-      <BaseInput
-        :key="index"
-        v-model="event.place"
-        class="input-box"
-        placeholder="Lugar" />
-      <BaseInput
-        :key="index"
-        v-model="event.event"
-        class="input-box"
-        placeholder="Descripción" />
-      <BaseInput
-        :key="index"
-        v-model="event.date"
-        class="input-box"
-        placeholder="dd/mm/yy" />
-      <BaseInput
-        :key="index"
-        v-model="event.hour"
-        class="input-box"
-        placeholder="hh:mm" />
-      <BaseInput
-        :key="index"
-        v-model="event.capacity"
-        class="input-box"
-        placeholder="Capacidad" />
-      <BaseInput
-        :key="index"
-        v-model="event.category"
-        class="input-box"
-        placeholder="Categoría" />
+  <Ondas />
+  <div style="margin-top: 10%; ">
+    <Title>
+      {{ $t('nuevoEvento') }}
+    </Title>
+    <div style="margin-top: 10%; justify-content: center; display: flex;">
+      <div v-for="(event, index) in eventDetail">
+        <BaseInput
+          :key="index"
+          v-model="event.name"
+          class="input-box"
+          placeholder="Nombre del evento" />
+        <BaseInput
+          :key="index"
+          v-model="event.place"
+          class="input-box"
+          placeholder="Lugar" />
+        <BaseInput
+          :key="index"
+          v-model="event.event"
+          class="input-box"
+          placeholder="Descripción" />
+        <BaseInput
+          :key="index"
+          v-model="event.date"
+          class="input-box"
+          placeholder="dd/mm/yy" />
+        <BaseInput
+          :key="index"
+          v-model="event.hour"
+          class="input-box"
+          placeholder="hh:mm" />
+        <BaseInput
+          :key="index"
+          v-model="event.capacity"
+          class="input-box"
+          placeholder="Capacidad" />
+        <BaseInput
+          :key="index"
+          v-model="event.category"
+          class="input-box"
+          placeholder="Categoría" />
+      </div>
     </div>
+    <Boton
+      type="rounded-blue"
+      style="margin-top: 10%;display: flex;"
+      @click="createE('/client')">
+      {{ $t('crearEvento') }}
+    </Boton>
   </div>
-  <Boton
-    type="rounded-blue"
-    style="display: flex;"
-    @click="createE('/client')">
-    {{ $t('crearEvento') }}
-  </Boton>
 </template>
 
 <script setup lang="ts">
