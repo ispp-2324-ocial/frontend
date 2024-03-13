@@ -1,11 +1,15 @@
 <template>
+  <Ondas />
   <div>
     <ul style="list-style-type:none; margin-top: 10%;">
-      <li>
+      <li
+        v-for="(item, index) in eventDetail"
+        :key="index">
         <div class="row mb-7 mr-3">
           <div style="margin:auto; text-align: center;display: flex; align-items: center; justify-content: center;">
             <div
               class="ml-3"
+              style=" text-align: left; width: 100%;">
               style=" text-align: left; width: 100%;">
               <Title>
                 {{ eventDetail.name }}
@@ -18,12 +22,12 @@
               <p
                 class="elemento"
                 style="margin-top: 7%;">
-                <b>{{ eventDetail.event }}</b>
+                <b>{{ item.event }}</b>
               </p>
               <p
                 class="elemento"
                 style="margin-top: 4%;">
-                <b>{{ $t('lugar:') }}</b>&nbsp;{{ $t('lugar', {place: eventDetail.place} ) }}
+                <b>{{ $t('lugar:') }}</b>&nbsp;{{ $t('lugar', {place: item.place} ) }}
               </p>
               <p class="elemento">
                 <b>{{ $t('fecha:') }}</b>&nbsp;{{ $t('fecha', {date: eventDetail.date, hour: eventDetail.hour } ) }}
