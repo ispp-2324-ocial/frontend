@@ -1,5 +1,6 @@
 <template>
-  <div>
+  <Ondas />
+  <div style="margin-top: 10%;">
     <ul style="list-style-type:none; margin-top: 1vh;">
       <li
         v-for="(item, index) in carProfile"
@@ -16,7 +17,7 @@
                 alt="Event image"
                 src="@/assets/images/temp/alamillo.png"
                 class="center"
-                style="display: block; width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px" />
+                style="margin-bottom: 7% ;display: block; width: 40%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px" />
               <p class="elemento">
                 <b>{{ item.name }}</b>
               </p>
@@ -86,5 +87,6 @@ const carProfile = [
   width: 90%;
   margin-left: 4vw;
   margin-bottom: 1vh;
+  margin-top: 4%;
 }
 </style>

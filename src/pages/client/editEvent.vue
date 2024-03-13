@@ -1,10 +1,11 @@
 <!-- TODO: Arreglar -->
 <!-- eslint-disable vue/require-v-for-key -->
 <template>
-  <Title>
+  <Ondas />
+  <Title style="margin-top: 10%;">
     {{ $t('editarEvento') }}
   </Title>
-  <div style="justify-content: center; display: flex;">
+  <div style="margin-top: 10% ;justify-content: center; display: flex;">
     <div
       v-for="event in eventDetail">
       <BaseInput
@@ -39,7 +40,7 @@
   </div>
   <Boton
     type="rounded-blue"
-    style="display: flex;"
+    style="margin-top: 10%;display: flex;"
     @click="editE('/client')">
     {{ $t('guardarCambios') }}
   </Boton>
