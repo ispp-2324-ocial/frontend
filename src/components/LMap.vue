@@ -10,27 +10,25 @@ import 'leaflet/dist/leaflet.css';
 import { map, icon, marker, tileLayer, type Marker} from 'leaflet';
 import { useI18n } from 'vue-i18n';
 import { usePermission } from '@vueuse/core';
+import { type CategoryEnum, EventApi } from '@/api';
+import { useEvent } from '@/composables/apis';
 import Azul from '@/assets/pin/Pin_Azul.png';
 import Verde from '@/assets/pin/Pin_Verde.png';
 import Rojo from '@/assets/pin/Pin_Rojo.png';
+import Morado from '@/assets/pin/Pin_Morado.png';
+import Amarillo from '@/assets/pin/Pin_Amarillo.png';
 import Dot from '@/assets/pin/dot.png';
 import { useToast } from '@/composables/use-toast';
 import { isNil, isNumber } from '@/utils/validation';
 
-const props = defineProps<{ markers: MapMarker[] }>();
+const props = defineProps<{ markers: MapEvent[] }>();
 
 const locationAccess = usePermission('geolocation');
-
 const { t } = useI18n();
+const { data: eventList } = await useEvent(EventApi, 'eventListList')();
+
 const TILE_LAYER_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const ATTRIBUTION = '© OpenStreetMap contributors';
-
-interface MapMarker {
-  description: string;
-  latitud: number;
-  longitud: number;
-  category: string;
-}
 
 const mapContainer = shallowRef<HTMLDivElement>();
 const mapInstance = shallowRef<ReturnType<typeof map>>();
@@ -39,10 +37,19 @@ let userMarker: Marker | undefined;
 const mapMarkers: Marker[] = [];
 let userLocationDetermined = false;
 
-const categoryIconMap : { [key: string]: string } = {
-  'Música': Azul,
-  'Deporte': Verde,
-  'Ocio': Rojo
+interface MapEvent {
+  name: string;
+  latitude: number;
+  longitude: number;
+  category?: CategoryEnum;
+}
+
+const categoryIconMap : { [key in CategoryEnum]: string } = {
+  '0': Azul,
+  '1': Verde,
+  '2': Rojo,
+  '3': Morado,
+  '4': Amarillo
 };
 
 const userIcon = icon({
@@ -62,18 +69,18 @@ onBeforeUnmount(() => {
  */
 function setMarkers(): void {
   if (mapInstance.value) {
-    for (const mapMarker of props.markers) {
+    for (const event of eventList.value) {
+      const customIconUrl = event.category !== undefined && categoryIconMap[event.category]
+        !== undefined ? categoryIconMap[event.category] : Dot;
       const customIcon = icon({
-        iconUrl: categoryIconMap[mapMarker.category] || Dot,
+        iconUrl: customIconUrl,
         iconSize: [22, 30],
         iconAnchor: [11, 6]
       });
 
-      mapMarkers.push(
-        marker([mapMarker.latitud, mapMarker.longitud], { icon: customIcon })
-          .addTo(mapInstance.value)
-          .bindPopup(`${t('Evento')}: ${mapMarker.description}`)
-      );
+      marker([event.latitude, event.longitude], { icon: customIcon })
+        .addTo(mapInstance.value)
+        .bindPopup(t('Evento')+`: ${event.name}`);
     }
   }
 };
