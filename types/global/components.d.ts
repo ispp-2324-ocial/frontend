@@ -6,7 +6,7 @@
 export {}
 
 declare module 'vue' {
-  export interface GlobalComponents {'(feat(buscador)': Comienzo buscador del mapa)
+  export interface GlobalComponents {
     BaseInput: typeof import('./../../src/components/BaseInput.vue')['default']
     Boton: typeof import('./../../src/components/Boton.vue')['default']
     Checkbox: typeof import('./../../src/components/checkbox.vue')['default']
