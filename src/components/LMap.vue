@@ -38,7 +38,6 @@ let watchId: number | undefined;
 let userMarker: Marker | undefined;
 const mapMarkers: Marker[] = [];
 let userLocationDetermined = false;
-let mapInitialized = false;
 
 const categoryIconMap : { [key: string]: string } = {
   'Música': Azul,
@@ -53,11 +52,8 @@ const userIcon = icon({
 });
 
 onBeforeUnmount(() => {
-  if (isNumber(watchId)) {
-    navigator.geolocation.clearWatch(watchId);
-  }
-
   disposeMap();
+  disposeWatcher();
   disposeMarkers();
 });
 
@@ -97,7 +93,7 @@ function disposeMarkers(): void {
  * Crea la instancia de Leaflet e inicia la geolocalización
  */
 function createMapLayer(): void {
-  if (!mapInitialized && mapContainer.value) {
+  if (!mapInstance.value && mapContainer.value) {
     mapInstance.value = map(mapContainer.value);
 
     tileLayer(TILE_LAYER_URL, {
@@ -107,8 +103,6 @@ function createMapLayer(): void {
      * Ubicación de sevilla
      */
     mapInstance.value.setView([37.3896, -5.9823], 5);
-
-    mapInitialized = true;
   }
 
   if (navigator.geolocation) {
@@ -152,6 +146,15 @@ function disposeMap(): void {
 }
 
 /**
+ * Dispose the watch instance
+ */
+function disposeWatcher(): void {
+  if (isNumber(watchId)) {
+    navigator.geolocation.clearWatch(watchId);
+  }
+}
+
+/**
  * Este watcher trackea cuando el elemento div cambia para crear el mapa (ahora mismo no cambia nunca
  * solo en mount, pero es posible que en un futuro, dependiendo del dispositivo, cambiemos el objeto DOM
  * al que haga referencia con un `<component :is="" ....>`)
@@ -175,12 +178,20 @@ watch([mapInstance, ():typeof props.markers => props.markers], () => {
  */
 watch(locationAccess, () => {
   if (locationAccess.value === 'granted') {
+    disposeWatcher();
     createMapLayer();
-  } else if ((locationAccess.value === 'denied' || locationAccess.value === 'prompt') && !isNil(userMarker)) {
-    userMarker.remove();
+
+    if (mapInstance.value && userMarker) {
+      userMarker.addTo(mapInstance.value);
+    }
+  } else if ((locationAccess.value === 'denied' || locationAccess.value === 'prompt') && userMarker) {
+    if (mapInstance.value) {
+      userMarker.remove();
+    }
+
     userMarker = undefined;
   }
-});
+}, { immediate: true });
 </script>
 
 <style scoped>
