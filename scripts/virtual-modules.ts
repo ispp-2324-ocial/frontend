@@ -47,6 +47,7 @@ const dfnsExports = localeNames
  */
 const commit_available = !Number(process.env.IS_STABLE) && Boolean(process.env.COMMIT_HASH);
 const commit_hash = commit_available && `'${process.env.COMMIT_HASH}'` || undefined;
+const base_url = process.env.BASE_URL ? `'${process.env.BASE_URL}'` : 'https://backend.s2.ocial.es';
 
 /**
  * Date-fns exporta todos los idiomas ingleses con variantes, por lo que tenemos que añadir el emparejamiento a mano
@@ -57,5 +58,6 @@ export default {
   'virtual:locales/date-fns': `export { ${dfnsExports.join(
     ', '
   )} } from 'date-fns/locale'`,
-  'virtual:commit': `export const commit_hash = ${commit_hash}`
+  'virtual:commit': `export const commit_hash = ${commit_hash}`,
+  'virtual:url': `export const base_url = '${base_url}'`
 };
