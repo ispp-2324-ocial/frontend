@@ -47,7 +47,7 @@
     </div>
     <Boton
       type="rounded-blue"
-      style="margin-top: 10%;display: flex;"
+      style="margin-top: 5%;display: flex;"
       @click="createE('/client')">
       {{ $t('crearEvento') }}
     </Boton>
