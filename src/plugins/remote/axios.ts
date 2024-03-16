@@ -9,20 +9,12 @@ import axios from 'axios';
  */
 class RemotePluginAxios {
   public readonly instance = axios.create();
-  private readonly _defaults = {
-    ...this.instance.defaults,
-    baseUrl: 'https://ocial.eu.pythonanywhere.com'
-  };
-
-  private resetDefaults = (): void => {
-    this.instance.defaults = this._defaults;
-  };
 
   public readonly setToken = (token?: string): void => {
     if (token) {
       this.instance.defaults.headers.common['Authorization'] = `Token ${token}`;
     } else {
-      this.resetDefaults();
+      delete this.instance.defaults.headers.common['Authorization'];
     }
   };
 }

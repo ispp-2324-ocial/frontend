@@ -7,3 +7,7 @@ declare module 'virtual:locales/date-fns' {
 declare module 'virtual:commit' {
   export const commit_hash: string | undefined;
 }
+
+declare module 'virtual:url' {
+  export const base_url: string;
+}
