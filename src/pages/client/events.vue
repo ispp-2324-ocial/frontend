@@ -1,36 +1,38 @@
 <template>
   <div>
-    <ul style="list-style-type:none; margin-top: 1vh;">
-      <li
-        v-for="(item, index) in eventDetail"
-        :key="index">
+    <ul style="list-style-type:none; margin-top: 10%;">
+      <li>
         <div class="row mb-7 mr-3">
           <div style="margin:auto; text-align: center;display: flex; align-items: center; justify-content: center;">
             <div
               class="ml-3"
-              style="text-align: left; width: 100%;">
+              style=" text-align: left; width: 100%;">
               <Title>
-                {{ item.name }}
+                {{ eventDetail.name }}
               </Title>
               <img
                 alt="Event image"
                 src="@/assets/images/temp/yoga.png"
                 class="center"
-                style="display: block; width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px" />
-              <p class="elemento">
-                <b>{{ item.event }}</b>
+                style="display: block; width: 40%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px" />
+              <p
+                class="elemento"
+                style="margin-top: 7%;">
+                <b>{{ eventDetail.event }}</b>
+              </p>
+              <p
+                class="elemento"
+                style="margin-top: 4%;">
+                <b>{{ $t('lugar:') }}</b>&nbsp;{{ $t('lugar', {place: eventDetail.place} ) }}
               </p>
               <p class="elemento">
-                <b>{{ $t('lugar:') }}</b>&nbsp;{{ $t('lugar', {place: item.place} ) }}
+                <b>{{ $t('fecha:') }}</b>&nbsp;{{ $t('fecha', {date: eventDetail.date, hour: eventDetail.hour } ) }}
               </p>
               <p class="elemento">
-                <b>{{ $t('fecha:') }}</b>&nbsp;{{ $t('fecha', {date: item.date, hour: item.hour } ) }}
+                <b>{{ $t('capacidad:') }}</b>&nbsp;{{ eventDetail.capacity }}
               </p>
               <p class="elemento">
-                <b>{{ $t('capacidad:') }}</b>&nbsp;{{ item.capacity }}
-              </p>
-              <p class="elemento">
-                <b>{{ $t('categoria:') }}</b>&nbsp;{{ item.category }}
+                <b>{{ $t('categoria:') }}</b>&nbsp;{{ eventDetail.category }}
               </p>
             </div>
           </div>
@@ -60,21 +62,18 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router/auto';
+import { EventApi } from '@/api';
+import { useEvent } from '@/composables/apis';
+
 
 const router = useRouter();
 
-const eventDetail = [
-  {
-    name: 'Yoga Outdoor',
-    place: 'Parque del Alamillo',
-    event: 'Clase de yoga al aire libre.',
-    date: '16/03/24',
-    hour: '16:00',
-    capacity: 60,
-    category: 'Deporte',
-    image: '@/assets/images/temp/yoga.png'
-  }
-];
+/**
+ *TODO: pasar a eventListClientList cuando funcione el general
+ */
+const { data: eventList} = await useEvent(EventApi, 'eventListList')();
+
+const eventDetail = eventList.value[0];
 
 </script>
 
