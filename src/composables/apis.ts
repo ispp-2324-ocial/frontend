@@ -141,7 +141,7 @@ async function resolveAndAdd<T extends new (...args: any[]) => BaseAPI, K extend
 
     const apiInstance = new api(new Configuration(), base_url, AxiosPlugin.instance) as InstanceType<T>;
     const func = (apiInstance[methodName] as KeyedFunction<InstanceType<T>, K>).bind(apiInstance);
-    const funcName = `${func.name}`;
+    const funcName = `${api.name}.${String(methodName)}`;
     const response = await func(...args) as Awaited<ReturnType<KeyedFunction<InstanceType<T>, K>>>;
 
     if (response.data) {
