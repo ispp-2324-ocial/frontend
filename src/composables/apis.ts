@@ -1,6 +1,7 @@
 import type { AxiosResponse } from 'axios';
 import { deepEqual } from 'fast-equals';
 import { computed, effectScope, getCurrentScope, isRef, shallowRef, toValue, unref, watch, type ComputedRef, type Ref } from 'vue';
+import { base_url } from 'virtual:url';
 import AxiosPlugin from '@/plugins/remote/axios';
 /**
  * TODO: Crear componente de barra de carga (como el que aparece en YouTube en la parte superior)
@@ -17,7 +18,7 @@ import { network } from '@/store';
 import { apiStore } from '@/store/api';
 import { isArray, isNil, isUndef } from '@/utils/validation';
 import type { BaseAPI } from '@/api/base';
-import type { Event } from '@/api';
+import { Configuration, type Event } from '@/api';
 
 /* eslint-disable @typescript-eslint/no-explicit-any, @typescript-eslint/no-unsafe-return */
 type FunctionKeys<T> = {
@@ -138,7 +139,8 @@ async function resolveAndAdd<T extends new (...args: any[]) => BaseAPI, K extend
   try {
     startLoading(loading, ops.globalLoading);
 
-    const func = (new api(undefined, undefined, AxiosPlugin.instance) as InstanceType<T>)[methodName] as KeyedFunction<InstanceType<T>, K>;
+    const apiInstance = new api(new Configuration(), base_url, AxiosPlugin.instance) as InstanceType<T>;
+    const func = (apiInstance[methodName] as KeyedFunction<InstanceType<T>, K>).bind(apiInstance);
     const funcName = `${func.name}`;
     const response = await func(...args) as Awaited<ReturnType<KeyedFunction<InstanceType<T>, K>>>;
 
@@ -288,7 +290,7 @@ function _sharedInternalLogic<T extends new (...args: any[]) => BaseAPI, K exten
           argsRef.value = normalizedArgs;
           await runNormally();
         }
-      });
+      }, { immediate: true });
       watch(network.isOnline, runWithRetry);
       isRef(api) && watch(api, runNormally);
       isRef(methodName) && watch(methodName, runNormally);
