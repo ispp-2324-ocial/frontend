@@ -30,9 +30,14 @@ console.log(eventList.value);
  */
 function getEvents(text: string): void {
   miArray.value.length = 0;
+  text = text.toLowerCase();
 
   for (const event of eventList.value) {
-    if (event.name.includes(text) || event.event.includes(text) || String(event.ocialClient).includes(text)){
+    const name = event.name.toLowerCase();
+    const eventText = event.event.toLowerCase();
+    const ocialClient = String(event.ocialClient).toLowerCase();
+
+    if (name.includes(text) || eventText.includes(text) || ocialClient.includes(text)){
       miArray.value.push(event);
     }
   }
