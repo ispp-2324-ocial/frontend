@@ -52,9 +52,9 @@ const userIcon = icon({
 });
 
 onBeforeUnmount(() => {
-  disposeMap();
   disposeWatcher();
   disposeMarkers();
+  disposeMap();
 });
 
 /**
