@@ -22,6 +22,10 @@ import '@/store/clientSettings';
  * - ESTILOS GLOBALES -
  */
 import 'inter-ui/inter-variable.css';
+/**
+ *  Unocss already includes the reset, no need of @unocss/reset
+ */
+/* eslint-disable-next-line import/no-extraneous-dependencies */
 import '@unocss/reset/tailwind.css';
 import '@/assets/styles/global.css';
 import 'virtual:uno.css';
