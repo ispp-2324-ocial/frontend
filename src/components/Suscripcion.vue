@@ -55,9 +55,9 @@ withDefaults (
   display: table;
   clear: both;
   }
-
-  .plan{
+.plan{
   border: solid 1px #0e4791;
+  background-color: rgb(255, 255, 255);
   border-radius: 25px;
   height: clamp(100px, 24vh, 300px);
   margin-bottom: 2vh;
