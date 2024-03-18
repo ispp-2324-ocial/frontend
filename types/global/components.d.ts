@@ -15,6 +15,7 @@ declare module 'vue' {
     Pin: typeof import('./../../src/components/Pin.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    Suscripcion: typeof import('./../../src/components/Suscripcion.vue')['default']
     Title: typeof import('./../../src/components/Title.vue')['default']
     TransitionView: typeof import('./../../src/components/TransitionView.vue')['default']
   }
