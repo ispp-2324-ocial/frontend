@@ -12,16 +12,15 @@
       </div>
     </Boton>
     <p
-      class="message"
-      style="margin: 15px 0 0;">
+      class="message">
       {{ $t('noTienesCuenta') }} <a href="/login/register">{{ $t('registrate') }}</a>
     </p>
   </form>
 </template>
 
 <route lang="yaml">
-meta:
-  layout: login
+  meta:
+    layout: login
 </route>
 
 <script setup lang="ts">
@@ -34,6 +33,7 @@ const router = useRouter();
 .form .message {
   color: #3e80d7;
   font-size: 14px;
+  margin-top: 1.5vh;
 }
 
 .form .message a {
@@ -47,7 +47,7 @@ const router = useRouter();
   width: 100%;
   border: 2px solid #3e80d7;
   border-radius: 15px;
-  margin: 0 0 15px;
+  margin-bottom: 1vh;
   padding: 15px;
   box-sizing: border-box;
   font-size: 16px;

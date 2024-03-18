@@ -74,8 +74,6 @@
   </div>
 </template>
 
-<script setup lang="ts">
-</script>
 <style scoped>
 .column {
   padding: 10px;

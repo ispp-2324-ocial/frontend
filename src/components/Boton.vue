@@ -23,10 +23,10 @@ const isHovered = ref(false);
 
 <style scoped>
 .scaled {
-    cursor: pointer;
-    transform: scale(0.9);
-    transition: transform 0.3s ease;
-  }
+  cursor: pointer;
+  transform: scale(0.9);
+  transition: transform 0.3s ease;
+}
 
 .rounded-blue {
   text-transform: uppercase;
@@ -47,16 +47,17 @@ const isHovered = ref(false);
   height: auto;
   background-color: var(--o-color-theme);
   color: #000;
-  }
+}
 
 .auth {
   text-transform: uppercase;
   background: #aacfff;
   width: 100%;
   border: 2px solid #3e80d7;
-  padding: 15px;
+  padding: 15px 5px 15px 5px;
   border-radius: 15px;
-  font-size: 16px;
+  font-size: clamp(16px,4.5vw,20px);
+  font-weight: 550;
   margin: auto;
   text-align: center;
 }

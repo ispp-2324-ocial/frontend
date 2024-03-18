@@ -1,5 +1,5 @@
 <template>
-  <form class="register-form">
+  <form>
     <slot />
     <input
       type="text"
@@ -14,26 +14,25 @@
       type="password"
       placeholder="confirmar contraseña" />
     <Boton
+      class="boton"
       type="auth"
       @click="createAcc('/map')">
       {{ $t('Crear') }}
     </Boton>
-    <Boton>
-      <p class="message">
-        {{ $t('tienesCuenta') }} <a href="#">{{ $t('iniciaSesion') }}</a>
-      </p>
+    <Boton
+      type="auth"
+      @click="router.push('/login/registerClient')">
+      {{ $t('cuentaCliente') }}
     </Boton>
   </form>
-  <Boton
-    type="auth"
-    @click="router.push('/login/registerClient')">
-    {{ $t('cuentaCliente') }}
-  </Boton>
+  <p class="message">
+    {{ $t('tienesCuenta') }} <a href="/login">{{ $t('iniciaSesion') }}</a>
+  </p>
 </template>
 
 <route lang="yaml">
-meta:
-  layout: login
+  meta:
+    layout: login
 </route>
 
 <script setup lang="ts">
@@ -49,13 +48,17 @@ const router = useRouter();
 async function createAcc(path:string) : Promise<void> {
   await router.push(path);
 };
-
 </script>
 
 <style scoped>
+.boton{
+  margin-bottom: 1vh;
+}
+
 .form .message {
   color: #3e80d7;
   font-size: 14px;
+  margin-top: 1.5vh;
 }
 
 .form .message a {
@@ -69,7 +72,7 @@ async function createAcc(path:string) : Promise<void> {
   width: 100%;
   border: 2px solid #3e80d7;
   border-radius: 15px;
-  margin: 0 0 15px;
+  margin-bottom: 1vh;
   padding: 15px;
   box-sizing: border-box;
   font-size: 16px;
