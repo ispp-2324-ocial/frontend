@@ -10,7 +10,7 @@ import 'leaflet/dist/leaflet.css';
 import { map, icon, marker, tileLayer, type Marker} from 'leaflet';
 import { useI18n } from 'vue-i18n';
 import { usePermission } from '@vueuse/core';
-import { type CategoryEnum, EventApi } from '@/api';
+import { CategoryEnum, EventApi } from '@/api';
 import { useEvent } from '@/composables/apis';
 import Azul from '@/assets/pin/Pin_Azul.png';
 import Verde from '@/assets/pin/Pin_Verde.png';
@@ -22,7 +22,6 @@ import { useToast } from '@/composables/use-toast';
 import { isNil, isNumber } from '@/utils/validation';
 
 const props = defineProps<{ markers: MapEvent[] }>();
-
 const locationAccess = usePermission('geolocation');
 const { t } = useI18n();
 const { data: eventList } = await useEvent(EventApi, 'eventListList')();
@@ -40,7 +39,7 @@ const mapMarkers: Marker[] = [];
 let userLocationDetermined = false;
 
 interface MapEvent {
-  id: number;
+  id?: number;
   name: string;
   latitude: number;
   longitude: number;
@@ -50,13 +49,38 @@ interface MapEvent {
   place: string;
   capacity?: number;
 }
+/**
+ * Para asignar los iconos a la categoría
+ */
+function getCategoryEnum(categoryName: string): CategoryEnum {
+  switch (categoryName.toLowerCase()) {
+    case 'sports': {
+      return CategoryEnum.NUMBER_0;
+    }
+    case 'music': {
+      return CategoryEnum.NUMBER_1;
+    }
+    case 'markets': {
+      return CategoryEnum.NUMBER_2;
+    }
+    case 'relax activities': {
+      return CategoryEnum.NUMBER_3;
+    }
+    case 'live concert': {
+      return CategoryEnum.NUMBER_4;
+    }
+    default: {
+      throw new Error(`Categoría desconocida: ${categoryName}`);
+    }
+  }
+}
 
-const categoryIconMap : { [key in CategoryEnum]: string } = {
-  '0': Azul,
-  '1': Verde,
-  '2': Rojo,
-  '3': Morado,
-  '4': Amarillo
+const categoryIconMap: { [key in CategoryEnum]: string } = {
+  [CategoryEnum.NUMBER_0]: Azul,
+  [CategoryEnum.NUMBER_1]: Verde,
+  [CategoryEnum.NUMBER_2]: Rojo,
+  [CategoryEnum.NUMBER_3]: Morado,
+  [CategoryEnum.NUMBER_4]: Amarillo
 };
 
 const userIcon = icon({
@@ -77,20 +101,20 @@ onBeforeUnmount(() => {
 function setMarkers(): void {
   if (mapInstance.value) {
     for (const event of eventList.value) {
-      const customIconUrl = event.category !== undefined && categoryIconMap[event.category]
-        !== undefined ? categoryIconMap[event.category] : Dot;
+      const category = event.category === undefined ? CategoryEnum.NUMBER_0 : getCategoryEnum(event.category.toString());
+      const customIconUrl = categoryIconMap[category] ?? Azul;
       const customIcon = icon({
         iconUrl: customIconUrl,
         iconSize: [22, 30],
         iconAnchor: [11, 6]
       });
-
+      const eventHour = event.hour.split(':').slice(0, 2).join(':'); // Obtener solo la parte de la hora y los minutos
       const popupContent = `
         <div>
           <strong>${t('Evento')}:</strong> ${event.name}<br>
           <strong>${t('Lugar')}:</strong> ${event.place}<br>
           <strong>${t('Fecha')}:</strong> ${event.date}<br>
-          <strong>${t('Hora')}:</strong> ${event.hour}<br>
+          <strong>${t('Hora')}:</strong> ${eventHour}<br>
           <strong>${t('Capacidad')}:</strong> ${event.capacity}<br>
           <a href="/detalles/${event.id}">${t('Ver detalles')}</a>
         </div>
