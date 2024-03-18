@@ -27,6 +27,8 @@ const locationAccess = usePermission('geolocation');
 const { t } = useI18n();
 const { data: eventList } = await useEvent(EventApi, 'eventListList')();
 
+console.log(eventList.value);
+
 const TILE_LAYER_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const ATTRIBUTION = '© OpenStreetMap contributors';
 
@@ -38,10 +40,15 @@ const mapMarkers: Marker[] = [];
 let userLocationDetermined = false;
 
 interface MapEvent {
+  id: number;
   name: string;
   latitude: number;
   longitude: number;
   category?: CategoryEnum;
+  date: string;
+  event: string;
+  place: string;
+  capacity?: number;
 }
 
 const categoryIconMap : { [key in CategoryEnum]: string } = {
@@ -78,9 +85,20 @@ function setMarkers(): void {
         iconAnchor: [11, 6]
       });
 
+      const popupContent = `
+        <div>
+          <strong>${t('Evento')}:</strong> ${event.name}<br>
+          <strong>${t('Lugar')}:</strong> ${event.place}<br>
+          <strong>${t('Fecha')}:</strong> ${event.date}<br>
+          <strong>${t('Hora')}:</strong> ${event.hour}<br>
+          <strong>${t('Capacidad')}:</strong> ${event.capacity}<br>
+          <a href="/detalles/${event.id}">${t('Ver detalles')}</a>
+        </div>
+      `;
+
       marker([event.latitude, event.longitude], { icon: customIcon })
         .addTo(mapInstance.value)
-        .bindPopup(t('Evento')+`: ${event.name}`);
+        .bindPopup(popupContent);
     }
   }
 };
