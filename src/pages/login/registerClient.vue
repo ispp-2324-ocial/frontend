@@ -1,5 +1,5 @@
 <template>
-  <form class="register-form">
+  <form>
     <slot />
     <input
       type="text"
@@ -24,18 +24,16 @@
       @click="createAcc('/client/createEvent')">
       {{ $t('Crear') }}
     </Boton>
-    <Boton>
-      <p class="message">
-        {{ $t('tienesCuenta') }} <a href="#">{{ $t('iniciaSesion') }}</a>
-      </p>
-    </Boton>
+    <p class="message">
+      {{ $t('tienesCuenta') }} <a href="/login">{{ $t('iniciaSesion') }}</a>
+    </p>
   </form>
 </template>
 
-  <route lang="yaml">
+<route lang="yaml">
   meta:
     layout: login
-  </route>
+</route>
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router';
@@ -50,29 +48,29 @@ const router = useRouter();
 async function createAcc(path:string) : Promise<void> {
   await router.push(path);
 };
-
 </script>
 
-  <style scoped>
-  .form .message {
-    color: #3e80d7;
-    font-size: 14px;
-  }
+<style scoped>
+.form .message {
+  color: #3e80d7;
+  font-size: 14px;
+  margin-top: 1.5vh;
+}
 
-  .form .message a {
-    color: #0e4791;
-    text-decoration: underline;
-  }
+.form .message a {
+  color: #0e4791;
+  text-decoration: underline;
+}
 
-  .form input {
-    outline: 0;
-    background: #ffffff;
-    width: 100%;
-    border: 2px solid #3e80d7;
-    border-radius: 15px;
-    margin: 0 0 15px;
-    padding: 15px;
-    box-sizing: border-box;
-    font-size: 16px;
-  }
-  </style>
+.form input {
+  outline: 0;
+  background: #ffffff;
+  width: 100%;
+  border: 2px solid #3e80d7;
+  border-radius: 15px;
+  margin-bottom: 1vh;
+  padding: 15px;
+  box-sizing: border-box;
+  font-size: 16px;
+}
+</style>
