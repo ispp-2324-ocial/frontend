@@ -7,7 +7,9 @@
       type="password"
       placeholder="contraseña" />
     <Boton type="auth">
-      {{ $t('iniciarSesion') }}
+      <div @click="router.push('/map')">
+        {{ $t('iniciarSesion') }}
+      </div>
     </Boton>
     <p
       class="message"
@@ -23,6 +25,9 @@ meta:
 </route>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router';
+
+const router = useRouter();
 </script>
 
 <style scoped>
