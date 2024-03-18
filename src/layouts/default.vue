@@ -1,12 +1,14 @@
+<!--TODO: Ajustar slot con el footer-->
 <template>
-  <slot />
-  <div>
+  <div class="h-full flex flex-col">
+    <slot />
+  </div>
+  <footer class="footer">
     <div
-      class="footer -mb-1.6"
-      style="background-color: #deecff; justify-content: center;">
+      class="flex justify-center -mb-1.6"
+      style="background-color: #deecff">
       <div>
         <Boton
-          type="default"
           class="h-10vh">
           <div @click="router.push('/client')">
             <img
@@ -16,12 +18,10 @@
           </div>
         </Boton>
       </div>
-
       <div>
         <Boton
-          type="default"
           class="h-10vh">
-          <div @click="router.push('/client/map')">
+          <div @click="router.push('/map')">
             <img
               alt="Mapa Claro"
               src="@/assets/images/Map_Clear.png"
@@ -29,10 +29,8 @@
           </div>
         </Boton>
       </div>
-
       <div>
         <Boton
-          type="default"
           class="h-10vh">
           <div @click="router.push('/client/profile')">
             <img
@@ -43,7 +41,7 @@
         </Boton>
       </div>
     </div>
-  </div>
+  </footer>
 </template>
 
 <script setup lang="ts">
@@ -55,11 +53,11 @@ const router = useRouter();
 <style scoped>
 .footer {
   position: fixed;
-  bottom: 0;
+  bottom: 0px;
   left: 0;
   width: 100%;
-  display: flex;
-  justify-content: space-around;
+  transform: translateY(0%);
+  z-index: 1000;
 }
 .footer img {
   width: 50%;
