@@ -245,8 +245,7 @@ watch(locationAccess, () => {
 
 <style scoped>
 .mapContainer {
-  width: 95%;
+  width: 100%;
   height: 90vh;
-  margin: 2% 2%;
 }
 </style>
