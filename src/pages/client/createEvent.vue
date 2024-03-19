@@ -27,36 +27,45 @@
           :key="index"
           v-model="event.date"
           class="input-box"
+          tipo="date"
           placeholder="dd/mm/yy" />
         <BaseInput
           :key="index"
           v-model="event.hour"
           class="input-box"
+          tipo="time"
           placeholder="hh:mm" />
         <BaseInput
           :key="index"
           v-model="event.capacity"
           class="input-box"
+          tipo="number"
           placeholder="Capacidad" />
-        <BaseInput
-          :key="index"
-          v-model="event.category"
-          class="input-box"
-          placeholder="Categoría" />
+        <select v-model="event.category">
+          <option
+            v-for="(category,indice) in cateEnum"
+            :key="category">
+            {{ categorias[indice] }}
+          </option>
+        </select>
       </div>
     </div>
     <Boton
       type="rounded-blue"
       style="margin-top: 5%;display: flex;"
-      @click="createE('/client')">
+      @click="createE()">
       {{ $t('crearEvento') }}
     </Boton>
   </div>
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue';
+import {ref, computed} from 'vue';
 import { useRouter } from 'vue-router/auto';
+import { useI18n } from 'vue-i18n';
+import { CategoryEnum } from '@/api';
+
+const { t } = useI18n();
 
 const router = useRouter();
 
@@ -71,13 +80,22 @@ const eventDetail = ref([
     category: ''
   }]);
 
+const cateEnum = [CategoryEnum.NUMBER_0, CategoryEnum.NUMBER_1, CategoryEnum.NUMBER_2, CategoryEnum.NUMBER_3, CategoryEnum.NUMBER_4];
+
+const categorias = computed(() =>
+  [t('categoryDeporte'),
+   t('categoryMusica'),
+   t('categoryMercado'),
+   t('categoryRelax'),
+   t('categoryConcierto')]);
+
 /**
  * Esta función guarda la información en la base de datos y luego redirige a otra vista
  * Cuando se fusione con back hay que añadir en la primera línea este código
  * This.finds.push({ value: '' });
  */
-async function createE(path:string) : Promise<void> {
-  await router.push(path);
+async function createE() : Promise<void> {
+  await router.push('/client');
 };
 
 </script>
