@@ -1,11 +1,10 @@
 <template>
   <form>
-    <slot />
     <input
       type="text"
       placeholder="nombre" />
     <input
-      type="text"
+      type="email"
       placeholder="correo electrónico" />
     <input
       type="password"
@@ -16,7 +15,7 @@
     <Boton
       class="boton"
       type="auth"
-      @click="createAcc('/map')">
+      @click="createAcc()">
       {{ $t('Crear') }}
     </Boton>
     <Boton
@@ -36,7 +35,7 @@
 </route>
 
 <script setup lang="ts">
-import { useRouter } from 'vue-router';
+import { useRouter } from 'vue-router/auto';
 
 const router = useRouter();
 
@@ -45,8 +44,8 @@ const router = useRouter();
  * Cuando se fusione con back hay que añadir en la primera línea este código
  * This.finds.push({ value: '' });
  */
-async function createAcc(path:string) : Promise<void> {
-  await router.push(path);
+async function createAcc() : Promise<void> {
+  await router.push('/map');
 };
 </script>
 

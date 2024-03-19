@@ -4,7 +4,7 @@
     <input
       v-model="value"
       v-bind="$attrs"
-      type="text"
+      :type="tipo"
       class="validate-style rounded-xl border focus-visible:outline-none"
       :placeholder="placeholder" />
   </div>
@@ -13,6 +13,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { isStr } from '@/utils/validation';
+
 
 const props = defineProps({
   label: {
@@ -26,6 +27,10 @@ const props = defineProps({
   placeholder: {
     type: String,
     default:''
+  },
+  tipo: {
+    type: String,
+    default: 'text'
   }
 });
 
