@@ -8,6 +8,7 @@ COPY public /app/public
 COPY scripts /app/scripts
 COPY src /app/src
 COPY types /app/types
+COPY api /app/api
 WORKDIR /app
 
 # Install dependencies
