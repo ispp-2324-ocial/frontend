@@ -7,11 +7,10 @@
 <script setup lang="ts">
 import { onBeforeUnmount, shallowRef, watch } from 'vue';
 import 'leaflet/dist/leaflet.css';
-import { map, icon, marker, tileLayer, type Marker} from 'leaflet';
+import { map, icon, marker, tileLayer, type Marker, Popup} from 'leaflet';
 import { useI18n } from 'vue-i18n';
 import { usePermission } from '@vueuse/core';
-import { CategoryEnum, EventApi } from '@/api';
-import { useEvent } from '@/composables/apis';
+import { CategoryEnum} from '@/api';
 import Azul from '@/assets/pin/Pin_Azul.png';
 import Verde from '@/assets/pin/Pin_Verde.png';
 import Rojo from '@/assets/pin/Pin_Rojo.png';
@@ -24,9 +23,6 @@ import { isNil, isNumber } from '@/utils/validation';
 const props = defineProps<{ markers: MapEvent[] }>();
 const locationAccess = usePermission('geolocation');
 const { t } = useI18n();
-const { data: eventList } = await useEvent(EventApi, 'eventListList')();
-
-console.log(eventList.value);
 
 const TILE_LAYER_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 const ATTRIBUTION = '© OpenStreetMap contributors';
@@ -45,6 +41,7 @@ interface MapEvent {
   longitude: number;
   category?: CategoryEnum;
   date: string;
+  hour: string;
   event: string;
   place: string;
   capacity?: number;
@@ -52,7 +49,11 @@ interface MapEvent {
 /**
  * Para asignar los iconos a la categoría
  */
-function getCategoryEnum(categoryName: string): CategoryEnum {
+function getCategoryEnum(categoryName?: string): CategoryEnum {
+  if (!categoryName) {
+    return CategoryEnum.NUMBER_0;
+  }
+
   switch (categoryName.toLowerCase()) {
     case 'sports': {
       return CategoryEnum.NUMBER_0;
@@ -70,7 +71,9 @@ function getCategoryEnum(categoryName: string): CategoryEnum {
       return CategoryEnum.NUMBER_4;
     }
     default: {
-      throw new Error(`Categoría desconocida: ${categoryName}`);
+      console.error(`Categoría desconocida: ${categoryName}`);
+
+      return CategoryEnum.NUMBER_0;
     }
   }
 }
@@ -98,10 +101,10 @@ onBeforeUnmount(() => {
 /**
  * Coloca los marcadores en el mapa
  */
-function setMarkers(): void {
+function setMarkers(markers: MapEvent[]): void {
   if (mapInstance.value) {
-    for (const event of eventList.value) {
-      const category = event.category === undefined ? CategoryEnum.NUMBER_0 : getCategoryEnum(event.category.toString());
+    for (const event of markers) {
+      const category = getCategoryEnum(event.category?.toString());
       const customIconUrl = categoryIconMap[category] ?? Azul;
       const customIcon = icon({
         iconUrl: customIconUrl,
@@ -109,20 +112,23 @@ function setMarkers(): void {
         iconAnchor: [11, 6]
       });
       const eventHour = event.hour.split(':').slice(0, 2).join(':'); // Obtener solo la parte de la hora y los minutos
-      const popupContent = `
-        <div>
-          <strong>${t('Evento')}:</strong> ${event.name}<br>
-          <strong>${t('Lugar')}:</strong> ${event.place}<br>
-          <strong>${t('Fecha')}:</strong> ${event.date}<br>
-          <strong>${t('Hora')}:</strong> ${eventHour}<br>
-          <strong>${t('Capacidad')}:</strong> ${event.capacity}<br>
-          <a href="/detalles/${event.id}">${t('Ver detalles')}</a>
-        </div>
+      const popupContent = document.createElement('div');
+
+      popupContent.innerHTML = `
+        <strong>${t('Evento')}:</strong> ${event.name}<br>
+        <strong>${t('Lugar')}:</strong> ${event.place}<br>
+        <strong>${t('Fecha')}:</strong> ${event.date}<br>
+        <strong>${t('Hora')}:</strong> ${eventHour}<br>
+        <strong>${t('Capacidad')}:</strong> ${event.capacity}<br>
+        <a href="/detalles/${event.id}">${t('Ver detalles')}</a>
       `;
+
+      // Crear un objeto Popup y asociarlo al marcador
+      const popup = new Popup().setContent(popupContent);
 
       marker([event.latitude, event.longitude], { icon: customIcon })
         .addTo(mapInstance.value)
-        .bindPopup(popupContent);
+        .bindPopup(popup);
     }
   }
 };
@@ -216,9 +222,9 @@ watch(mapContainer, () => {
 /**
  * Este watch trackea los markers si cambian y se actualizan si es así.
  */
-watch([mapInstance, ():typeof props.markers => props.markers], () => {
+watch([mapInstance, ():typeof props.markers => props.markers], ([, newMarkers]) => {
   disposeMarkers();
-  setMarkers();
+  setMarkers(newMarkers);
 }, { deep: true }) ;
 
 /**
