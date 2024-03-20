@@ -85,6 +85,24 @@
       {{ $t('iniciaSesion') }}
     </Boton>
   </div>
+  <div
+    class="mb-7"
+    style="width: 100%;">
+    <div
+      style="justify-content: center; display: flex;"
+      @click="router.push('/client/editProfile')">
+      <Boton
+        type="rounded-blue"
+        class="ocial-button"
+        style="width: 80%; padding-top: 1vh; padding-bottom: 1vh;">
+        <div>
+          <p>
+            {{ $t('editarPerfil') }}
+          </p>
+        </div>
+      </Boton>
+    </div>
+  </div>
 </template>
 
 
