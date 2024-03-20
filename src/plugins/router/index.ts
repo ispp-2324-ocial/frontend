@@ -3,7 +3,7 @@ import { computed } from 'vue';
 import {
   createRouter,
   createWebHistory
-} from 'vue-router';
+} from 'vue-router/auto';
 /**
  * TODO: Implementar cuando el login esté terminado
  */
@@ -13,7 +13,6 @@ import { isStr } from '@/utils/validation';
 
 export const router = createRouter({
   history: createWebHistory(),
-  routes: [],
   /**
    * TODO: Arreglar esto, de forma que solo se realice el scroll en cuanto Suspense resuelva
    */
