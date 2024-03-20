@@ -13,9 +13,9 @@
 <script setup lang = 'ts'>
 import { ref } from 'vue';
 
-withDefaults (defineProps<{
+withDefaults(defineProps<{
   type?: 'rounded-blue'| 'default' | 'auth';
-}>(), {type: 'default'});
+}>(), { type: 'default' });
 
 const isHovered = ref(false);
 
