@@ -1,10 +1,10 @@
+import { defu } from 'defu';
 import { reactive } from 'vue';
 import type {
   RouteLocationNormalized,
   RouteLocationRaw,
   RouteMeta
 } from 'vue-router/auto';
-import { defuSchema } from '@/utils/data-manipulation';
 
 const defaultMeta: RouteMeta = {
   layout: 'default',
@@ -14,6 +14,8 @@ const defaultMeta: RouteMeta = {
     opacity: 0.25
   }
 };
+
+const reactiveMeta = reactive(structuredClone(defaultMeta));
 
 /**
  * Este middleware gestiona la propiedad meta entre rutas
@@ -41,7 +43,8 @@ export function metaGuard(
   to: RouteLocationNormalized,
   from: RouteLocationNormalized
 ): boolean | RouteLocationRaw {
-  to.meta = reactive<RouteMeta>(defuSchema(to.meta, defaultMeta));
+  Object.assign(reactiveMeta, defu(to.meta, defaultMeta));
+  to.meta = reactiveMeta;
 
   if (from.meta.transition?.leave) {
     if (to.meta.transition) {
