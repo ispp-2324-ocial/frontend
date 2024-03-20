@@ -1,8 +1,8 @@
 <template>
   <Boton
-    :class="{'selectedp': isPlan}"
+    :class="{ 'selectedp': isPlan }"
     class="row plan"
-    style="text-transform: uppercase">
+    style="text-transform: uppercase; align-items: center;">
     <div
       class="column left">
       <p>
@@ -19,7 +19,7 @@
 </template>
 
 <script setup lang="ts">
-withDefaults (
+withDefaults(
   defineProps<{
     isPlan?: boolean
   }>(),
