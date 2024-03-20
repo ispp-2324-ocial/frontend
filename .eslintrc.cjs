@@ -63,6 +63,7 @@ module.exports = {
     'file-progress'
   ],
   rules: {
+    '@stylistic/object-curly-spacing': ['error', 'always'],
     '@stylistic/semi': ['error', 'always'],
     '@stylistic/quotes': ['error', 'single', { 'avoidEscape': true }],
     '@stylistic/comma-dangle': 'error',
@@ -234,7 +235,8 @@ module.exports = {
     'vue/html-closing-bracket-newline': ['error', { multiline: 'never' }],
     'vue/multiline-html-element-content-newline': 'error',
     'vue/multi-word-component-names': 'off',
-    'vue/return-in-computed-property': 'off'
+    'vue/return-in-computed-property': 'off',
+    'vue/require-default-prop': 'off'
   },
   /**
    * 'overrides' nos permite omitir el argumento --ext en la terminal, simplificando la sección de scripts de package.json
