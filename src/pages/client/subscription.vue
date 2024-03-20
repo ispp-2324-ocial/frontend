@@ -78,12 +78,10 @@
 .column {
   padding: 10px;
 }
-
 .highlight {
   color:rgb(24, 172, 83)
 }
 .price{
   font-size: clamp(18px, 4.5vw, 25px);
 }
-
 </style>
