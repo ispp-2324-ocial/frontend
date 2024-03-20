@@ -61,7 +61,8 @@ import { useEvent } from '@/composables/apis';
 const router = useRouter();
 
 /**
- *TODO: pasar a eventListClientList cuando funcione el general
+ *TODO: pasar a eventListClientList cuando el registro
+ *      e inicio de sesión de cliente sea funcional
  */
 const { data: eventList} = await useEvent(EventApi, 'eventListList')();
 </script>
