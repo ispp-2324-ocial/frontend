@@ -1,21 +1,20 @@
 <template>
   <form>
-    <slot />
     <BaseInput
       tipo="text"
-      placeholder="nombre" />
+      :placeholder="placeholders[0]" />
     <BaseInput
       tipo="text"
-      placeholder="correo electrónico" />
+      :placeholder="placeholders[1]" />
     <BaseInput
       tipo="dni"
-      placeholder="DNI" />
+      :placeholder="placeholders[2]" />
     <BaseInput
       tipo="password"
-      placeholder="contraseña" />
+      :placeholder="placeholders[3]" />
     <BaseInput
       tipo="password"
-      placeholder="confirmar contraseña" />
+      :placeholder="placeholders[4]" />
     <select v-model="ocialClientDetail.category">
       <option
         v-for="(category,indice) in cateEnum"
@@ -23,9 +22,6 @@
         {{ categorias[indice] }}
       </option>
     </select>
-    <BaseInput
-      tipo="categoria"
-      placeholder="categoria" />
     <Boton
       type="auth"
       @click="createAcc()">
@@ -78,6 +74,13 @@ const categorias = computed(() =>
 async function createAcc() : Promise<void> {
   await router.push('/client/createEvent');
 };
+
+const placeholders = computed(() =>
+  [t('placeholderNombre'),
+   t('placeholderEmail'),
+   t('placeholderDNI'),
+   t('placeholderContra'),
+   t('placeholderConfirmarContra')]);
 </script>
 
 <style scoped>
@@ -90,17 +93,5 @@ async function createAcc() : Promise<void> {
 .form .message a {
   color: #0e4791;
   text-decoration: underline;
-}
-
-.form input {
-  outline: 0;
-  background: #ffffff;
-  width: 100%;
-  border: 2px solid #3e80d7;
-  border-radius: 15px;
-  margin-bottom: 1vh;
-  padding: 15px;
-  box-sizing: border-box;
-  font-size: 16px;
 }
 </style>
