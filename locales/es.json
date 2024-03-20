@@ -1,14 +1,10 @@
 {
-  "Tu ubicación": "Tu ubicación",
-  "Evento": "Evento",
-  "¡Notificación Exitosa!" : "¡Notificación Exitosa!",
-  "¡Notificación de Errónea!" : "¡Notificación de Errónea!",
-  "¡Notificación de Advertencia!" : "¡Notificación de Advertencia!",
-  "¡Notificación de Información!" : "¡Notificación de Información!",
-  "Notificación" : "Notificación",
-  "Error al obtener la ubicación" : "Error al obtener la ubicación",
-  "La geolocalización no es soportada por tu navegador" : "La geolocalización no es soportada por tu navegador",
   "1eventoMensual": "· 1 evento mensual",
+  "Error al obtener la ubicación": "Error al obtener la ubicación",
+  "Evento": "Evento",
+  "La geolocalización no es soportada por tu navegador": "La geolocalización no es soportada por tu navegador",
+  "Notificación": "Notificación",
+  "Tu ubicación": "Tu ubicación",
   "basico": "básico",
   "capacidad:": "Capacidad:",
   "categoria:": "Categoría:",
@@ -18,6 +14,7 @@
   "dot10": "· 10",
   "edicionEventos": "· edición de eventos",
   "editarEvento": "Editar Evento",
+  "editarPerfil": "Editar Perfil",
   "email:": "Email:",
   "envioNotificaciones": "· envío de notificaciones",
   "eventosDestacados": "· eventos destacados",
@@ -41,5 +38,9 @@
   "soporte24h": "en suporte 24h",
   "soporteLimitado": "· soporte 24h limitado",
   "suscripciones": "Suscripciones",
-  "tusEventos": "Tus eventos"
+  "tusEventos": "Tus eventos",
+  "¡Notificación Exitosa!": "¡Notificación Exitosa!",
+  "¡Notificación de Advertencia!": "¡Notificación de Advertencia!",
+  "¡Notificación de Errónea!": "¡Notificación de Errónea!",
+  "¡Notificación de Información!": "¡Notificación de Información!"
 }

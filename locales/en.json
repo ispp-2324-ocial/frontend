@@ -1,14 +1,10 @@
 {
-  "Tu ubicación": "Your location",
-  "Evento": "Event",
-  "¡Notificación Exitosa!" : "Success Notification!",
-  "¡Notificación de Errónea!" : "Error Notification!",
-  "¡Notificación de Advertencia!" : "Warning Notification!",
-  "¡Notificación de Información!" : "Info Notification!",
-  "Notificación" : "Notification",
-  "Error al obtener la ubicación" : "Error at finding your location",
-  "La geolocalización no es soportada por tu navegador" : "Geolocation is not supported by your browser",
   "1eventoMensual": "· 1 event per month",
+  "Error al obtener la ubicación": "Error at finding your location",
+  "Evento": "Event",
+  "La geolocalización no es soportada por tu navegador": "Geolocation is not supported by your browser",
+  "Notificación": "Notification",
+  "Tu ubicación": "Your location",
   "basico": "basic",
   "capacidad:": "Capacity:",
   "categoria:": "Category:",
@@ -18,6 +14,7 @@
   "dot10": "· 10",
   "edicionEventos": "· edit your events",
   "editarEvento": "Edit Event",
+  "editarPerfil": "Edit Profile",
   "email:": "Email:",
   "envioNotificaciones": "· notification messages",
   "eventosDestacados": "· highlight events",
@@ -41,5 +38,9 @@
   "soporte24h": "24h support",
   "soporteLimitado": "· limited 24h support",
   "suscripciones": "Subscriptions",
-  "tusEventos": "Your events"
+  "tusEventos": "Your events",
+  "¡Notificación Exitosa!": "Success Notification!",
+  "¡Notificación de Advertencia!": "Warning Notification!",
+  "¡Notificación de Errónea!": "Error Notification!",
+  "¡Notificación de Información!": "Info Notification!"
 }
