@@ -1,11 +1,12 @@
 <template>
   <form>
-    <input
-      type="text"
-      placeholder="correo electrónico" />
-    <input
-      type="password"
-      placeholder="contraseña" />
+    <BaseInput
+      class="input"
+      tipo="text"
+      :placeholder="placeholders[0]" />
+    <BaseInput
+      tipo="password"
+      :placeholder="placeholders[1]" />
     <Boton type="auth">
       <div @click="router.push('/map')">
         {{ $t('iniciarSesion') }}
@@ -24,9 +25,17 @@
 </route>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useRouter } from 'vue-router/auto';
+import { useI18n } from 'vue-i18n';
 
 const router = useRouter();
+
+const { t } = useI18n();
+
+const placeholders = computed(() =>
+  [t('placeholderEmail'),
+   t('placeholderContra')]);
 </script>
 
 <style scoped>
@@ -39,17 +48,5 @@ const router = useRouter();
 .form .message a {
   color: #0e4791;
   text-decoration: underline;
-}
-
-.form input {
-  outline: 0;
-  background: #ffffff;
-  width: 100%;
-  border: 2px solid #3e80d7;
-  border-radius: 15px;
-  margin-bottom: 1vh;
-  padding: 15px;
-  box-sizing: border-box;
-  font-size: 16px;
 }
 </style>

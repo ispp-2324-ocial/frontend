@@ -1,17 +1,17 @@
 <template>
   <form>
-    <input
-      type="text"
-      placeholder="nombre" />
-    <input
-      type="email"
-      placeholder="correo electrónico" />
-    <input
-      type="password"
-      placeholder="contraseña" />
-    <input
-      type="password"
-      placeholder="confirmar contraseña" />
+    <BaseInput
+      tipo="text"
+      :placeholder="placeholders[0]" />
+    <BaseInput
+      tipo="email"
+      :placeholder="placeholders[1]" />
+    <BaseInput
+      tipo="password"
+      :placeholder="placeholders[2]" />
+    <BaseInput
+      tipo="password"
+      :placeholder="placeholders[3]" />
     <Boton
       class="boton"
       type="auth"
@@ -35,7 +35,9 @@
 </route>
 
 <script setup lang="ts">
+import { computed } from 'vue';
 import { useRouter } from 'vue-router/auto';
+import { useI18n } from 'vue-i18n';
 
 const router = useRouter();
 
@@ -47,6 +49,14 @@ const router = useRouter();
 async function createAcc() : Promise<void> {
   await router.push('/map');
 };
+
+const { t } = useI18n();
+
+const placeholders = computed(() =>
+  [t('placeholderNombre'),
+   t('placeholderEmail'),
+   t('placeholderContra'),
+   t('placeholderConfirmarContra')]);
 </script>
 
 <style scoped>
@@ -63,17 +73,5 @@ async function createAcc() : Promise<void> {
 .form .message a {
   color: #0e4791;
   text-decoration: underline;
-}
-
-.form input {
-  outline: 0;
-  background: #ffffff;
-  width: 100%;
-  border: 2px solid #3e80d7;
-  border-radius: 15px;
-  margin-bottom: 1vh;
-  padding: 15px;
-  box-sizing: border-box;
-  font-size: 16px;
 }
 </style>
