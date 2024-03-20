@@ -17,6 +17,7 @@ import Components from 'unplugin-vue-components/vite';
 import VueRouter from 'unplugin-vue-router/vite';
 import { defineConfig, type UserConfig } from 'vite';
 import { apiRoot, entrypoints, localeFilesFolder, srcRoot } from './scripts/paths';
+import { UnpluginVueRouterSyncImportFix } from './scripts/transforms';
 import virtualModules from './scripts/virtual-modules';
 
 export default defineConfig(({ mode }): UserConfig => {
@@ -70,7 +71,8 @@ export default defineConfig(({ mode }): UserConfig => {
         fullInstall: false,
         forceStringify: true,
         include: localeFilesFolder
-      })
+      }),
+      UnpluginVueRouterSyncImportFix()
     ],
     build: {
       /**

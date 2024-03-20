@@ -174,6 +174,12 @@ module.exports = {
     'promise/no-return-in-finally': 'error',
     'promise/prefer-await-to-callbacks': 'error',
     'promise/prefer-await-to-then': 'error',
+    '@typescript-eslint/no-restricted-imports': ['error', {
+      paths: [{
+        name: 'vue-router',
+        message: 'Use vue-router/auto instead'
+      }]
+    }],
     '@typescript-eslint/ban-ts-comment': [
       'error',
       {
