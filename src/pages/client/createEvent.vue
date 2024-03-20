@@ -12,36 +12,36 @@
           :key="index"
           v-model="event.name"
           class="input-box"
-          placeholder="Nombre del evento" />
+          :placeholder="placeholders[0]" />
         <BaseInput
           :key="index"
           v-model="event.place"
           class="input-box"
-          placeholder="Lugar" />
+          :placeholder="placeholders[1]" />
         <BaseInput
           :key="index"
           v-model="event.event"
           class="input-box"
-          placeholder="Descripción" />
+          :placeholder="placeholders[2]" />
         <BaseInput
           :key="index"
           v-model="event.date"
           class="input-box"
-          tipo="date"
-          placeholder="dd/mm/yy" />
+          tipo="date" />
         <BaseInput
           :key="index"
           v-model="event.hour"
           class="input-box"
-          tipo="time"
-          placeholder="hh:mm" />
+          tipo="time" />
         <BaseInput
           :key="index"
           v-model="event.capacity"
           class="input-box"
           tipo="number"
-          placeholder="Capacidad" />
-        <select v-model="event.category">
+          :placeholder="placeholders[3]" />
+        <select
+          v-model="event.category"
+          class="input-box">
           <option
             v-for="(category,indice) in cateEnum"
             :key="category">
@@ -89,6 +89,7 @@ const categorias = computed(() =>
    t('categoryRelax'),
    t('categoryConcierto')]);
 
+
 /**
  * Esta función guarda la información en la base de datos y luego redirige a otra vista
  * Cuando se fusione con back hay que añadir en la primera línea este código
@@ -98,6 +99,11 @@ async function createE() : Promise<void> {
   await router.push('/client');
 };
 
+const placeholders = computed(() =>
+  [t('placeholderNombreEvento'),
+   t('placeholderLugar'),
+   t('placeholderDescripcion'),
+   t('placeholderCapacidad')]);
 </script>
 
 <style scoped>

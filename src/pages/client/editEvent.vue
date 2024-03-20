@@ -7,35 +7,47 @@
   </Title>
   <div style="margin-top: 10% ;justify-content: center; display: flex;">
     <div
-      v-for="event in eventDetail">
+      v-for="(event, index) in eventDetail">
       <BaseInput
+        :key="index"
         v-model="event.name"
         class="input-box"
-        placeholder="Nombre del evento" />
+        :placeholder="placeholders[0]" />
       <BaseInput
+        :key="index"
         v-model="event.place"
         class="input-box"
-        placeholder="Lugar" />
+        :placeholder="placeholders[1]" />
       <BaseInput
+        :key="index"
         v-model="event.event"
         class="input-box"
-        placeholder="Descripción" />
+        :placeholder="placeholders[2]" />
       <BaseInput
+        :key="index"
         v-model="event.date"
         class="input-box"
-        placeholder="dd/mm/yy" />
+        tipo="date" />
       <BaseInput
+        :key="index"
         v-model="event.hour"
         class="input-box"
-        placeholder="hh:mm" />
+        tipo="time" />
       <BaseInput
+        :key="index"
         v-model="event.capacity"
         class="input-box"
-        placeholder="Capacidad" />
-      <BaseInput
+        tipo="number"
+        :placeholder="placeholders[3]" />
+      <select
         v-model="event.category"
-        class="input-box"
-        placeholder="Categoría" />
+        class="input-box">
+        <option
+          v-for="(category,indice) in cateEnum"
+          :key="category">
+          {{ categorias[indice] }}
+        </option>
+      </select>
     </div>
   </div>
   <Boton
@@ -47,8 +59,10 @@
 </template>
 
 <script setup lang="ts">
-import {ref} from 'vue';
+import {ref, computed} from 'vue';
 import { useRouter } from 'vue-router/auto';
+import { useI18n } from 'vue-i18n';
+import { CategoryEnum } from '@/api';
 
 const router = useRouter();
 
@@ -64,6 +78,15 @@ const eventDetail = ref([
     image: '@/assets/images/temp/yoga.png'
   }]);
 
+const cateEnum = [CategoryEnum.NUMBER_0, CategoryEnum.NUMBER_1, CategoryEnum.NUMBER_2, CategoryEnum.NUMBER_3, CategoryEnum.NUMBER_4];
+
+const categorias = computed(() =>
+  [t('categoryDeporte'),
+   t('categoryMusica'),
+   t('categoryMercado'),
+   t('categoryRelax'),
+   t('categoryConcierto')]);
+
 /**
  * Esta función guarda la información en la base de datos y luego redirige a otra vista
  * Cuando se fusione con back hay que añadir en la primera línea este código
@@ -73,6 +96,13 @@ async function editE(path:string) : Promise<void> {
   await router.push(path);
 };
 
+const { t } = useI18n();
+
+const placeholders = computed(() =>
+  [t('placeholderNombreEvento'),
+   t('placeholderLugar'),
+   t('placeholderDescripcion'),
+   t('placeholderCapacidad')]);
 </script>
 
 <style scoped>
