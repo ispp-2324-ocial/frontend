@@ -1,25 +1,20 @@
 <template>
   <div class="slider-component">
+    <div
+      class="current-value">
+      <p>{{ value || (min+max)/2 }} {{ $t(' km') }} </p>
+    </div>
     <input
       v-model="value"
       type="range"
       :min="min"
       :max="max"
       :step="step"
-      class="slider"
-      @input="showCurrentValue"
-      @change="hideCurrentValue" />
-
-    <div
-      v-if="showValue"
-      class="current-value">
-      <p>{{ value }} {{ $t(' km') }} </p>
-    </div>
+      class="slider" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 
 withDefaults(defineProps<{
   min: number;
@@ -32,25 +27,10 @@ withDefaults(defineProps<{
 );
 
 const value = defineModel<string>();
-const showValue = ref(false);
-
-/**
- * Show current value on slider when moving the slider thumb
- */
-function showCurrentValue(): void {
-  showValue.value = true;
-}
-
-/**
- * Hide current value on slider when restarting the page
- */
-function hideCurrentValue(): void {
-  showValue.value = false;
-}
 </script>
 
 <style scoped>
-/*********** Baseline, reset styles ***********/
+ /* Baseline */
 .current-value {
   display: flex;
   justify-content: center;
@@ -64,11 +44,6 @@ function hideCurrentValue(): void {
   background: transparent;
   cursor: pointer;
   width: 100%;
-}
-
-/* Removes default focus */
-.slider-component .slider:focus {
-  outline: none;
 }
 
 /******** Chrome, Safari, Opera and Edge Chromium styles ********/
