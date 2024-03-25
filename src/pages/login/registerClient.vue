@@ -52,7 +52,7 @@
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
 import { ref, computed } from 'vue';
-import { UsersApi, type LoginUser, TypeClientEnum} from '@/api';
+import { UsersApi, TypeClientEnum} from '@/api';
 import { useApi } from '@/composables/apis';
 
 const password2 = ref('');
@@ -88,6 +88,7 @@ const categorias = computed(() =>
 async function createAcc() : Promise<void> {
 
   const { data: UserCreated} = await useApi(UsersApi, 'usersClientRegisterCreate')(() => ({
+<<<<<<< HEAD
     client: {
       'password': ocialClientDetail.value.password,
       'email': ocialClientDetail.value.email,
@@ -99,6 +100,19 @@ async function createAcc() : Promise<void> {
       'default_longitude': 0,
       'usuario': 0
     }
+=======
+  client: {
+  "password": ocialClientDetail.value.password,
+  "email": ocialClientDetail.value.email,
+  "username": ocialClientDetail.value.username,
+  "name": ocialClientDetail.value.name,
+  "identification_document": ocialClientDetail.value.dni,
+  "typeClient": ocialClientDetail.value.category,
+  "default_latitude": 0,
+  "default_longitude": 0,
+  "usuario": 0
+  }
+>>>>>>> 6cde836 (chore: Refactorizacion clases)
   }));
 
   console.log(UserCreated.value);

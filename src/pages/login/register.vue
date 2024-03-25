@@ -43,7 +43,7 @@
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
-import { UsersApi, type User, CategoryEnum } from '@/api';
+import { UsersApi,  CategoryEnum } from '@/api';
 import { useApi } from '@/composables/apis';
 
 const username = ref('');
@@ -62,7 +62,7 @@ async function createAcc() : Promise<void> {
   if (password.value != password2.value) {
     //TO-DO error
   }
-  const { loading, data: UserCreated} = await useApi(UsersApi, 'usersUserRegisterCreate')(() => ({
+  const { data: UserCreated} = await useApi(UsersApi, 'usersUserRegisterCreate')(() => ({
   user: {
   "password": password.value,
   "email": email.value,
