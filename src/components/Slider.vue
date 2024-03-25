@@ -2,7 +2,14 @@
   <div class="slider-component">
     <div
       class="current-value">
-      <p>{{ value || (min+max)/2 }} {{ $t(' km') }} </p>
+      <p>
+        <slot
+          v-if="$slots.label"
+          name="label" />
+        <template v-else>
+          {{ $t('{distance} km', { distance: value || (min+max) / 2 }) }}
+        </template>
+      </p>
     </div>
     <input
       v-model="value"
@@ -15,7 +22,6 @@
 </template>
 
 <script setup lang="ts">
-
 withDefaults(defineProps<{
   min: number;
   max: number;
@@ -23,8 +29,8 @@ withDefaults(defineProps<{
 }>(), {
   min: 0,
   max: 1000,
-  step: 10}
-);
+  step: 10
+});
 
 const value = defineModel<string>();
 </script>
