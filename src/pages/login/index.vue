@@ -42,18 +42,14 @@ const username = ref('');
 const password = ref('');
 
 async function Login() : Promise<void> {
-  console.log(auth);
-  console.log(username.value);
-  console.log(password.value);
-  const {loading, data: UserCreated} = await useApi(UsersApi, 'usersLoginCreate')(() => ({
+  const {data: UserCreated} = await useApi(UsersApi, 'usersLoginCreate')(() => ({
   loginUser: {
   "username": username.value,
   "password": password.value,
-  }
+  },
   }));
-  console.log(UserCreated.value);
   auth.authenticate(username.value, UserCreated.value.isClient, UserCreated.value.token);
-  console.log(auth);
+  console.log(auth.token.value);
   router.push('/map');
 };
 
