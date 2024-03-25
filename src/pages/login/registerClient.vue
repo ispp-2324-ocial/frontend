@@ -1,20 +1,30 @@
 <template>
-  <form>
+  <form @submit.prevent="()=>{}">
     <BaseInput
+      v-model="ocialClientDetail.username"
       tipo="text"
       :placeholder="placeholders[0]" />
     <BaseInput
+      v-model="ocialClientDetail.name"
       tipo="text"
       :placeholder="placeholders[1]" />
     <BaseInput
-      tipo="dni"
+      v-model="ocialClientDetail.email"
+      tipo="email"
       :placeholder="placeholders[2]" />
     <BaseInput
-      tipo="password"
+      v-model="ocialClientDetail.dni"
+      tipo="dni"
       :placeholder="placeholders[3]" />
     <BaseInput
+      v-model="ocialClientDetail.password"
       tipo="password"
       :placeholder="placeholders[4]" />
+    <BaseInput
+      v-model="password2"
+      tipo="password"
+      :validators="[(v)=>v===ocialClientDetail.password]"
+      :placeholder="placeholders[5]" />
     <select v-model="ocialClientDetail.category">
       <option
         v-for="(category,indice) in cateEnum"
@@ -42,7 +52,10 @@
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
 import { ref, computed } from 'vue';
-import { CategoryEnum } from '@/api';
+import { UsersApi, type LoginUser, TypeClientEnum} from '@/api';
+import { useApi } from '@/composables/apis';
+
+const password2 = ref('');
 
 const router = useRouter();
 
@@ -50,11 +63,12 @@ const { t } = useI18n();
 
 const ocialClientDetail = ref(
   {
+    username: '',
     name: '',
     email: '',
     dni: '',
     password: '',
-    category: ''
+    category: TypeClientEnum._0
   });
 
 const cateEnum = [CategoryEnum.Sports, CategoryEnum.Music, CategoryEnum.Markets, CategoryEnum.RelaxActivities, CategoryEnum.LiveConcert];
@@ -72,11 +86,29 @@ const categorias = computed(() =>
  * This.finds.push({ value: '' });
  */
 async function createAcc() : Promise<void> {
+
+  const { data: UserCreated} = await useApi(UsersApi, 'usersClientRegisterCreate')(() => ({
+    client: {
+      'password': ocialClientDetail.value.password,
+      'email': ocialClientDetail.value.email,
+      'username': ocialClientDetail.value.username,
+      'name': ocialClientDetail.value.name,
+      'identification_document': ocialClientDetail.value.dni,
+      'typeClient': TypeClientEnum._0,
+      'default_latitude': 0,
+      'default_longitude': 0,
+      'usuario': 0
+    }
+  }));
+
+  console.log(UserCreated.value);
+  // Autenticar al cliente
   await router.push('/client/createEvent');
 };
 
 const placeholders = computed(() =>
-  [t('placeholderNombre'),
+  [t('placeholderUsername'),
+   t('placeholderNombre'),
    t('placeholderEmail'),
    t('placeholderDNI'),
    t('placeholderContra'),
