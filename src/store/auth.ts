@@ -5,6 +5,8 @@ import {
 import { computed, watchEffect } from 'vue';
 import AxiosPlugin from '@/plugins/remote/axios';
 import { defuSchema } from '@/utils/data-manipulation';
+import { UsersApi } from '@/api';
+import { useApi } from '@/composables/apis';
 
 /**
  * == INTERFACES Y TIPOS ==
@@ -56,19 +58,12 @@ class AuthStore {
 
   public readonly isLoggedIn = computed(() => Boolean(this._state.value.token));
 
-  public authenticate = (): void => {
+  public authenticate = async (username: string, isClient: boolean, token: string | undefined): Promise<void> => {
     // Todo: lógica de login call backend
-    const response = {
-      name: 'nombre',
-      id: 1,
-      isClient: true,
-      token: 'token'
-    };
-
-    this._state.value.name = response.name;
-    this._state.value.id = response.id;
-    this._state.value.isClient = response.isClient;
-    this._state.value.token = response.token;
+    this._state.value.name = username;
+    this._state.value.id = 0; // cambiar
+    this._state.value.isClient = isClient;
+    this._state.value.token = token;
   };
 
   public logout = (): void => {
