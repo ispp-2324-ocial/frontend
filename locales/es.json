@@ -8,6 +8,8 @@
   "Hora": "Hora",
   "La geolocalización no es soportada por tu navegador": "La geolocalización no es soportada por tu navegador",
   "Lugar": "Lugar",
+  "NotLogged": "No has iniciado sesión como cliente. No tienes permitido el acceso a esta página.",
+  "NotLoggedUser": "No has iniciado sesión como usuario. No tienes permitido el acceso a esta página.",
   "Notificación": "Notificación",
   "Tu ubicación": "Tu ubicación",
   "Ver detalles": "Ver detalles",

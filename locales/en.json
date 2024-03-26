@@ -8,6 +8,8 @@
   "Hora": "Hour",
   "La geolocalización no es soportada por tu navegador": "Geolocation is not supported by your browser",
   "Lugar": "Place",
+  "NotLogged": "You are not logged as a client. You are not allowed to enter this page.",
+  "NotLoggedUser": "You are not logged as a user. You are not allowed to enter this page.",
   "Notificación": "Notification",
   "Tu ubicación": "Your location",
   "Ver detalles": "View details",

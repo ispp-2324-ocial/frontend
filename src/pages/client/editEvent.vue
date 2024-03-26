@@ -2,60 +2,73 @@
 <!-- eslint-disable vue/require-v-for-key -->
 <template>
   <Ondas />
-  <Title style="margin-top: 10%;">
-    {{ $t('editarEvento') }}
-  </Title>
-  <div style="margin-top: 10% ;justify-content: center; display: flex;">
-    <div
-      v-for="(event, index) in eventDetail">
-      <BaseInput
-        :key="index"
-        v-model="event.name"
-        class="input-box"
-        :placeholder="placeholders[0]" />
-      <BaseInput
-        :key="index"
-        v-model="event.place"
-        class="input-box"
-        :placeholder="placeholders[1]" />
-      <BaseInput
-        :key="index"
-        v-model="event.event"
-        class="input-box"
-        :placeholder="placeholders[2]" />
-      <BaseInput
-        :key="index"
-        v-model="event.date"
-        class="input-box"
-        tipo="date" />
-      <BaseInput
-        :key="index"
-        v-model="event.hour"
-        class="input-box"
-        tipo="time" />
-      <BaseInput
-        :key="index"
-        v-model="event.capacity"
-        class="input-box"
-        tipo="number"
-        :placeholder="placeholders[3]" />
-      <select
-        v-model="event.category"
-        class="input-box">
-        <option
-          v-for="(category,indice) in cateEnum"
-          :key="category">
-          {{ categorias[indice] }}
-        </option>
-      </select>
+  <div v-if="auth.isLoggedIn.value && auth.isClient.value">
+    <Title style="margin-top: 10%;">
+      {{ $t('editarEvento') }}
+    </Title>
+    <div style="margin-top: 10% ;justify-content: center; display: flex;">
+      <div
+        v-for="(event, index) in eventDetail">
+        <BaseInput
+          :key="index"
+          v-model="event.name"
+          class="input-box"
+          :placeholder="placeholders[0]" />
+        <BaseInput
+          :key="index"
+          v-model="event.place"
+          class="input-box"
+          :placeholder="placeholders[1]" />
+        <BaseInput
+          :key="index"
+          v-model="event.event"
+          class="input-box"
+          :placeholder="placeholders[2]" />
+        <BaseInput
+          :key="index"
+          v-model="event.date"
+          class="input-box"
+          tipo="date" />
+        <BaseInput
+          :key="index"
+          v-model="event.hour"
+          class="input-box"
+          tipo="time" />
+        <BaseInput
+          :key="index"
+          v-model="event.capacity"
+          class="input-box"
+          tipo="number"
+          :placeholder="placeholders[3]" />
+        <select
+          v-model="event.category"
+          class="input-box">
+          <option
+            v-for="(category,indice) in cateEnum"
+            :key="category">
+            {{ categorias[indice] }}
+          </option>
+        </select>
+      </div>
     </div>
+    <Boton
+      type="rounded-blue"
+      style="margin-top: 10%;display: flex;"
+      @click="editE('/client')">
+      {{ $t('guardarCambios') }}
+    </Boton>
   </div>
-  <Boton
-    type="rounded-blue"
-    style="margin-top: 10%;display: flex;"
-    @click="editE('/client')">
-    {{ $t('guardarCambios') }}
-  </Boton>
+  <div v-else>
+    <Title>
+      {{ $t('NotLogged') }}
+    </Title>
+    <Boton
+      type="rounded-blue"
+      style="margin-top: 5%;display: flex;"
+      @click="router.push('/login')">
+      {{ $t('iniciaSesion') }}
+    </Boton>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -63,6 +76,7 @@ import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
 import { CategoryEnum } from '@/api';
+import { auth } from '@/store/auth';
 
 const router = useRouter();
 
