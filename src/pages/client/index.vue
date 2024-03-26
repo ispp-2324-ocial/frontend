@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="auth.isLoggedIn.value && auth.isClient.value">
     <div
       style="justify-content: center; display: flex; margin-top: 10%;"
       @click="router.push('/client/createEvent')">
@@ -27,7 +27,7 @@
             @click="router.push('/client/events')">
             <div style=" cursor: pointer;margin:auto; text-align: center;display: flex; align-items: center; justify-content: left;">
               <img
-                alt="Event image"
+                alt="Event"
                 src="@/assets/images/temp/yoga.png"
                 style="display: block; width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px;" />
               <div
@@ -51,12 +51,24 @@
       </ul>
     </div>
   </div>
+  <div v-else>
+    <Title>
+      {{ $t('NotLogged') }}
+    </Title>
+    <Boton
+      type="rounded-blue"
+      style="margin-top: 5%;display: flex;"
+      @click="router.push('/login')">
+      {{ $t('iniciaSesion') }}
+    </Boton>
+  </div>
 </template>
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router/auto';
 import { EventApi } from '@/api';
 import { useEvent } from '@/composables/apis';
+import { auth } from '@/store/auth';
 
 const router = useRouter();
 

@@ -4,6 +4,8 @@
   "Error al obtener la ubicación": "Error at finding your location",
   "Evento": "Event",
   "La geolocalización no es soportada por tu navegador": "Geolocation is not supported by your browser",
+  "NotLogged": "You are not logged as a client. You are not allowed to enter this page.",
+  "NotLoggedUser": "You are not logged as a user. You are not allowed to enter this page.",
   "Notificación": "Notification",
   "Tu ubicación": "Your location",
   "basico": "basic",
