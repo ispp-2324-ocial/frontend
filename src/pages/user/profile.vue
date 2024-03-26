@@ -84,12 +84,6 @@ async function Logout() : Promise<void> {
 </script>
 
 <style scoped>
-.center {
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
-  width: 50%;
-}
 .elemento {
   font-size: clamp(15px, 5.5vw, 30px);
   font-weight: normal;
