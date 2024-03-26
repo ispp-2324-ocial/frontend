@@ -54,11 +54,30 @@
       </Boton>
     </div>
   </div>
+  <div
+    class="mb-7"
+    style="width: 100%; margin-top: 30%;">
+    <div
+      style="justify-content: center; display: flex;"
+      @click=Logout()>
+      <Boton
+        type="rounded-blue"
+        class="ocial-button"
+        style="width: 80%; padding-top: 1vh; padding-bottom: 1vh;">
+        <div>
+          <p>
+            {{ $t('CerrarSesión') }}
+          </p>
+        </div>
+      </Boton>
+    </div>
+  </div>
 </template>
 
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router/auto';
+import { auth } from '@/store/auth';
 
 const router = useRouter();
 
@@ -71,6 +90,11 @@ const carProfile = [
     tipoCliente: 'Eventos y conciertos'
   }
 ];
+
+async function Logout() : Promise<void> {
+  auth.logout();
+  router.push('/login');
+}
 
 </script>
 
