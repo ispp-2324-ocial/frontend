@@ -14,7 +14,7 @@
                 {{ item.username }}
               </Title>
               <img
-                alt="Event image"
+                alt="Event"
                 src="@/assets/images/temp/alamillo.png"
                 class="center"
                 style="margin-bottom: 7% ;display: block; width: 40%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px" />
