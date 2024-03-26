@@ -11,48 +11,19 @@
               class="ml-3"
               style="text-align: left; width: 100%;">
               <Title>
-                {{ item.username }}
+                {{ item.name }}
               </Title>
-              <img
-                alt="Event image"
-                src="@/assets/images/temp/alamillo.png"
-                class="center"
-                style="margin-bottom: 7% ;display: block; width: 40%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px" />
-              <p class="elemento">
-                <b>{{ item.name }}</b>
-              </p>
               <p class="elemento">
                 <b>{{ $t('email:') }}</b> {{ item.email }}
               </p>
               <p class="elemento">
                 <b>{{ $t('localidad:' ) }}</b> {{ item.city }}
               </p>
-              <p class="elemento">
-                <b>{{ $t('organiza:' ) }}</b> {{ item.tipoCliente }}
-              </p>
             </div>
           </div>
         </div>
       </li>
     </ul>
-  </div>
-  <div
-    class="mb-7"
-    style="width: 100%;">
-    <div
-      style="justify-content: center; display: flex;"
-      @click="router.push('/client/subscription')">
-      <Boton
-        type="rounded-blue"
-        class="ocial-button"
-        style="width: 80%; padding-top: 1vh; padding-bottom: 1vh;">
-        <div>
-          <p>
-            {{ $t('comprobarSuscripcion') }}
-          </p>
-        </div>
-      </Boton>
-    </div>
   </div>
   <div
     class="mb-7"
@@ -84,15 +55,13 @@ const router = useRouter();
 const carProfile = [
   {
     name: 'Marta García Gómez',
-    username: 'Alamillo Eventos',
     email: ' alamillo@local.jccm.es',
-    city: 'Sevilla',
-    tipoCliente: 'Eventos y conciertos'
+    city: 'Sevilla'
   }
 ];
 
 /**
- * Cerrar sesion cliente
+ * Cerrar sesion usuario
  */
 function Logout() : void {
   auth.logout();
