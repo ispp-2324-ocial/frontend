@@ -56,7 +56,7 @@
   </div>
   <div
     class="mb-7"
-    style="width: 100%; margin-top: 30%;">
+    style="width: 100%;">
     <div
       style="justify-content: center; display: flex;"
       @click="Logout()">
@@ -66,7 +66,7 @@
         style="width: 80%; padding-top: 1vh; padding-bottom: 1vh;">
         <div>
           <p>
-            {{ $t('CerrarSesión') }}
+            {{ $t('cerrarsesion') }}
           </p>
         </div>
       </Boton>
