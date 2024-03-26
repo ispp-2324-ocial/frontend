@@ -58,7 +58,7 @@ async function Login() : Promise<void> {
 };
 
 const placeholders = computed(() =>
-  [t('placeholderEmail'),
+  [t('placeholderUsername'),
    t('placeholderContra')]);
 </script>
 
