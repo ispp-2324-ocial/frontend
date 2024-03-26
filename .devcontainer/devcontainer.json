@@ -19,7 +19,8 @@
     "npm": "npm ci --no-audit",
     "no-yarn": "unset YARN_VERSION && rm -rf /opt/yarn*",
     "use-bash": "rm -rf /bin/sh && ln -s /bin/bash /bin/sh",
-    "git-config": "git config --global core.editor 'code --wait'"
+    "git-config": "git config --global core.editor 'code --wait'",
+    "api-clone": "git submodule init && git submodule update"
   },
   "postAttachCommand": "cat .vscode/extensions.json | jq -r .recommendations[] | xargs -n 1 code --install-extension",
   "hostRequirements": { "cpus": 4, "memory": "8gb" }
