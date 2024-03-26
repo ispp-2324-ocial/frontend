@@ -1,5 +1,5 @@
 <template>
-  <div class="input-wrap">
+  <div :class="styleType">
     <label>{{ label }}</label>
     <input
       v-model="value"
@@ -13,7 +13,6 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { isStr } from '@/utils/validation';
-
 
 const props = defineProps({
   label: {
@@ -31,6 +30,10 @@ const props = defineProps({
   tipo: {
     type: String,
     default: 'text'
+  },
+  styleType: {
+    type: String,
+    default: 'inputWrap'
   }
 });
 
@@ -51,7 +54,7 @@ const cssColor = computed(()=> validate.value || value.value === '' ? 'var(--o-c
   border-color: v-bind(cssColor);
 }
 
-.input-wrap {
+.inputWrap {
     display: flex;
     flex-direction: column;
 
@@ -59,5 +62,22 @@ const cssColor = computed(()=> validate.value || value.value === '' ? 'var(--o-c
       padding: 8px 12px;
       font-size: 16px;
     }
+}
+
+.authInputWrap {
+  display: flex;
+  flex-direction: column;
+
+  input {
+    padding: 15px;
+    font-size: 16px;
+    border: 2px solid #3e80d7;
+    border-radius: 15px;
+    margin-bottom: 1vh;
+    outline: 0;
+    background: #ffffff;
+    width: 100%;
+    box-sizing: border-box;
+  }
 }
 </style>
