@@ -89,17 +89,25 @@ async function createAcc() : Promise<void> {
 
   const { data: UserCreated} = await useApi(UsersApi, 'usersClientRegisterCreate')(() => ({
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+>>>>>>> d718bd3 (feat: traducciones)
     client: {
       'password': ocialClientDetail.value.password,
       'email': ocialClientDetail.value.email,
       'username': ocialClientDetail.value.username,
       'name': ocialClientDetail.value.name,
       'identification_document': ocialClientDetail.value.dni,
+<<<<<<< HEAD
       'typeClient': TypeClientEnum._0,
+=======
+      'typeClient': ocialClientDetail.value.category,
+>>>>>>> d718bd3 (feat: traducciones)
       'default_latitude': 0,
       'default_longitude': 0,
       'usuario': 0
     }
+<<<<<<< HEAD
 =======
   client: {
   "password": ocialClientDetail.value.password,
@@ -113,6 +121,8 @@ async function createAcc() : Promise<void> {
   "usuario": 0
   }
 >>>>>>> 6cde836 (chore: Refactorizacion clases)
+=======
+>>>>>>> d718bd3 (feat: traducciones)
   }));
 
   console.log(UserCreated.value);
