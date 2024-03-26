@@ -37,7 +37,7 @@
         style="width: 80%; padding-top: 1vh; padding-bottom: 1vh;">
         <div>
           <p>
-            {{ $t('CerrarSesión') }}
+            {{ $t('cerrarsesion') }}
           </p>
         </div>
       </Boton>
