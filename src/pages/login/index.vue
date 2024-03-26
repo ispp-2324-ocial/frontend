@@ -1,13 +1,13 @@
 <template>
   <form @submit.prevent="()=>{}">
     <BaseInput
+      v-model="username"
       class="input"
       tipo="text"
-      v-model="username"
       :placeholder="placeholders[0]" />
     <BaseInput
-      tipo="password"
       v-model="password"
+      tipo="password"
       :placeholder="placeholders[1]" />
     <Boton type="auth">
       <div @click="Login()">
@@ -41,13 +41,17 @@ const { t } = useI18n();
 const username = ref('');
 const password = ref('');
 
+/**
+ * Login de usuario y cliente
+ */
 async function Login() : Promise<void> {
   const {data: UserCreated} = await useApi(UsersApi, 'usersLoginCreate')(() => ({
-  loginUser: {
-  "username": username.value,
-  "password": password.value,
-  },
+    loginUser: {
+      'username': username.value,
+      'password': password.value
+    }
   }));
+
   auth.authenticate(username.value, UserCreated.value.isClient, UserCreated.value.token);
   console.log(auth.token.value);
   router.push('/map');
