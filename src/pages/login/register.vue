@@ -1,20 +1,20 @@
 <template>
   <form @submit.prevent="()=>{}">
     <BaseInput
-      tipo="text"
       v-model="username"
+      tipo="text"
       :placeholder="placeholders[0]" />
     <BaseInput
-      tipo="email"
       v-model="email"
+      tipo="email"
       :placeholder="placeholders[1]" />
     <BaseInput
-      tipo="password"
       v-model="password"
+      tipo="password"
       :placeholder="placeholders[2]" />
     <BaseInput
-      tipo="password"
       v-model="password2"
+      tipo="password"
       :validators="[(v)=>v===password]"
       :placeholder="placeholders[3]" />
     <Boton
@@ -43,7 +43,7 @@
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
-import { UsersApi,  CategoryEnum } from '@/api';
+import { UsersApi, CategoryEnum } from '@/api';
 import { useApi } from '@/composables/apis';
 
 const username = ref('');
@@ -62,20 +62,22 @@ async function createAcc() : Promise<void> {
   if (password.value != password2.value) {
     //TO-DO error
   }
+
   const { data: UserCreated} = await useApi(UsersApi, 'usersUserRegisterCreate')(() => ({
-  user: {
-  "password": password.value,
-  "email": email.value,
-  "username": username.value,
-  //"auth_provider": "email",
-  "lastKnowLocLat": 0.,
-  "lastKnowLocLong": 0,
-  "category": CategoryEnum.NUMBER_0, //esto hay que quitarlo
-  "usuario": 1 //cambiar despues a django user
-  }
+    user: {
+      'password': password.value,
+      'email': email.value,
+      'username': username.value,
+      //"auth_provider": "email",
+      'lastKnowLocLat': 0,
+      'lastKnowLocLong': 0,
+      'category': CategoryEnum.NUMBER_0, //Esto hay que quitarlo
+      'usuario': 1 //Cambiar despues a django user
+    }
   }));
+
   console.log(UserCreated.value);
-  // autenticar al usuario registrado
+  // Autenticar al usuario registrado
   await router.push('/map');
 };
 
