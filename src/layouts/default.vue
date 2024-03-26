@@ -10,7 +10,7 @@
       <div>
         <Boton
           class="h-10vh">
-          <div @click="router.push('/client')">
+          <div @click="redirectEvent()">
             <img
               alt="Logo Ocial"
               src="@/assets/images/Ocial_Clear.png"
@@ -21,7 +21,7 @@
       <div>
         <Boton
           class="h-10vh">
-          <div @click="router.push('/map')">
+          <div @click="redirectMap()">
             <img
               alt="Mapa Claro"
               src="@/assets/images/Map_Clear.png"
@@ -32,7 +32,7 @@
       <div>
         <Boton
           class="h-10vh">
-          <div @click="router.push('/client/profile')">
+          <div @click="redirectProfile()">
             <img
               alt="Human Blue"
               src="@/assets/images/Human_Clear.png"
@@ -46,8 +46,42 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router/auto';
+import { auth } from '@/store/auth';
 
 const router = useRouter();
+
+/**
+ * Redirección botón evento
+ */
+async function redirectEvent() : Promise<void> {
+  if (auth.token.value == undefined) {
+    await router.push('/login');
+  } else if (auth.isClient.value) {
+    await router.push('/client');
+  } else {
+    await router.push('/map'); //TO-DO Debe llevarte a la vista de lista de eventos
+  }
+};
+
+/**
+ * Redirección botón mapa
+ */
+async function redirectMap() : Promise<void> {
+  await (auth.token.value == undefined ? router.push('/login') : router.push('/map'));
+};
+
+/**
+ * Redirección botón perfil
+ */
+async function redirectProfile() : Promise<void> {
+  if (auth.token.value == undefined) {
+    await router.push('/login');
+  } else if (auth.isClient.value) {
+    await router.push('/client/profile');
+  } else {
+    await router.push('/user/profile');
+  }
+};
 </script>
 
 <style scoped>
