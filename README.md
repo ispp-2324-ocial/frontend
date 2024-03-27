@@ -42,7 +42,8 @@ sudo apt install -y nodejs
   git submodule init
   git submodule update
   ```
-* Ejecutamos `npm ci` para instalar todas las dependencias (esto hay que hacerlo cada vez que se mergee un PR de `renovate`)
+* Ejecutamos `npm ci` para instalar todas las dependencias. Esto hay que hacerlo cada vez que se mergee un PR de `renovate`.
+   - Tras las actualizaciones de `renovate` que sean relacionadas con la API hay que hacer `git submodule update` para actualizar los archivos.
 * Iniciamos el servidor de desarrollo con `npm start`.
 
 ### En remoto
