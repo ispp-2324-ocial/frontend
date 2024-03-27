@@ -35,9 +35,8 @@
     <div>
       <input
         type="file"
-        multiple
         accept="image/*"
-        @change="createImage(image)" />
+        @change="handleImage" />
     </div>
     <Boton
       type="auth"
@@ -59,9 +58,9 @@
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
 import { ref, computed } from 'vue';
-import imageToBase64 from 'image-to-base64/browser';
 import { UsersApi, TypeClientEnum} from '@/api';
 import { useApi } from '@/composables/apis';
+import { isNull } from '@/utils/validation';
 
 const password2 = ref('');
 
@@ -69,7 +68,7 @@ const router = useRouter();
 
 const { t } = useI18n();
 
-const image = ref();
+const image = ref('');
 
 
 const ocialClientDetail = ref(
@@ -79,7 +78,7 @@ const ocialClientDetail = ref(
     email: '',
     dni: '',
     password: '',
-    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
     category: TypeClientEnum.Artist
   });
 
@@ -108,11 +107,11 @@ async function createAcc() : Promise<void> {
       'name': ocialClientDetail.value.name,
       'identificationDocument': ocialClientDetail.value.dni,
       'defaultLatitude': 0,
-      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+
       'typeClient': TypeClientEnum.Artist, //OcialClientDetail.value.category,
       'defaultLongitude':0,
       'djangoUser': 0,
-      'imageB64': image.value //Cambiar
+      'imageB64': image.value == undefined ? '' : image.value //Cambiar
     }
   }));
 
@@ -121,22 +120,19 @@ async function createAcc() : Promise<void> {
 };
 
 /**
- * Imagen to base64
+ * Pasar imagen del input a base64
  */
-function createImage(file: string) : void {
-  imageToBase64(file) // Path to the image
-    .then(
-      (response: any) => {
-        console.log(response);
-        image.value = response; // "cGF0aC90by9maWxlLmpwZw=="
-      }
-    )
-    .catch(
-      (error: any) => {
-        console.log(error); // Logs an error if there was one
-      }
-    );
-}
+function handleImage() : void {
+  var file = document.querySelector('input[type=file]')['files'][0];
+
+  var reader = new FileReader();
+
+  reader.addEventListener('load', () => {
+    image.value = isNull(reader.result) ? undefined : reader.result;
+
+  });
+  reader.readAsDataURL(file);
+};
 
 const placeholders = computed(() =>
   [t('placeholderUsername'),
