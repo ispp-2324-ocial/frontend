@@ -7,7 +7,6 @@ import {
 /**
  * TODO: Implementar cuando el login esté terminado
  */
-import { loginGuard } from './middlewares/login';
 import { metaGuard } from './middlewares/meta';
 import { isStr } from '@/utils/validation';
 
