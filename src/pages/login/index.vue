@@ -53,7 +53,6 @@ async function Login() : Promise<void> {
   }));
 
   auth.authenticate(username.value, UserCreated.value.isClient, UserCreated.value.token);
-  console.log(auth.token.value);
   await router.push('/map');
 };
 

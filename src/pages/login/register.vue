@@ -43,7 +43,7 @@
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
-import { UsersApi, CategoryEnum } from '@/api';
+import { UsersApi } from '@/api';
 import { useApi } from '@/composables/apis';
 
 const username = ref('');
@@ -54,31 +54,26 @@ const email = ref('');
 const router = useRouter();
 
 /**
- * Esta función guarda la información en la base de datos y luego redirige a otra vista
- * Cuando se fusione con back hay que añadir en la primera línea este código
- * This.finds.push({ value: '' });
+ * Esta función crea un usuario
  */
 async function createAcc() : Promise<void> {
-  if (password.value != password2.value) {
-    //TO-DO error
+  if (password.value == password2.value) {
+    const { data: UserCreated} = await useApi(UsersApi, 'usersUserRegisterCreate')(() => ({
+      user: {
+        'password': password.value,
+        'email': email.value,
+        'username': username.value,
+        'lastKnowLocLat': 0, //TO-DO mejorar
+        'lastKnowLocLong': 0,
+        'djangoUser': 1
+      }
+    }));
+
+    await router.push('/login');
+  } else {
+    //TO-DO error, contraseña no iguales
   }
 
-  const { data: UserCreated} = await useApi(UsersApi, 'usersUserRegisterCreate')(() => ({
-    user: {
-      'password': password.value,
-      'email': email.value,
-      'username': username.value,
-      //"auth_provider": "email",
-      'lastKnowLocLat': 0,
-      'lastKnowLocLong': 0,
-      'category': CategoryEnum.NUMBER_0, //Esto hay que quitarlo
-      'usuario': 1 //Cambiar despues a django user
-    }
-  }));
-
-  console.log(UserCreated.value);
-  // Autenticar al usuario registrado
-  await router.push('/map');
 };
 
 const { t } = useI18n();

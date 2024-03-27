@@ -23,7 +23,7 @@
     <BaseInput
       v-model="password2"
       tipo="password"
-      :validators="[(v)=>v===ocialClientDetail.password]"
+      :validators="[(v: string)=>v===ocialClientDetail.password]"
       :placeholder="placeholders[5]" />
     <select v-model="ocialClientDetail.category">
       <option
@@ -32,6 +32,13 @@
         {{ categorias[indice] }}
       </option>
     </select>
+    <div>
+      <input
+        type="file"
+        multiple
+        accept="image/*"
+        @change="createImage(image)" />
+    </div>
     <Boton
       type="auth"
       @click="createAcc()">
@@ -52,6 +59,7 @@
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
 import { ref, computed } from 'vue';
+import imageToBase64 from 'image-to-base64/browser';
 import { UsersApi, TypeClientEnum} from '@/api';
 import { useApi } from '@/composables/apis';
 
@@ -61,6 +69,9 @@ const router = useRouter();
 
 const { t } = useI18n();
 
+const image = ref();
+
+
 const ocialClientDetail = ref(
   {
     username: '',
@@ -68,17 +79,18 @@ const ocialClientDetail = ref(
     email: '',
     dni: '',
     password: '',
-    category: TypeClientEnum._0
+    // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+    category: TypeClientEnum.Artist
   });
 
-const cateEnum = [CategoryEnum.Sports, CategoryEnum.Music, CategoryEnum.Markets, CategoryEnum.RelaxActivities, CategoryEnum.LiveConcert];
+const cateEnum = [TypeClientEnum.Artist, TypeClientEnum.BarRestaurant, TypeClientEnum.EventsAndConcerts, TypeClientEnum.LocalGuide, TypeClientEnum.SmallBusiness];
 
 const categorias = computed(() =>
-  [t('categoryDeporte'),
-   t('categoryMusica'),
-   t('categoryMercado'),
-   t('categoryRelax'),
-   t('categoryConcierto')]);
+  [t('categoryArtist'),
+   t('categoryBarRestaurant'),
+   t('categoryEventsAndConcerts'),
+   t('categoryLocalGuide'),
+   t('categorySmallBusiness')]);
 
 /**
  * Esta función guarda la información en la base de datos y luego redirige a otra vista
@@ -86,49 +98,45 @@ const categorias = computed(() =>
  * This.finds.push({ value: '' });
  */
 async function createAcc() : Promise<void> {
+  console.log(image.value);
 
   const { data: UserCreated} = await useApi(UsersApi, 'usersClientRegisterCreate')(() => ({
-<<<<<<< HEAD
-<<<<<<< HEAD
-=======
->>>>>>> d718bd3 (feat: traducciones)
     client: {
       'password': ocialClientDetail.value.password,
       'email': ocialClientDetail.value.email,
       'username': ocialClientDetail.value.username,
       'name': ocialClientDetail.value.name,
-      'identification_document': ocialClientDetail.value.dni,
-<<<<<<< HEAD
-      'typeClient': TypeClientEnum._0,
-=======
-      'typeClient': ocialClientDetail.value.category,
->>>>>>> d718bd3 (feat: traducciones)
-      'default_latitude': 0,
-      'default_longitude': 0,
-      'usuario': 0
+      'identificationDocument': ocialClientDetail.value.dni,
+      'defaultLatitude': 0,
+      // eslint-disable-next-line @typescript-eslint/no-unsafe-assignment
+      'typeClient': TypeClientEnum.Artist, //OcialClientDetail.value.category,
+      'defaultLongitude':0,
+      'djangoUser': 0,
+      'imageB64': image.value //Cambiar
     }
-<<<<<<< HEAD
-=======
-  client: {
-  "password": ocialClientDetail.value.password,
-  "email": ocialClientDetail.value.email,
-  "username": ocialClientDetail.value.username,
-  "name": ocialClientDetail.value.name,
-  "identification_document": ocialClientDetail.value.dni,
-  "typeClient": ocialClientDetail.value.category,
-  "default_latitude": 0,
-  "default_longitude": 0,
-  "usuario": 0
-  }
->>>>>>> 6cde836 (chore: Refactorizacion clases)
-=======
->>>>>>> d718bd3 (feat: traducciones)
   }));
 
-  console.log(UserCreated.value);
   // Autenticar al cliente
-  await router.push('/client/createEvent');
+  await router.push('/login');
 };
+
+/**
+ * Imagen to base64
+ */
+function createImage(file: string) : void {
+  imageToBase64(file) // Path to the image
+    .then(
+      (response: any) => {
+        console.log(response);
+        image.value = response; // "cGF0aC90by9maWxlLmpwZw=="
+      }
+    )
+    .catch(
+      (error: any) => {
+        console.log(error); // Logs an error if there was one
+      }
+    );
+}
 
 const placeholders = computed(() =>
   [t('placeholderUsername'),
