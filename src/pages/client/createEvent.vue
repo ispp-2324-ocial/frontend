@@ -80,7 +80,7 @@ const eventDetail = ref([
     category: ''
   }]);
 
-const cateEnum = [CategoryEnum.NUMBER_0, CategoryEnum.NUMBER_1, CategoryEnum.NUMBER_2, CategoryEnum.NUMBER_3, CategoryEnum.NUMBER_4];
+const cateEnum = [CategoryEnum.Sports, CategoryEnum.Music, CategoryEnum.Markets, CategoryEnum.RelaxActivities, CategoryEnum.LiveConcert];
 
 const categorias = computed(() =>
   [t('categoryDeporte'),
