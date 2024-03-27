@@ -7,7 +7,7 @@ import {
 /**
  * TODO: Implementar cuando el login esté terminado
  */
-// Import { loginGuard } from './middlewares/login';
+import { loginGuard } from './middlewares/login';
 import { metaGuard } from './middlewares/meta';
 import { isStr } from '@/utils/validation';
 
@@ -27,9 +27,6 @@ export const router = createRouter({
  * Cada uno de ellos se ejecutará antes de que accedamos a una ruta.
  */
 router.beforeEach(metaGuard);
-/**
- * TODO: Reimplementar, de forma que se redirija a la página de inicio si no se ha iniciado sesión
- */
 // Router.beforeEach(loginGuard);
 
 /**
