@@ -34,7 +34,8 @@
     <select v-model="ocialClientDetail.category">
       <option
         v-for="(category,indice) in cateEnum"
-        :key="category">
+        :key="category"
+        :value="category">
         {{ categorias[indice] }}
       </option>
     </select>
