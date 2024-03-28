@@ -60,7 +60,7 @@ import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
 import { z } from 'zod';
-import useValidation from '@/pages/login/useValidation';
+import useValidation from '@/utils/useValidation';
 import { UsersApi } from '@/api';
 import { useApi } from '@/composables/apis';
 
@@ -85,8 +85,6 @@ const { validate, isValid, getError, scrolltoError } = useValidation(validationS
   mode: 'lazy'
 });
 
-const password = ref('');
-
 const router = useRouter();
 
 /**
@@ -97,7 +95,7 @@ async function createAcc() : Promise<void> {
   await validate();
 
   if (isValid.value) {
-    await useApi(UsersApi, 'usersUserRegisterCreate')(() => ({
+    const { response: r } = await useApi(UsersApi, 'usersUserRegisterCreate')(() => ({
       user: {
         'password': form.value.password,
         'email': form.value.email,
@@ -107,6 +105,8 @@ async function createAcc() : Promise<void> {
         'djangoUser': 1
       }
     }));
+
+    console.log(r.value); //Sigue sin pasar por aqui y no puedo comprobar el error
 
     await router.push('/login');
   } else {
