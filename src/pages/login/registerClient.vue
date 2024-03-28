@@ -3,26 +3,32 @@
     <BaseInput
       v-model="ocialClientDetail.username"
       tipo="text"
+      :is-required="true"
       :placeholder="placeholders[0]" />
     <BaseInput
       v-model="ocialClientDetail.name"
       tipo="text"
+      :is-required="true"
       :placeholder="placeholders[1]" />
     <BaseInput
       v-model="ocialClientDetail.email"
       tipo="email"
+      :is-required="true"
       :placeholder="placeholders[2]" />
     <BaseInput
       v-model="ocialClientDetail.dni"
       tipo="dni"
+      :is-required="true"
       :placeholder="placeholders[3]" />
     <BaseInput
       v-model="ocialClientDetail.password"
       tipo="password"
+      :is-required="true"
       :placeholder="placeholders[4]" />
     <BaseInput
       v-model="password2"
       tipo="password"
+      :is-required="true"
       :validators="[(v: string)=>v===ocialClientDetail.password]"
       :placeholder="placeholders[5]" />
     <select v-model="ocialClientDetail.category">
@@ -78,7 +84,6 @@ const ocialClientDetail = ref(
     email: '',
     dni: '',
     password: '',
-
     category: TypeClientEnum.Artist
   });
 
@@ -97,26 +102,29 @@ const categorias = computed(() =>
  * This.finds.push({ value: '' });
  */
 async function createAcc() : Promise<void> {
-  console.log(image.value);
 
-  const { data: UserCreated} = await useApi(UsersApi, 'usersClientRegisterCreate')(() => ({
-    client: {
-      'password': ocialClientDetail.value.password,
-      'email': ocialClientDetail.value.email,
-      'username': ocialClientDetail.value.username,
-      'name': ocialClientDetail.value.name,
-      'identificationDocument': ocialClientDetail.value.dni,
-      'defaultLatitude': 0,
+  if (ocialClientDetail.value.password.value == password2.value && ocialClientDetail.value.username.value != '' &&
+    ocialClientDetail.value.password.value != '' && ocialClientDetail.value.dni.value != '' &&
+    /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(ocialClientDetail.value.email.value)) {
+    const { data: UserCreated} = await useApi(UsersApi, 'usersClientRegisterCreate')(() => ({
+      client: {
+        'password': ocialClientDetail.value.password,
+        'email': ocialClientDetail.value.email,
+        'username': ocialClientDetail.value.username,
+        'name': ocialClientDetail.value.name,
+        'identificationDocument': ocialClientDetail.value.dni,
+        'defaultLatitude': 0,
+        'typeClient': TypeClientEnum.Artist, //OcialClientDetail.value.category,
+        'defaultLongitude':0,
+        'djangoUser': 0,
+        'imageB64': image.value == undefined ? '' : image.value //Cambiar
+      }
+    }));
 
-      'typeClient': TypeClientEnum.Artist, //OcialClientDetail.value.category,
-      'defaultLongitude':0,
-      'djangoUser': 0,
-      'imageB64': image.value == undefined ? '' : image.value //Cambiar
-    }
-  }));
+    // Autenticar al cliente
+    await router.push('/login');
 
-  // Autenticar al cliente
-  await router.push('/login');
+  }
 };
 
 /**

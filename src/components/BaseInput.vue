@@ -5,6 +5,7 @@
       v-model="value"
       v-bind="$attrs"
       :type="tipo"
+      :required="isRequired"
       class="validate-style rounded-xl border focus-visible:outline-none"
       :placeholder="placeholder" />
   </div>
@@ -31,6 +32,10 @@ const props = defineProps({
   tipo: {
     type: String,
     default: 'text'
+  },
+  isRequired: {
+    type: Boolean,
+    default: false
   }
 });
 
