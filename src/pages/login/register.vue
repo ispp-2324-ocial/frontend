@@ -6,7 +6,7 @@
       :is-required="true"
       :placeholder="placeholders[0]" />
     <div class="error">
-      {{ getError('name') }}
+      {{ getError('username') }}
     </div>
     <BaseInput
       v-model="form.email"
@@ -118,7 +118,7 @@ async function createAcc() : Promise<void> {
 };
 
 const placeholders = computed(() =>
-  [t('placeholderNombre'),
+  [t('placeholderUsername'),
    t('placeholderEmail'),
    t('placeholderContra'),
    t('placeholderConfirmarContra')]);
