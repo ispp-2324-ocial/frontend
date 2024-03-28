@@ -62,8 +62,8 @@ const router = useRouter();
  */
 async function createAcc() : Promise<void> {
 
-  if (password.value == password2.value && username.value != '' && password.value != '' && /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email.value)) {
-    const { data: UserCreated} = await useApi(UsersApi, 'usersUserRegisterCreate')(() => ({
+  if (password.value == password2.value && username.value != '' && password.value != '' && email.value != '') { //TO-DO camabiar validacion
+    await useApi(UsersApi, 'usersUserRegisterCreate')(() => ({
       user: {
         'password': password.value,
         'email': email.value,
