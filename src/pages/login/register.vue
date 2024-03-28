@@ -64,13 +64,15 @@ import useValidation from '@/utils/useValidation';
 import { UsersApi } from '@/api';
 import { useApi } from '@/composables/apis';
 
+const { t } = useI18n();
+
 const validationSchema = z.object({
-  username: z.string().min(1, 'The name field is required'),
-  password: z.string().min(8, 'Please enter a valid password'),
-  password2: z.string().min(8, 'Please enter a valid password'),
-  email: z.string().email('Please enter a valid email')
+  username: z.string().min(1, t('usernameRequired')),
+  password: z.string().min(8, t('validPassword')),
+  password2: z.string().min(8, t('validPassword')),
+  email: z.string().email(t('validEmail'))
 }).refine((data) => data.password === data.password2, {
-  message: "Passwords don't match",
+  message: t('passwordMatch'),
   path: ['password2']
 });
 
@@ -114,8 +116,6 @@ async function createAcc() : Promise<void> {
   }
 
 };
-
-const { t } = useI18n();
 
 const placeholders = computed(() =>
   [t('placeholderNombre'),
