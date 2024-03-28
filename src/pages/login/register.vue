@@ -1,16 +1,25 @@
 <template>
-  <form>
+  <form @submit.prevent="() => {}">
     <BaseInput
+      v-model="username"
       tipo="text"
+      :is-required="true"
       :placeholder="placeholders[0]" />
     <BaseInput
+      v-model="email"
+      :is-required="true"
       tipo="email"
       :placeholder="placeholders[1]" />
     <BaseInput
+      v-model="password"
       tipo="password"
+      :is-required="true"
       :placeholder="placeholders[2]" />
     <BaseInput
+      v-model="password2"
       tipo="password"
+      :is-required="true"
+      :validators="[(v)=>v===password]"
       :placeholder="placeholders[3]" />
     <Boton
       class="boton"
@@ -35,19 +44,39 @@
 </route>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
+import { UsersApi } from '@/api';
+import { useApi } from '@/composables/apis';
+
+const username = ref('');
+const password = ref('');
+const password2 = ref('');
+const email = ref('');
 
 const router = useRouter();
 
 /**
- * Esta función guarda la información en la base de datos y luego redirige a otra vista
- * Cuando se fusione con back hay que añadir en la primera línea este código
- * This.finds.push({ value: '' });
+ * Esta función crea un usuario
  */
 async function createAcc() : Promise<void> {
-  await router.push('/map');
+
+  if (password.value == password2.value && username.value != '' && password.value != '' && email.value != '') { //TO-DO camabiar validacion
+    await useApi(UsersApi, 'usersUserRegisterCreate')(() => ({
+      user: {
+        'password': password.value,
+        'email': email.value,
+        'username': username.value,
+        'lastKnowLocLat': 0, //TO-DO mejorar
+        'lastKnowLocLong': 0,
+        'djangoUser': 1
+      }
+    }));
+
+    await router.push('/login');
+  }
+
 };
 
 const { t } = useI18n();

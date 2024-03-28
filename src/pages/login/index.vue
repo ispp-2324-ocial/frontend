@@ -1,14 +1,16 @@
 <template>
-  <form>
+  <form @submit.prevent="()=>{}">
     <BaseInput
+      v-model="username"
       class="input"
       tipo="text"
       :placeholder="placeholders[0]" />
     <BaseInput
+      v-model="password"
       tipo="password"
       :placeholder="placeholders[1]" />
     <Boton type="auth">
-      <div @click="router.push('/map')">
+      <div @click="Login()">
         {{ $t('iniciarSesion') }}
       </div>
     </Boton>
@@ -25,16 +27,37 @@
 </route>
 
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
+import { UsersApi } from '@/api';
+import { useApi } from '@/composables/apis';
+import { auth } from '@/store/auth';
 
 const router = useRouter();
 
 const { t } = useI18n();
 
+const username = ref('');
+const password = ref('');
+
+/**
+ * Login de usuario y cliente
+ */
+async function Login() : Promise<void> {
+  const {data: UserCreated} = await useApi(UsersApi, 'usersLoginCreate')(() => ({
+    loginUser: {
+      'username': username.value,
+      'password': password.value
+    }
+  }));
+
+  auth.authenticate(username.value, UserCreated.value.isClient, UserCreated.value.token);
+  await router.push('/map');
+};
+
 const placeholders = computed(() =>
-  [t('placeholderEmail'),
+  [t('placeholderUsername'),
    t('placeholderContra')]);
 </script>
 

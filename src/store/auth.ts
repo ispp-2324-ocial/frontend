@@ -56,19 +56,14 @@ class AuthStore {
 
   public readonly isLoggedIn = computed(() => Boolean(this._state.value.token));
 
-  public authenticate = (): void => {
-    // Todo: lógica de login call backend
-    const response = {
-      name: 'nombre',
-      id: 1,
-      isClient: true,
-      token: 'token'
-    };
+  public readonly token = computed(() => this._state.value.token);
 
-    this._state.value.name = response.name;
-    this._state.value.id = response.id;
-    this._state.value.isClient = response.isClient;
-    this._state.value.token = response.token;
+  public authenticate = (username: string, isClient: boolean, token: string | undefined): void => {
+    // Todo: lógica de login call backend
+    this._state.value.name = username;
+    this._state.value.id = 0; // Cambiar
+    this._state.value.isClient = isClient;
+    this._state.value.token = token;
   };
 
   public logout = (): void => {
