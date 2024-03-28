@@ -1,26 +1,38 @@
 <template>
   <form @submit.prevent="() => {}">
     <BaseInput
-      v-model="username"
+      v-model="form.username"
       tipo="text"
       :is-required="true"
       :placeholder="placeholders[0]" />
+    <div class="error">
+      {{ getError('name') }}
+    </div>
     <BaseInput
-      v-model="email"
+      v-model="form.email"
       :is-required="true"
       tipo="email"
       :placeholder="placeholders[1]" />
+    <div class="error">
+      {{ getError('email') }}
+    </div>
     <BaseInput
-      v-model="password"
+      v-model="form.password"
       tipo="password"
       :is-required="true"
       :placeholder="placeholders[2]" />
+    <div class="error">
+      {{ getError('password') }}
+    </div>
     <BaseInput
-      v-model="password2"
+      v-model="form.password2"
       tipo="password"
       :is-required="true"
-      :validators="[(v)=>v===password]"
+      :validators="[(v)=>v===form.password]"
       :placeholder="placeholders[3]" />
+    <div class="error">
+      {{ getError('password2') }}
+    </div>
     <Boton
       class="boton"
       type="auth"
@@ -47,13 +59,33 @@
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
+import { z } from 'zod';
+import useValidation from '@/pages/login/useValidation';
 import { UsersApi } from '@/api';
 import { useApi } from '@/composables/apis';
 
-const username = ref('');
+const validationSchema = z.object({
+  username: z.string().min(1, 'The name field is required'),
+  password: z.string().min(8, 'Please enter a valid password'),
+  password2: z.string().min(8, 'Please enter a valid password'),
+  email: z.string().email(1, 'Please enter a valid email')
+}).refine((data) => data.password === data.password2, {
+  message: "Passwords don't match",
+  path: ['password2']
+});
+
+const form = ref({
+  username: '',
+  password: '',
+  password2: '',
+  email: ''
+});
+
+const { validate, isValid, getError, scrolltoError } = useValidation(validationSchema, form, {
+  mode: 'lazy'
+});
+
 const password = ref('');
-const password2 = ref('');
-const email = ref('');
 
 const router = useRouter();
 
@@ -62,12 +94,14 @@ const router = useRouter();
  */
 async function createAcc() : Promise<void> {
 
-  if (password.value == password2.value && username.value != '' && password.value != '' && email.value != '') { //TO-DO camabiar validacion
+  await validate();
+
+  if (isValid.value) {
     await useApi(UsersApi, 'usersUserRegisterCreate')(() => ({
       user: {
-        'password': password.value,
-        'email': email.value,
-        'username': username.value,
+        'password': form.value.password,
+        'email': form.value.email,
+        'username': form.value.username,
         'lastKnowLocLat': 0, //TO-DO mejorar
         'lastKnowLocLong': 0,
         'djangoUser': 1
@@ -75,6 +109,8 @@ async function createAcc() : Promise<void> {
     }));
 
     await router.push('/login');
+  } else {
+    scrolltoError('.p-invalid', { offset: 24 });
   }
 
 };
@@ -97,6 +133,12 @@ const placeholders = computed(() =>
   color: #3e80d7;
   font-size: 14px;
   margin-top: 1.5vh;
+}
+
+.error {
+  font-size: 14px;
+  color: red;
+  margin-top: 4px;
 }
 
 .form .message a {
