@@ -7,6 +7,7 @@
       v-model="value"
       v-bind="$attrs"
       :type="tipo"
+      :required="isRequired"
       class="validate-style rounded-xl border focus-visible:outline-none"
       :placeholder="placeholder" />
   </div>
@@ -22,7 +23,8 @@ const props = withDefaults(defineProps<{
   placeholder?: string,
   tipo?: string,
   variant?: 'default' | 'auth',
-}>(), { variant: 'default' });
+  isRequired?: boolean
+}>(), { variant: 'default', isRequired: false });
 
 const value = defineModel<string>();
 const validate = computed(()=>{
