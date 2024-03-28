@@ -97,7 +97,7 @@ const validationSchema = z.object({
   name: z.string().min(1, 'The name field is required'),
   password: z.string().min(8, 'Please enter a valid password'),
   password2: z.string().min(8, 'Please enter a valid password'),
-  email: z.string().email(1, 'Please enter a valid email'),
+  email: z.string().email('Please enter a valid email'),
   dni: z.string().length(9, 'Please enter a valid documentation'),
   category: z.string().min(1, ' The category is required')
 }).refine((data) => data.password === data.password2, {
