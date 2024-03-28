@@ -1,37 +1,55 @@
 <template>
   <form @submit.prevent="()=>{}">
     <BaseInput
-      v-model="ocialClientDetail.username"
+      v-model="form.username"
       tipo="text"
       :is-required="true"
       :placeholder="placeholders[0]" />
+    <div class="error">
+      {{ getError('username') }}
+    </div>
     <BaseInput
-      v-model="ocialClientDetail.name"
+      v-model="form.name"
       tipo="text"
       :is-required="true"
       :placeholder="placeholders[1]" />
+    <div class="error">
+      {{ getError('name') }}
+    </div>
     <BaseInput
-      v-model="ocialClientDetail.email"
+      v-model="form.email"
       tipo="email"
       :is-required="true"
       :placeholder="placeholders[2]" />
+    <div class="error">
+      {{ getError('email') }}
+    </div>
     <BaseInput
-      v-model="ocialClientDetail.dni"
+      v-model="form.dni"
       tipo="dni"
       :is-required="true"
       :placeholder="placeholders[3]" />
+    <div class="error">
+      {{ getError('dni') }}
+    </div>
     <BaseInput
-      v-model="ocialClientDetail.password"
+      v-model="form.password"
       tipo="password"
       :is-required="true"
       :placeholder="placeholders[4]" />
+    <div class="error">
+      {{ getError('password') }}
+    </div>
     <BaseInput
-      v-model="password2"
+      v-model="form.password2"
       tipo="password"
       :is-required="true"
-      :validators="[(v: string)=>v===ocialClientDetail.password]"
+      :validators="[(v: string)=>v===form.password]"
       :placeholder="placeholders[5]" />
-    <select v-model="ocialClientDetail.category">
+    <div class="error">
+      {{ getError('password2') }}
+    </div>
+    <select v-model="form.category">
       <option
         v-for="(category,indice) in cateEnum"
         :key="category"
@@ -39,6 +57,9 @@
         {{ categorias[indice] }}
       </option>
     </select>
+    <div class="error">
+      {{ getError('category') }}
+    </div>
     <div>
       <input
         type="file"
@@ -65,28 +86,44 @@
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
 import { ref, computed } from 'vue';
-import { UsersApi, TypeClientEnum} from '@/api';
+import { z } from 'zod';
+import { UsersApi, TypeClientEnum } from '@/api';
 import { useApi } from '@/composables/apis';
 import { isNull } from '@/utils/validation';
+import useValidation from '@/utils/useValidation';
 
-const password2 = ref('');
+const validationSchema = z.object({
+  username: z.string().min(1, 'The username field is required'),
+  name: z.string().min(1, 'The name field is required'),
+  password: z.string().min(8, 'Please enter a valid password'),
+  password2: z.string().min(8, 'Please enter a valid password'),
+  email: z.string().email(1, 'Please enter a valid email'),
+  dni: z.string().length(9, 'Please enter a valid documentation'),
+  category: z.string().min(1, ' The category is required')
+}).refine((data) => data.password === data.password2, {
+  message: "Passwords don't match",
+  path: ['password2']
+});
+
+const form = ref({
+  username: '',
+  password: '',
+  password2: '',
+  email: '',
+  name: '',
+  dni: '',
+  category: TypeClientEnum.Artist
+});
+
+const { validate, isValid, getError, scrolltoError } = useValidation(validationSchema, form, {
+  mode: 'lazy'
+});
 
 const router = useRouter();
 
 const { t } = useI18n();
 
 const image = ref('');
-
-
-const ocialClientDetail = ref(
-  {
-    username: '',
-    name: '',
-    email: '',
-    dni: '',
-    password: '',
-    category: TypeClientEnum.Artist
-  });
 
 const cateEnum = [TypeClientEnum.Artist, TypeClientEnum.BarRestaurant, TypeClientEnum.EventsAndConcerts, TypeClientEnum.LocalGuide, TypeClientEnum.SmallBusiness];
 
@@ -104,18 +141,18 @@ const categorias = computed(() =>
  */
 async function createAcc() : Promise<void> {
 
-  if (ocialClientDetail.value.password.value == password2.value && ocialClientDetail.value.username.value != '' &&
-    ocialClientDetail.value.password.value != '' && ocialClientDetail.value.dni.value != '' &&
-    ocialClientDetail.value.email.value != '') {
+  await validate();
+
+  if (isValid.value) {
     await useApi(UsersApi, 'usersClientRegisterCreate')(() => ({
       clientCreate: {
-        'password': ocialClientDetail.value.password,
-        'email': ocialClientDetail.value.email,
-        'username': ocialClientDetail.value.username,
-        'name': ocialClientDetail.value.name,
-        'identificationDocument': ocialClientDetail.value.dni,
+        'password': form.value.password,
+        'email': form.value.email,
+        'username': form.value.username,
+        'name': form.value.name,
+        'identificationDocument': form.value.dni,
         'defaultLatitude': 0,
-        'typeClient': TypeClientEnum.Artist, //OcialClientDetail.value.category,
+        'typeClient': form.value.category, //OcialClientDetail.value.category,
         'defaultLongitude':0,
         'djangoUser': 0,
         'imageB64': image.value == undefined ? '' : image.value //Cambiar
@@ -125,6 +162,8 @@ async function createAcc() : Promise<void> {
     // Autenticar al cliente
     await router.push('/login');
 
+  } else {
+    scrolltoError('.p-invalid', { offset: 24 });
   }
 };
 
@@ -157,6 +196,12 @@ const placeholders = computed(() =>
   color: #3e80d7;
   font-size: 14px;
   margin-top: 1.5vh;
+}
+
+.error {
+  font-size: 14px;
+  color: red;
+  margin-top: 4px;
 }
 
 .form .message a {
