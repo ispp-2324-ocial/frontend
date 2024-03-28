@@ -92,16 +92,18 @@ import { useApi } from '@/composables/apis';
 import { isNull } from '@/utils/validation';
 import useValidation from '@/utils/useValidation';
 
+const { t } = useI18n();
+
 const validationSchema = z.object({
-  username: z.string().min(1, 'The username field is required'),
-  name: z.string().min(1, 'The name field is required'),
-  password: z.string().min(8, 'Please enter a valid password'),
-  password2: z.string().min(8, 'Please enter a valid password'),
-  email: z.string().email('Please enter a valid email'),
-  dni: z.string().length(9, 'Please enter a valid documentation'),
-  category: z.string().min(1, ' The category is required')
+  username: z.string().min(1, t('usernameRequired')),
+  name: z.string().min(1, t('nameRequired')),
+  password: z.string().min(8, t('validPassword')),
+  password2: z.string().min(8, t('validPassword')),
+  email: z.string().email(t('validEmail')),
+  dni: z.string().length(9, t('validDocumentation')),
+  category: z.string().min(1, t('categoryRequired'))
 }).refine((data) => data.password === data.password2, {
-  message: "Passwords don't match",
+  message: t('passwordMatch'),
   path: ['password2']
 });
 
@@ -120,8 +122,6 @@ const { validate, isValid, getError, scrolltoError } = useValidation(validationS
 });
 
 const router = useRouter();
-
-const { t } = useI18n();
 
 const image = ref('');
 
