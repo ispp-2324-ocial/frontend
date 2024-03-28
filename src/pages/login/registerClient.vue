@@ -105,9 +105,9 @@ async function createAcc() : Promise<void> {
 
   if (ocialClientDetail.value.password.value == password2.value && ocialClientDetail.value.username.value != '' &&
     ocialClientDetail.value.password.value != '' && ocialClientDetail.value.dni.value != '' &&
-    /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(ocialClientDetail.value.email.value)) {
-    const { data: UserCreated} = await useApi(UsersApi, 'usersClientRegisterCreate')(() => ({
-      client: {
+    ocialClientDetail.value.email.value != '') {
+    await useApi(UsersApi, 'usersClientRegisterCreate')(() => ({
+      clientCreate: {
         'password': ocialClientDetail.value.password,
         'email': ocialClientDetail.value.email,
         'username': ocialClientDetail.value.username,
