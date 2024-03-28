@@ -1,6 +1,6 @@
 import type { AxiosResponse } from 'axios';
 import { deepEqual } from 'fast-equals';
-import { computed, effectScope, getCurrentScope, isRef, shallowRef, toValue, unref, watch, type ComputedRef, type Ref } from 'vue';
+import { computed, effectScope, getCurrentScope, isRef, shallowRef, toValue, unref, watch, type ComputedRef, type Ref, type ShallowRef } from 'vue';
 import { base_url } from 'virtual:url';
 import AxiosPlugin from '@/plugins/remote/axios';
 /**
@@ -55,6 +55,7 @@ type MaybeReadonlyRef<T> = T | Ref<T> | ComputedRef<T>;
 interface ReturnPayload<T extends new (...args: any[]) => BaseAPI, K extends FunctionKeys<InstanceType<T>>, J extends boolean> {
   loading: Ref<boolean | undefined>,
   data: ComputedRef<ReturnData<T, K, J>>;
+  response: ShallowRef<BetterOmit<Awaited<ReturnType<KeyedFunction<InstanceType<T>, K>>>, 'data'> | undefined>;
 }
 
 interface OfflineParams<T extends new (...args: any[]) => BaseAPI, K extends FunctionKeys<InstanceType<T>>> {
@@ -132,12 +133,12 @@ async function resolveAndAdd<T extends new (...args: any[]) => BaseAPI, K extend
   api: T,
   methodName: K,
   ofEvent: boolean,
-  loading: Ref<boolean | undefined> | undefined,
+  { loadingRef, responseRef }: { loadingRef: Ref<boolean | undefined> | undefined, responseRef: ShallowRef<BetterOmit<Awaited<ReturnType<KeyedFunction<InstanceType<T>, K>>>, 'data'> | undefined> },
   stringifiedArgs: string,
   ops: Required<ComposableOps>,
   ...args: Parameters<KeyedFunction<InstanceType<T>, K>>): Promise<Awaited<ReturnType<KeyedFunction<InstanceType<T>, K>>['data']> | void> {
   try {
-    startLoading(loading, ops.globalLoading);
+    startLoading(loadingRef, ops.globalLoading);
 
     const apiInstance = new api(new Configuration(), base_url, AxiosPlugin.instance) as InstanceType<T>;
     const func = (apiInstance[methodName] as KeyedFunction<InstanceType<T>, K>).bind(apiInstance);
@@ -157,12 +158,15 @@ async function resolveAndAdd<T extends new (...args: any[]) => BaseAPI, K extend
         apiStore.requestAdd(funcName, stringifiedArgs, ofEvent, requestData);
       }
     }
+
+    delete response.data;
+    responseRef.value = response;
   } catch {
-    if (!isNil(loading)) {
-      loading.value = undefined;
+    if (!isNil(loadingRef)) {
+      loadingRef.value = undefined;
     }
 
-    stopLoading(loading, ops.globalLoading);
+    stopLoading(loadingRef, ops.globalLoading);
   }
 }
 
@@ -181,6 +185,7 @@ function _sharedInternalLogic<T extends new (...args: any[]) => BaseAPI, K exten
   const loading = shallowRef<boolean | undefined>(false);
   const argsRef = shallowRef<Parameters<KeyedFunction<InstanceType<T>, K>>>();
   const result = shallowRef<ReturnData<T, K, typeof ofEvent>>();
+  const response = shallowRef<BetterOmit<Awaited<ReturnType<KeyedFunction<InstanceType<T>, K>>>, 'data'>>();
 
   const stringArgs = computed(() => {
     return JSON.stringify(argsRef.value);
@@ -234,7 +239,9 @@ function _sharedInternalLogic<T extends new (...args: any[]) => BaseAPI, K exten
     if (argsRef.value && !onlyPending) {
       try {
         if (network.isOnline.value) {
-          const resolved = await resolveAndAdd(unrefApi, unrefMethod, ofEvent, isRefresh ? undefined : loading, stringArgs.value, ops, ...argsRef.value);
+          const resolved = await resolveAndAdd(unrefApi, unrefMethod, ofEvent,
+                                               { loadingRef: isRefresh ? undefined : loading, responseRef: response },
+                                               stringArgs.value, ops, ...argsRef.value);
 
           result.value = resolved as ReturnData<T, K, typeof ofEvent>;
         } else {
@@ -270,7 +277,7 @@ function _sharedInternalLogic<T extends new (...args: any[]) => BaseAPI, K exten
           watch(isCached, () => {
             if (isCached.value && !ops.skipCache.request) {
               scope.stop();
-              resolve({ loading, data });
+              resolve({ loading, data, response });
             }
           }, { immediate: true, flush: 'sync' });
         });
@@ -320,7 +327,7 @@ function _sharedInternalLogic<T extends new (...args: any[]) => BaseAPI, K exten
       return returnablePromise();
     }
 
-    return { loading, data };
+    return { loading, data, response };
   };
 }
 
@@ -375,6 +382,7 @@ function _sharedInternalLogic<T extends new (...args: any[]) => BaseAPI, K exten
  *   como marcar las valoraciones de un evento. El valor predeterminado es `false`.
  *   USAR CON PRECAUCIÓN, YA QUE ES MEJOR ALMACENAR EN CACHÉ SIEMPRE DE FORMA PREDETERMINADA.
  * @returns data - El `Event` o `Event[]` que se solicitó.
+ * @returns response - El objeto de tipo AxiosResponse devuelto por la solicitud.
  * @returns loading - Un ref booleano que indica si la solicitud está en progreso. Es `undefined` si ha habido un error en la solicitud
  * realizada con los parámetros actuales. En ese caso, `data` apuntará a los datos cacheados de la última solicitud correcta.
  */
@@ -437,6 +445,7 @@ export function useEvent<T extends new (...args: any[]) => BaseAPI, K extends Fu
  *   como marcar las valoraciones de un evento. El valor predeterminado es `false`.
  *   USAR CON PRECAUCIÓN, YA QUE ES MEJOR ALMACENAR EN CACHÉ SIEMPRE DE FORMA PREDETERMINADA.
  * @returns data - Los datos de la solicitud.
+ * @returns response - El objeto de tipo AxiosResponse devuelto por la solicitud.
  * @returns loading - Un ref booleano que indica si la solicitud está en progreso. Es `undefined` si ha habido un error en la solicitud
  * realizada con los parámetros actuales. En ese caso, `data` apuntará a los datos cacheados de la última solicitud correcta.
  */
