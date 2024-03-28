@@ -14,9 +14,9 @@
                 </Title>
                 <img
                   alt="Event"
-                  src="@/assets/images/temp/yoga.png"
+                  :src="eventDetail.image?.image"
                   class="center"
-                  style="display: block; width: 40%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px" />
+                  style="display: block; width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px;" />
                 <p
                   class="elemento"
                   style="margin-top: 7%;">
@@ -28,13 +28,19 @@
                   <b>{{ $t('lugar:') }}</b>&nbsp;{{ $t('lugar', {place: eventDetail.place} ) }}
                 </p>
                 <p class="elemento">
-                  <b>{{ $t('fecha:') }}</b>&nbsp;{{ $t('fecha', {date: eventDetail.date, hour: eventDetail.hour } ) }}
+                  <b>{{ $t('StartDate:') }}</b>&nbsp;{{ $t('fecha', {date: eventDetail.timeStart?.split('T')[0], hour: eventDetail.timeStart?.split('T')[1].split('.')[0].slice(0,5)} ) }}
+                </p>
+                <p class="elemento">
+                  <b>{{ $t('EndDate:') }}</b>&nbsp;{{ $t('fecha', {date: eventDetail.timeEnd?.split('T')[0], hour: eventDetail.timeEnd?.split('T')[1].split('.')[0].slice(0,5)} ) }}
                 </p>
                 <p class="elemento">
                   <b>{{ $t('capacidad:') }}</b>&nbsp;{{ eventDetail.capacity }}
                 </p>
                 <p class="elemento">
                   <b>{{ $t('categoria:') }}</b>&nbsp;{{ eventDetail.category }}
+                </p>
+                <p class="elemento">
+                  <b>{{ $t('client:') }}</b>&nbsp;{{ nameClient }}
                 </p>
               </div>
             </div>
@@ -46,6 +52,7 @@
       class="mb-7"
       style="width: 100%;">
       <div
+        v-if="auth.isLoggedIn.value && auth.isClient.value"
         style="justify-content: center; display: flex;"
         @click="router.push('/client/editEvent')">
         <Boton
@@ -57,6 +64,23 @@
             </p>
           </div>
         </Boton>
+      </div>
+      <div
+        class="mb-7"
+        style="width: 100%;">
+        <div
+          style="justify-content: center; display: flex;"
+          @click="router.push('/client/editEvent')">
+          <Boton
+            type="rounded-blue"
+            style="width: 80%; padding-top: 1vh; padding-bottom: 1vh;">
+            <div>
+              <p>
+                {{ $t('editarEvento') }}
+              </p>
+            </div>
+          </Boton>
+        </div>
       </div>
     </div>
   </div>
@@ -76,9 +100,10 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router/auto';
-import { EventApi } from '@/api';
-import { useEvent } from '@/composables/apis';
+import { EventApi , UsersApi } from '@/api';
+import { useEvent , useApi } from '@/composables/apis';
 import { auth } from '@/store/auth';
+
 
 const router = useRouter();
 
@@ -86,8 +111,20 @@ const router = useRouter();
  *TODO: pasar a eventListClientList cuando funcione el general
  */
 const { data: eventList } = await useEvent(EventApi, 'eventListList')();
-
 const eventDetail = eventList.value[0];
+
+const { data: ocialClient } = await useEvent(EventApi, 'eventClientRetrieve')(() => ({
+  'id': eventDetail.id
+}));
+const nameClient = ocialClient.value.name;
+
+if (auth.isLoggedIn.value) {
+  const { data: loggedClient } = await useApi(UsersApi, 'usersClientGetList')();
+
+  console.log(loggedClient.value);
+  console.log(loggedClient.value[0]);
+} else {}
+
 
 </script>
 
