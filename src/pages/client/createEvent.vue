@@ -12,52 +12,63 @@
       <div v-for="(event, index) in eventDetail">
         <BaseInput
           :key="index"
-          v-model="event.name"
+          v-model="eventDetail.name"
           class="input-box"
           :placeholder="placeholders[0]" />
         <BaseInput
           :key="index"
-          v-model="event.place"
+          v-model="eventDetail.place"
           class="input-box"
           :placeholder="placeholders[1]" />
         <BaseInput
           :key="index"
-          v-model="event.event"
+          v-model="eventDetail.event"
           class="input-box"
           :placeholder="placeholders[2]" />
         <BaseInput
           :key="index"
-          v-model="event.date"
+          v-model="eventDetail.timeStart"
           class="input-box"
-          tipo="date" />
+          tipo="datetime-local" />
         <BaseInput
           :key="index"
-          v-model="event.hour"
+          v-model="eventDetail.timeEnd"
           class="input-box"
-          tipo="time" />
+          tipo="datetime-local" />
         <BaseInput
           :key="index"
-          v-model="event.capacity"
+          v-model="eventDetail.capacity"
           class="input-box"
           tipo="number"
           :placeholder="placeholders[3]" />
         <select
-          v-model="event.category"
+          v-model="eventDetail.category"
           class="input-box">
           <option
             v-for="(category,indice) in cateEnum"
-            :key="category">
+            :key="category"
+            :value="category">
             {{ categorias[indice] }}
           </option>
         </select>
+        <div>
+          <input
+            type="file"
+            accept="image/*"
+            @change="handleImage" />
+        </div>
+        <div
+          id="map"
+          style="height: 300px;" />
+        <div />
       </div>
+      <Boton
+        type="rounded-blue"
+        style="margin-top: 5%;display: flex;"
+        @click="createE()">
+        {{ $t('crearEvento') }}
+      </Boton>
     </div>
-    <Boton
-      type="rounded-blue"
-      style="margin-top: 5%;display: flex;"
-      @click="createE()">
-      {{ $t('crearEvento') }}
-    </Boton>
   </div>
   <div v-else>
     <Title>
@@ -73,23 +84,30 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed } from 'vue';
+import { ref, computed, onMounted } from 'vue';
+import * as L from 'leaflet';
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
-import { CategoryEnum } from '@/api';
+import { CategoryEnum , EventApi } from '@/api';
 import { auth } from '@/store/auth';
+import { useEvent } from '@/composables/apis';
+import { isNull } from '@/utils/validation';
 
 const { t } = useI18n();
 
 const router = useRouter();
+
+const image = ref('');
+
+const markerLocation = ref<[number, number]>();
 
 const eventDetail = ref([
   {
     name: '',
     place: '',
     event: '',
-    date: '',
-    hour: '',
+    timeStart: '',
+    timeEnd: '',
     capacity: '',
     category: ''
   }]);
@@ -110,7 +128,38 @@ const categorias = computed(() =>
  * This.finds.push({ value: '' });
  */
 async function createE() : Promise<void> {
+  const { data: eventCreated } = await useEvent(EventApi, 'eventCreateCreate')(() => ({
+    eventCreate: {
+      'event': eventDetail.value.event,
+      'place': eventDetail.value.place,
+      'capacity': eventDetail.value.capacity,
+      'name': eventDetail.value.name,
+      'latitude': markerLocation.value[0], //TO-DO mejorar
+      'longitude': markerLocation.value[1],
+      'timeEnd' : eventDetail.value.timeEnd + ':00.000Z',
+      'timeStart': eventDetail.value.timeStart + ':00.000Z',
+      'category': eventDetail.value.category,
+      'imageB64': image.value == undefined ? '' : image.value,
+      'ocialClient': 0
+    }
+  }));
+
   await router.push('/client');
+};
+
+/**
+ * Pasar imagen del input a base64
+ */
+function handleImage() : void {
+  var file = document.querySelector('input[type=file]')['files'][0];
+
+  var reader = new FileReader();
+
+  reader.addEventListener('load', () => {
+    image.value = isNull(reader.result) ? undefined : reader.result;
+
+  });
+  reader.readAsDataURL(file);
 };
 
 const placeholders = computed(() =>
@@ -118,6 +167,27 @@ const placeholders = computed(() =>
    t('placeholderLugar'),
    t('placeholderDescripcion'),
    t('placeholderCapacidad')]);
+
+
+let map: L.Map;
+let marker: L.Marker | undefined;
+
+onMounted(() => {
+  map = L.map('map').setView([37.393, -5.984], 12); // Initial map center (Sevilla)
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '© OpenStreetMap contributors'
+  }).addTo(map);
+
+  map.on('click', (e: L.LeafletMouseEvent) => {
+    if (marker) {
+      map.removeLayer(marker);
+    }
+
+    marker = L.marker(e.latlng).addTo(map);
+    markerLocation.value = [e.latlng.lat, e.latlng.lng];
+  });
+});
 </script>
 
 <style scoped>
