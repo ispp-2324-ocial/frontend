@@ -134,7 +134,7 @@ async function createE() : Promise<void> {
       'place': eventDetail.value.place,
       'capacity': eventDetail.value.capacity,
       'name': eventDetail.value.name,
-      'latitude': markerLocation.value[0], //TO-DO mejorar
+      'latitude': markerLocation.value[0],
       'longitude': markerLocation.value[1],
       'timeEnd' : eventDetail.value.timeEnd + ':00.000Z',
       'timeStart': eventDetail.value.timeStart + ':00.000Z',
