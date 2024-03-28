@@ -40,11 +40,13 @@
     "fast-equals": "5.0.1",
     "inter-ui": "4.0.2",
     "leaflet": "1.9.4",
+    "lodash-es": "4.17.21",
     "radix-vue": "1.5.3",
     "vue": "3.4.21",
     "vue-i18n": "9.10.2",
     "vue-router": "4.3.0",
-    "vue3-toastify": "0.2.1"
+    "vue3-toastify": "0.2.1",
+    "zod": "3.22.4"
   },
   "devDependencies": {
     "@iconify/json": "2.2.188",
