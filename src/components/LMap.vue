@@ -26,7 +26,7 @@
 <script setup lang="ts">
 import { onBeforeUnmount, shallowRef, watch, computed } from 'vue';
 import 'leaflet/dist/leaflet.css';
-import { map, icon, marker, tileLayer, type Marker, Popup} from 'leaflet';
+import { map, icon, marker, tileLayer, type Marker, Popup } from 'leaflet';
 import { useI18n } from 'vue-i18n';
 import { usePermission } from '@vueuse/core';
 import { CategoryEnum, type Event } from '@/api';
