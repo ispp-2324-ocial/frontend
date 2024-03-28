@@ -25,9 +25,6 @@ export function loginGuard (
     destinationRoute = { path: homeUrl, replace: true };
   }
 
-
-  console.log(destinationRoute, to.path);
-
   return destinationRoute && to.path !== destinationRoute.path
     ? destinationRoute : true;
 }

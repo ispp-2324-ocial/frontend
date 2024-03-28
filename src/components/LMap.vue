@@ -2,15 +2,34 @@
   <div
     ref="mapContainer"
     class="mapContainer" />
+  <Teleport
+    v-if="selectedEvent"
+    to=".leaflet-popup-content-wrapper">
+    <div>
+      <strong>{{ t('Evento') }}:</strong> {{ selectedEvent.name }}<br />
+      <strong>{{ t('Lugar') }}:</strong> {{ selectedEvent.place }}<br />
+      <strong>{{ t('Fecha') }}:<!-- </strong> {{ selectedEvent.date }}<br /> -->
+        <strong>{{ t('Hora') }}:<!-- </strong> {{ selectedEvent.hour.split(':').slice(0, 2).join(':') }}<br /> -->
+          <strong>{{ t('Capacidad') }}:</strong> {{ selectedEvent.capacity }}<br />
+          <!-- TODO: Poner la ruta de destino apropiada -->
+          <RouterLink
+            v-if="selectedEvent.id"
+            :to="`/details/${selectedEvent.id}`">
+            {{ t('Ver detalles') }}
+          </RouterLink>
+        </strong>
+      </strong>
+    </div>
+  </Teleport>
 </template>
 
 <script setup lang="ts">
-import { onBeforeUnmount, shallowRef, watch } from 'vue';
+import { onBeforeUnmount, shallowRef, watch, computed } from 'vue';
 import 'leaflet/dist/leaflet.css';
 import { map, icon, marker, tileLayer, type Marker, Popup} from 'leaflet';
 import { useI18n } from 'vue-i18n';
 import { usePermission } from '@vueuse/core';
-import { CategoryEnum} from '@/api';
+import { CategoryEnum, type Event } from '@/api';
 import Azul from '@/assets/pin/Pin_Azul.png';
 import Verde from '@/assets/pin/Pin_Verde.png';
 import Rojo from '@/assets/pin/Pin_Rojo.png';
@@ -20,7 +39,7 @@ import Dot from '@/assets/pin/dot.png';
 import { useToast } from '@/composables/use-toast';
 import { isNil, isNumber } from '@/utils/validation';
 
-const props = defineProps<{ markers: MapEvent[] }>();
+const props = defineProps<{ markers: Event[] }>();
 const locationAccess = usePermission('geolocation');
 const { t } = useI18n();
 
@@ -29,61 +48,19 @@ const ATTRIBUTION = '© OpenStreetMap contributors';
 
 const mapContainer = shallowRef<HTMLDivElement>();
 const mapInstance = shallowRef<ReturnType<typeof map>>();
+const selectedEventId = shallowRef<Event['id']>();
 let watchId: number | undefined;
 let userMarker: Marker | undefined;
-const mapMarkers: Marker[] = [];
 let userLocationDetermined = false;
-
-interface MapEvent {
-  id?: number;
-  name: string;
-  latitude: number;
-  longitude: number;
-  category?: CategoryEnum;
-  date: string;
-  hour: string;
-  event: string;
-  place: string;
-  capacity?: number;
-}
-/**
- * Para asignar los iconos a la categoría
- */
-function getCategoryEnum(categoryName?: string): CategoryEnum {
-  if (!categoryName) {
-    return CategoryEnum.NUMBER_0;
-  }
-
-  switch (categoryName.toLowerCase()) {
-    case 'sports': {
-      return CategoryEnum.NUMBER_0;
-    }
-    case 'music': {
-      return CategoryEnum.NUMBER_1;
-    }
-    case 'markets': {
-      return CategoryEnum.NUMBER_2;
-    }
-    case 'relax activities': {
-      return CategoryEnum.NUMBER_3;
-    }
-    case 'live concert': {
-      return CategoryEnum.NUMBER_4;
-    }
-    default: {
-      console.error(`Categoría desconocida: ${categoryName}`);
-
-      return CategoryEnum.NUMBER_0;
-    }
-  }
-}
+const mapMarkers = new Map<Event['id'], Marker>();
+const mapPopups = new Map<Event['id'], Popup>();
 
 const categoryIconMap: { [key in CategoryEnum]: string } = {
-  [CategoryEnum.NUMBER_0]: Azul,
-  [CategoryEnum.NUMBER_1]: Verde,
-  [CategoryEnum.NUMBER_2]: Rojo,
-  [CategoryEnum.NUMBER_3]: Morado,
-  [CategoryEnum.NUMBER_4]: Amarillo
+  [CategoryEnum.Sports]: Azul,
+  [CategoryEnum.Music]: Verde,
+  [CategoryEnum.Markets]: Rojo,
+  [CategoryEnum.RelaxActivities]: Morado,
+  [CategoryEnum.LiveConcert]: Amarillo
 };
 
 const userIcon = icon({
@@ -91,58 +68,38 @@ const userIcon = icon({
   iconSize: [20, 20],
   iconAnchor: [10, 10]
 });
-
-onBeforeUnmount(() => {
-  disposeWatcher();
-  disposeMarkers();
-  disposeMap();
-});
+const selectedEvent = computed(() => props.markers.find((e) => e.id === selectedEventId.value));
 
 /**
  * Coloca los marcadores en el mapa
  */
-function setMarkers(markers: MapEvent[]): void {
+function setMarkers(markers: Event[]): void {
   if (mapInstance.value) {
     for (const event of markers) {
-      const category = getCategoryEnum(event.category?.toString());
+      const category = event.category ?? CategoryEnum.Sports;
       const customIconUrl = categoryIconMap[category] ?? Azul;
       const customIcon = icon({
         iconUrl: customIconUrl,
         iconSize: [22, 30],
         iconAnchor: [11, 6]
       });
-      const eventHour = event.hour.split(':').slice(0, 2).join(':'); // Obtener solo la parte de la hora y los minutos
-      const popupContent = document.createElement('div');
-
-      popupContent.innerHTML = `
-        <strong>${t('Evento')}:</strong> ${event.name}<br>
-        <strong>${t('Lugar')}:</strong> ${event.place}<br>
-        <strong>${t('Fecha')}:</strong> ${event.date}<br>
-        <strong>${t('Hora')}:</strong> ${eventHour}<br>
-        <strong>${t('Capacidad')}:</strong> ${event.capacity}<br>
-        <a href="/detalles/${event.id}">${t('Ver detalles')}</a>
-      `;
-
       // Crear un objeto Popup y asociarlo al marcador
-      const popup = new Popup().setContent(popupContent);
+      const popup = new Popup();
+      const mapMarker = marker([event.latitude, event.longitude], { icon: customIcon });
 
-      marker([event.latitude, event.longitude], { icon: customIcon })
-        .addTo(mapInstance.value)
-        .bindPopup(popup);
+      mapMarker.addEventListener('popupopen', () => {
+        selectedEventId.value = event.id;
+      });
+      mapMarker.addEventListener('popupclose', () => {
+        selectedEventId.value = undefined;
+      });
+      mapPopups.set(event.id, popup);
+      mapMarkers.set(event.id, mapMarker);
+      mapMarker.bindPopup(popup);
+      mapMarker.addTo(mapInstance.value);
     }
   }
 };
-
-/**
- * Elimina los marcadores del mapa
- */
-function disposeMarkers(): void {
-  for (const marker of mapMarkers) {
-    marker.remove();
-  }
-
-  mapMarkers.length = 0;
-}
 
 /**
  * Crea la instancia de Leaflet e inicia la geolocalización
@@ -176,7 +133,6 @@ function createMapLayer(): void {
         }
 
         userMarker = marker([latitude, longitude], { icon: userIcon }).addTo(mapInstance.value!);
-
         userMarker.bindPopup(t('Tu ubicación'));
       },
       (error) => {
@@ -189,6 +145,33 @@ function createMapLayer(): void {
     useToast(t('La geolocalización no es soportada por tu navegador'), 'error');
   }
 };
+
+/**
+ * Elimina los marcadores del mapa
+ */
+function disposeMarkers(): void {
+  if (!isNil(userMarker)) {
+    userMarker.remove();
+  }
+
+  for (const [,marker] of mapMarkers) {
+    marker.clearAllEventListeners();
+    marker.remove();
+  }
+
+  mapMarkers.clear();
+}
+
+/**
+ * Elimina los popups del mapa
+ */
+function disposePopups(): void {
+  for (const [,popup] of mapPopups) {
+    popup.remove();
+  }
+
+  mapPopups.clear();
+}
 
 /**
  * Dispose the map instance
@@ -210,12 +193,22 @@ function disposeWatcher(): void {
 }
 
 /**
+ * Dispose everything
+ */
+function dispose(): void {
+  disposeWatcher();
+  disposePopups();
+  disposeMarkers();
+  disposeMap();
+}
+
+/**
  * Este watcher trackea cuando el elemento div cambia para crear el mapa (ahora mismo no cambia nunca
  * solo en mount, pero es posible que en un futuro, dependiendo del dispositivo, cambiemos el objeto DOM
  * al que haga referencia con un `<component :is="" ....>`)
  */
 watch(mapContainer, () => {
-  disposeMap();
+  dispose();
   createMapLayer();
 });
 
@@ -247,6 +240,8 @@ watch(locationAccess, () => {
     userMarker = undefined;
   }
 }, { immediate: true });
+
+onBeforeUnmount(dispose);
 </script>
 
 <style scoped>
