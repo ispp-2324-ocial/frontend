@@ -24,11 +24,11 @@
           <div
             class="row mr-3"
             style="border-top: solid 1px #b0b0b0; padding: 0%;"
-            @click="router.push('/client/events')">
+            @click="getDetailsEvent(event.id)">
             <div style=" cursor: pointer;margin:auto; text-align: center;display: flex; align-items: center; justify-content: left;">
               <img
                 alt="Event"
-                src="@/assets/images/temp/yoga.png"
+                :src="event.image?.image"
                 style="display: block; width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px;" />
               <div
                 class="ml-3"
@@ -38,8 +38,11 @@
                     {{ event.name }}
                   </p>
                 </div>
-                <p class="tiempo">
-                  {{ $t('fecha', {date: event.date, hour: event.hour } ) }}
+                <p class="tiempo inicial">
+                  {{ $t('fecha', {date: event.timeStart?.split('T')[0], hour: event.timeStart?.split('T')[1].split('.')[0].slice(0,5)} ) }}
+                </p>
+                <p class="tiempo final">
+                  {{ $t('fecha', {date: event.timeEnd?.split('T')[0], hour: event.timeEnd?.split('T')[1].split('.')[0].slice(0,5)} ) }}
                 </p>
                 <p class="lugar">
                   {{ $t('lugar', {place: event.place} ) }}
@@ -76,7 +79,15 @@ const router = useRouter();
  *TODO: pasar a eventListClientList cuando el registro
  *      e inicio de sesión de cliente sea funcional
  */
-const { data: eventList } = await useEvent(EventApi, 'eventListList')();
+const { data: eventList } = await useEvent(EventApi, 'eventListClientList')();
+
+/**
+ * Go to the details of that event
+ */
+async function getDetailsEvent(eventId: number | undefined) : Promise<void> {
+  await router.push(`/client/events/${eventId}`);
+};
+
 </script>
 
 <style scoped>
