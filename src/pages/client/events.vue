@@ -72,7 +72,7 @@ const router = useRouter();
 /**
  *TODO: pasar a eventListClientList cuando funcione el general
  */
-const { data: eventList} = await useEvent(EventApi, 'eventListList')();
+const { data: eventList } = await useEvent(EventApi, 'eventListList')();
 
 const eventDetail = eventList.value[0];
 

@@ -60,7 +60,7 @@
 </template>
 
 <script setup lang="ts">
-import {ref, computed} from 'vue';
+import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
 import { CategoryEnum } from '@/api';
