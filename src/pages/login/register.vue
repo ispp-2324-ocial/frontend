@@ -1,20 +1,24 @@
 <template>
-  <form @submit.prevent="()=>{}">
+  <form @submit.prevent="() => {}">
     <BaseInput
       v-model="username"
       tipo="text"
+      :is-required="true"
       :placeholder="placeholders[0]" />
     <BaseInput
       v-model="email"
+      :is-required="true"
       tipo="email"
       :placeholder="placeholders[1]" />
     <BaseInput
       v-model="password"
       tipo="password"
+      :is-required="true"
       :placeholder="placeholders[2]" />
     <BaseInput
       v-model="password2"
       tipo="password"
+      :is-required="true"
       :validators="[(v)=>v===password]"
       :placeholder="placeholders[3]" />
     <Boton
@@ -57,7 +61,8 @@ const router = useRouter();
  * Esta función crea un usuario
  */
 async function createAcc() : Promise<void> {
-  if (password.value == password2.value) {
+
+  if (password.value == password2.value && username.value != '' && password.value != '' && /^\w+([.-]?\w+)*@\w+([.-]?\w+)*(\.\w{2,3})+$/.test(email.value)) {
     const { data: UserCreated} = await useApi(UsersApi, 'usersUserRegisterCreate')(() => ({
       user: {
         'password': password.value,
@@ -70,8 +75,6 @@ async function createAcc() : Promise<void> {
     }));
 
     await router.push('/login');
-  } else {
-    //TO-DO error, contraseña no iguales
   }
 
 };
