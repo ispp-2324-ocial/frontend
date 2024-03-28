@@ -1,5 +1,7 @@
 <template>
-  <div :class="styleType">
+  <div
+    :class="{ 'auth': variant === 'auth',
+              'inputWrap': variant === 'default'}">
     <label>{{ label }}</label>
     <input
       v-model="value"
@@ -14,32 +16,17 @@
 import { computed } from 'vue';
 import { isStr } from '@/utils/validation';
 
-const props = defineProps({
-  label: {
-    type: String,
-    default: ''
-  },
-  validators: {
-    type: Array<(i: string) => boolean>,
-    default: []
-  },
-  placeholder: {
-    type: String,
-    default:''
-  },
-  tipo: {
-    type: String,
-    default: 'text'
-  },
-  styleType: {
-    type: String,
-    default: 'inputWrap'
-  }
-});
+const props = withDefaults(defineProps<{
+  label?: string,
+  validators?: Array<(i: string) => boolean>,
+  placeholder?: string,
+  tipo?: string,
+  variant?: 'default' | 'auth',
+}>(), { variant: 'default' });
 
 const value = defineModel<string>();
 const validate = computed(()=>{
-  return props.validators.map((fn)=>{
+  return (props.validators ?? [] ).map((fn)=>{
     return isStr(value.value) && Boolean(fn(value.value));
   }).every((i)=>{
     return i === true;
@@ -64,7 +51,7 @@ const cssColor = computed(()=> validate.value || value.value === '' ? 'var(--o-c
     }
 }
 
-.authInputWrap {
+.auth {
   display: flex;
   flex-direction: column;
 
