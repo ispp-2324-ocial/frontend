@@ -47,8 +47,8 @@ const router = useRouter();
 const { t } = useI18n();
 
 const validationSchema = z.object({
-  username: z.string().min(1, 'The username is required'),
-  password: z.string().min(8, 'Please enter a valid password')
+  username: z.string().min(1, t('usernameRequired')), //The username is required
+  password: z.string().min(8, t('validPassword')) //Please enter a valid password
 });
 
 const form = ref({
