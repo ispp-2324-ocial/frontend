@@ -3,9 +3,7 @@
   <div v-if="auth.isLoggedIn.value && auth.isClient.value">
     <div style="margin-top: 10%;">
       <ul style="list-style-type:none; margin-top: 1vh;">
-        <li
-          v-for="(item, index) in 1"
-          :key="index">
+        <li>
           <div class="row mb-7 mr-3">
             <div style="margin:auto; text-align: center;display: flex; align-items: center; justify-content: center;">
               <div
