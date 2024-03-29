@@ -53,6 +53,10 @@
               <p class="elemento">
                 <b>{{ $t('client:') }}</b>&nbsp;{{ eventDetail.ocialClient.name }}
               </p>
+              <p class="elemento">
+                <b>{{ $t('¿Te gusta el evento?') }}</b>
+                <Like />
+              </p>
             </div>
           </div>
         </div>
