@@ -105,9 +105,4 @@ const placeholders = computed(() =>
   color: red;
   margin-top: 4px;
 }
-
-.form .message a {
-  color: #0e4791;
-  text-decoration: underline;
-}
 </style>
