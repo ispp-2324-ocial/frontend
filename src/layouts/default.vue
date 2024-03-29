@@ -1,9 +1,12 @@
 <!--TODO: Ajustar slot con el footer-->
 <template>
-  <div class="h-full flex flex-col">
+  <div
+    class="h-full flex flex-col"
+    style="margin-bottom:20%">
     <slot />
   </div>
-  <footer class="footer">
+  <footer
+    class="footer">
     <div
       class="flex justify-center -mb-1.6"
       style="background-color: #deecff">
