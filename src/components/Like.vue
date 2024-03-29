@@ -43,6 +43,7 @@ const isHovered = ref(false);
 <style scoped>
 .checkbox-container {
   display: inline-block;
+  margin-left: 1%;
 }
 
 .hidden {
@@ -51,9 +52,10 @@ const isHovered = ref(false);
 }
 
 .heart-icon {
-  width: 24px;
-  height: 24px;
+  width: 30px;
+  height: 30px;
   cursor: pointer;
+
 }
 
 .heart-icon:hover {
