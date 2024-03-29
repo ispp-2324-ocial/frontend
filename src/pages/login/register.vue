@@ -46,7 +46,10 @@
     </Boton>
   </form>
   <p class="message">
-    {{ $t('tienesCuenta') }} <a href="/login">{{ $t('iniciaSesion') }}</a>
+    {{ $t('tienesCuenta') }} <RouterLink
+      :to="`/login`">
+      {{ $t('iniciaSesion') }}
+    </RouterLink>
   </p>
 </template>
 

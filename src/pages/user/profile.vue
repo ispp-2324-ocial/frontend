@@ -1,6 +1,5 @@
 <template>
   <Ondas />
-  <div v-if="auth.isLoggedIn.value && !auth.isClient.value" />
   <div style="margin-top: 10%;">
     <ul style="list-style-type:none; margin-top: 1vh;">
       <li
@@ -27,6 +26,24 @@
     class="mb-7"
     style="width: 100%;">
     <div
+      style="justify-content: center; display: flex;"
+      @click="Logout()">
+      <Boton
+        type="rounded-blue"
+        class="ocial-button"
+        style="width: 80%; padding-top: 1vh; padding-bottom: 1vh;">
+        <div>
+          <p>
+            {{ $t('cerrarsesion') }}
+          </p>
+        </div>
+      </Boton>
+    </div>
+  </div>
+  <div
+    class="mb-7"
+    style="width: 100%;">
+    <div
       v-if="false"
       style="justify-content: center; display: flex;"
       @click="router.push('/user/editProfile')">
@@ -47,17 +64,15 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router/auto';
+import { useApi } from '@/composables/apis';
+import { UsersApi } from '@/api';
 import { auth } from '@/store/auth';
+
 
 const router = useRouter();
 
-const carProfile = [
-  {
-    name: 'Marta García Gómez',
-    email: ' alamillo@local.jccm.es',
-    city: 'Sevilla'
-  }
-];
+const { data: loggedDjangoUser } = await useApi(UsersApi, 'usersGetList')();
+
 
 /**
  * Cerrar sesion usuario
@@ -67,14 +82,6 @@ async function Logout() : Promise<void> {
   await router.push('/login');
 }
 
-import { useApi } from '@/composables/apis';
-import { UsersApi } from '@/api';
-
-
-const router = useRouter();
-
-const { data: loggedUser } = await useApi(UsersApi, 'usersUserGetList')();
-const { data: loggedDjangoUser } = await useApi(UsersApi, 'usersGetList')();
 </script>
 
 <style scoped>
