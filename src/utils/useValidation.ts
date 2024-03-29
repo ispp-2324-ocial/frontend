@@ -3,7 +3,7 @@ import { get, groupBy } from 'lodash-es';
 import { ref, watch, toValue, type MaybeRefOrGetter } from 'vue';
 
 /**
- *
+ * Funcion auxiliar para validacion zod
  */
 export default function<T extends ZodTypeAny>(schema: T, data: MaybeRefOrGetter<Record<string, unknown>>, options?: { mode: 'eager' | 'lazy' }) {
   const opts = Object.assign({}, { mode : 'lazy' }, options);
