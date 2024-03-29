@@ -11,7 +11,7 @@
               <Title>
                 {{ eventDetail.name }}
               </Title>
-              <div>
+              <div class="flex justify-center items-center pt-12">
                 <img
                   v-if="eventDetail.image"
                   alt="Event"
@@ -42,7 +42,13 @@
                 <b>{{ $t('capacidad:') }}</b>&nbsp;{{ eventDetail.capacity }}
               </p>
               <p class="elemento">
-                <b>{{ $t('categoria:') }}</b>&nbsp;{{ eventDetail.category }}
+                <b>{{ $t('categoria:') }} </b> <span
+                  v-for="(category,indice) in cateEnum"
+                  :key="category">
+                  <span v-if="category == eventDetail.category">
+                    {{ categorias[indice] }}
+                  </span>
+                </span>
               </p>
               <p class="elemento">
                 <b>{{ $t('client:') }}</b>&nbsp;{{ nameClient }}
@@ -75,14 +81,18 @@
 
 
 <script setup lang="ts">
+import { computed, ref } from 'vue';
 import { useRoute, useRouter } from 'vue-router/auto';
-import { EventApi, UsersApi } from '@/api';
+import { useI18n } from 'vue-i18n';
+import { EventApi, UsersApi, CategoryEnum } from '@/api';
 import { useApi, useEvent } from '@/composables/apis';
 import { auth } from '@/store/auth';
 
 const route = useRoute('/client/events/[id]');
 
 const router = useRouter();
+
+const { t } = useI18n();
 
 const { data: eventDetail } = await useEvent(EventApi, 'eventList')(() => ({
   'id': route.params.id
@@ -94,6 +104,8 @@ const { data: ocialClient } = await useEvent(EventApi, 'eventClientRetrieve')(()
 
 const nameClient = ocialClient.value.name;
 
+const categoria = ref('');
+
 /**
  * Cuando se haga editar evento, en el v-if del boton de editar evento hay que cambiar el false por comprobar que el cliente logueado sea el que creó ese evento
  */
@@ -101,7 +113,15 @@ if (auth.isLoggedIn.value) {
   const { data: loggedClient } = await useApi(UsersApi, 'usersClientGetList')();
 }
 
-console.log(eventDetail.value);
+const cateEnum = [CategoryEnum.Sports, CategoryEnum.Music, CategoryEnum.Markets, CategoryEnum.RelaxActivities, CategoryEnum.LiveConcert];
+
+const categorias = computed(() =>
+  [t('categoryDeporte'),
+   t('categoryMusica'),
+   t('categoryMercado'),
+   t('categoryRelax'),
+   t('categoryConcierto')]);
+
 </script>
 
 <style scoped>
