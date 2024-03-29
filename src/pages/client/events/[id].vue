@@ -1,6 +1,6 @@
 <template>
   <Ondas />
-  <div>
+  <div v-if="auth.isLoggedIn.value && auth.isClient.value">
     <ul style="list-style-type:none; margin-top: 10%;">
       <li>
         <div class="row mb-7 mr-3">
@@ -58,24 +58,35 @@
         </div>
       </li>
     </ul>
-  </div>
-  <div
-    class="mb-7"
-    style="width: 100%;">
     <div
-      v-if="auth.isLoggedIn.value && auth.isClient.value && false"
-      style="justify-content: center; display: flex;"
-      @click="router.push('/client/editEvent')">
-      <Boton
-        type="rounded-blue"
-        style="width: 80%; padding-top: 1vh; padding-bottom: 1vh;">
-        <div>
-          <p>
-            {{ $t('editarEvento') }}
-          </p>
-        </div>
-      </Boton>
+      class="mb-7"
+      style="width: 100%;">
+      <div
+        v-if="auth.isLoggedIn.value && auth.isClient.value && false"
+        style="justify-content: center; display: flex;"
+        @click="router.push('/client/editEvent')">
+        <Boton
+          type="rounded-blue"
+          style="width: 80%; padding-top: 1vh; padding-bottom: 1vh;">
+          <div>
+            <p>
+              {{ $t('editarEvento') }}
+            </p>
+          </div>
+        </Boton>
+      </div>
     </div>
+  </div>
+  <div v-else>
+    <Title>
+      {{ $t('NotLogged') }}
+    </Title>
+    <Boton
+      type="rounded-blue"
+      style="margin-top: 5%;display: flex;"
+      @click="router.push('/login')">
+      {{ $t('iniciaSesion') }}
+    </Boton>
   </div>
 </template>
 
@@ -103,8 +114,6 @@ const { data: ocialClient } = await useEvent(EventApi, 'eventClientRetrieve')(()
 }));
 
 const nameClient = ocialClient.value.name;
-
-const categoria = ref('');
 
 /**
  * Cuando se haga editar evento, en el v-if del boton de editar evento hay que cambiar el false por comprobar que el cliente logueado sea el que creó ese evento
