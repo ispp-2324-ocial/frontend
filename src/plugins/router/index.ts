@@ -2,7 +2,7 @@ import { useTitle } from '@vueuse/core';
 import { computed } from 'vue';
 import {
   createRouter,
-  createWebHistory
+  createWebHashHistory
 } from 'vue-router/auto';
 /**
  * TODO: Implementar cuando el login esté terminado
@@ -11,7 +11,7 @@ import { metaGuard } from './middlewares/meta';
 import { isStr } from '@/utils/validation';
 
 export const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHashHistory(),
   /**
    * TODO: Arreglar esto, de forma que solo se realice el scroll en cuanto Suspense resuelva
    */
