@@ -5,20 +5,17 @@
   <Teleport
     v-if="selectedEvent"
     to=".leaflet-popup-content-wrapper">
-    <div>
+    <div class="popup">
       <strong>{{ t('Evento') }}:</strong> {{ selectedEvent.name }}<br />
       <strong>{{ t('Lugar') }}:</strong> {{ selectedEvent.place }}<br />
-      <strong>{{ t('Fecha') }}:<!-- </strong> {{ selectedEvent.date }}<br /> -->
-        <strong>{{ t('Hora') }}:<!-- </strong> {{ selectedEvent.hour.split(':').slice(0, 2).join(':') }}<br /> -->
-          <strong>{{ t('Capacidad') }}:</strong> {{ selectedEvent.capacity }}<br />
-          <!-- TODO: Poner la ruta de destino apropiada -->
-          <RouterLink
-            v-if="selectedEvent.id"
-            :to="`/details/${selectedEvent.id}`">
-            {{ t('Ver detalles') }}
-          </RouterLink>
-        </strong>
-      </strong>
+      <strong>{{ t('Fecha Inicio') }}:</strong> {{ formatDate(selectedEvent.timeStart) }}<br />
+      <strong>{{ t('Fecha Final') }}:</strong> {{ formatDate(selectedEvent.timeEnd) }}<br />
+      <strong>{{ t('Capacidad') }}:</strong> {{ selectedEvent.capacity }}<br />
+      <RouterLink
+        v-if="selectedEvent.id"
+        :to="`/details/${selectedEvent.id}`">
+        {{ t('Ver detalles') }}
+      </RouterLink>
     </div>
   </Teleport>
 </template>
@@ -69,6 +66,13 @@ const userIcon = icon({
   iconAnchor: [10, 10]
 });
 const selectedEvent = computed(() => props.markers.find((e) => e.id === selectedEventId.value));
+
+const formatDate = (dateTime: string): string => {
+  const [date, time] = dateTime.split('T');
+  const formattedTime = time.split('.')[0].slice(0, 5); // Formatea la hora quitando los milisegundos
+
+  return `${date} - ${formattedTime}`;
+};
 
 /**
  * Coloca los marcadores en el mapa
@@ -248,5 +252,11 @@ onBeforeUnmount(dispose);
 .mapContainer {
   width: 100%;
   height: 90vh;
+}
+
+.popup {
+  width: 100%;
+  height: 100%;
+  padding: 10%;
 }
 </style>
