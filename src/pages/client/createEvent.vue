@@ -9,59 +9,85 @@
       {{ $t('nuevoEvento') }}
     </Title>
     <div style="margin-top: 1%; justify-content: center; display: flex;">
-      <div v-for="(event, index) in eventDetail">
-        <BaseInput
-          :key="index"
-          v-model="eventDetail.name"
-          class="input-box"
-          :placeholder="placeholders[0]" />
-        <BaseInput
-          :key="index"
-          v-model="eventDetail.place"
-          class="input-box"
-          :placeholder="placeholders[1]" />
-        <BaseInput
-          :key="index"
-          v-model="eventDetail.event"
-          class="input-box"
-          :placeholder="placeholders[2]" />
-        <BaseInput
-          :key="index"
-          v-model="eventDetail.timeStart"
-          class="input-box"
-          tipo="datetime-local" />
-        <BaseInput
-          :key="index"
-          v-model="eventDetail.timeEnd"
-          class="input-box"
-          tipo="datetime-local" />
-        <BaseInput
-          :key="index"
-          v-model="eventDetail.capacity"
-          class="input-box"
-          tipo="number"
-          :placeholder="placeholders[3]" />
-        <select
-          v-model="eventDetail.category"
-          class="input-box">
-          <option
-            v-for="(category,indice) in cateEnum"
-            :key="category"
-            :value="category">
-            {{ categorias[indice] }}
-          </option>
-        </select>
-        <div>
-          <input
-            type="file"
-            accept="image/*"
-            @change="handleImage" />
+      <form @submit.prevent="()=>{}">
+        <div v-for="(event, index) in 1">
+          <BaseInput
+            :key="index"
+            v-model="form.name"
+            class="input-box"
+            :placeholder="placeholders[0]" />
+          <div class="error">
+            {{ getError('name') }}
+          </div>
+          <BaseInput
+            :key="index"
+            v-model="form.place"
+            class="input-box"
+            :placeholder="placeholders[1]" />
+          <div class="error">
+            {{ getError('place') }}
+          </div>
+          <BaseInput
+            :key="index"
+            v-model="form.event"
+            class="input-box"
+            :placeholder="placeholders[2]" />
+          <div class="error">
+            {{ getError('event') }}
+          </div>
+          <BaseInput
+            :key="index"
+            v-model="form.timeStart"
+            class="input-box"
+            tipo="datetime-local" />
+          <div class="error">
+            {{ getError('timeStart') }}
+          </div>
+          <BaseInput
+            :key="index"
+            v-model="form.timeEnd"
+            class="input-box"
+            tipo="datetime-local" />
+          <div class="error">
+            {{ getError('timeEnd') }}
+          </div>
+          <BaseInput
+            :key="index"
+            v-model="form.capacity"
+            class="input-box"
+            tipo="number"
+            :placeholder="placeholders[3]" />
+          <div class="error">
+            {{ getError('capacity') }}
+          </div>
+          <select
+            v-model="form.category"
+            class="input-box">
+            <option
+              v-for="(category,indice) in cateEnum"
+              :key="category"
+              :value="category">
+              {{ categorias[indice] }}
+            </option>
+          </select>
+          <div class="error">
+            {{ getError('category') }}
+          </div>
+          <div>
+            <input
+              type="file"
+              accept="image/*"
+              @change="handleImage" />
+          </div>
+          <div
+            id="map"
+            style="height: 300px;" />
+          <div />
+          <div class="error">
+            {{ getError('latitude') }}
+          </div>
         </div>
-        <div
-          id="map"
-          style="height: 300px;" />
-        <div />
-      </div>
+      </form>
     </div>
     <Boton
       type="rounded-blue"
@@ -88,29 +114,55 @@ import { ref, computed, onMounted } from 'vue';
 import * as L from 'leaflet';
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
+import { z } from 'zod';
 import { CategoryEnum , EventApi } from '@/api';
 import { auth } from '@/store/auth';
 import { useEvent } from '@/composables/apis';
 import { isNull } from '@/utils/validation';
+import useValidation from '@/utils/useValidation';
 
 const { t } = useI18n();
+
+const validationSchema = z.object({
+  place: z.string().min(1, t('placeRequired')),
+  name: z.string().min(1, t('nameRequired')),
+  event: z.string().min(1, t('eventRequired')),
+  timeStart: z.string().datetime({ precision: 3, message: t('timeStartRequired') }),
+  timeEnd: z.string().datetime({ precision: 3, message: t('timeEndRequired') }),
+  capacity: z.number().min(1, t('capacityRequired')),
+  category: z.string().min(1, t('categoryRequired')),
+  latitude: z.number().min(-91, t('mapRequired')),
+  longitude: z.number().min(-400, t('mapRequired'))
+}).refine((data) => new Date(data.timeStart) <= new Date(data.timeEnd), {
+  message: t('EventMustStartBeforeEnd'),
+  path: ['timeStart']
+}).refine((data) => new Date(data.timeStart) >= new Date(Date.now()), {
+  message: t('EventMustStartInFuture'),
+  path: ['timeStart']
+}).refine((data) => new Date(data.timeEnd) <= new Date(new Date(data.timeStart).setDate(new Date(data.timeStart).getDate() + 1)), {
+  message: t('EventMustEndBeforeADay'),
+  path: ['timeEnd']
+});
+
+const form = ref({
+  name: '',
+  place: '',
+  event: '',
+  timeStart: '',
+  timeEnd: '',
+  capacity: 1,
+  category: CategoryEnum.Sports,
+  latitude: -999,
+  longitude: -999
+});
 
 const router = useRouter();
 
 const image = ref('');
 
-const markerLocation = ref<[number, number]>();
-
-const eventDetail = ref([
-  {
-    name: '',
-    place: '',
-    event: '',
-    timeStart: '',
-    timeEnd: '',
-    capacity: '',
-    category: ''
-  }]);
+const { validate, isValid, getError, scrolltoError } = useValidation(validationSchema, form, {
+  mode: 'lazy'
+});
 
 const cateEnum = [CategoryEnum.Sports, CategoryEnum.Music, CategoryEnum.Markets, CategoryEnum.RelaxActivities, CategoryEnum.LiveConcert];
 
@@ -128,23 +180,33 @@ const categorias = computed(() =>
  * This.finds.push({ value: '' });
  */
 async function createE() : Promise<void> {
-  const { data: eventCreated } = await useEvent(EventApi, 'eventCreateCreate')(() => ({
-    eventCreate: {
-      'event': eventDetail.value.event,
-      'place': eventDetail.value.place,
-      'capacity': eventDetail.value.capacity,
-      'name': eventDetail.value.name,
-      'latitude': markerLocation.value[0],
-      'longitude': markerLocation.value[1],
-      'timeEnd' : eventDetail.value.timeEnd + ':00.000Z',
-      'timeStart': eventDetail.value.timeStart + ':00.000Z',
-      'category': eventDetail.value.category,
-      'imageB64': image.value == undefined ? '' : image.value,
-      'ocialClient': 0
-    }
-  }));
 
-  await router.push('/client');
+  form.value.timeStart = form.value.timeStart + ':00.000Z';
+  form.value.timeEnd = form.value.timeEnd + ':00.000Z';
+  await validate();
+
+  if (isValid.value) {
+
+    await useEvent(EventApi, 'eventCreateCreate')(() => ({
+      eventCreate: {
+        'event': form.value.event,
+        'place': form.value.place,
+        'capacity': form.value.capacity,
+        'name': form.value.name,
+        'latitude': form.value.latitude,
+        'longitude': form.value.longitude,
+        'timeEnd' : form.value.timeEnd,
+        'timeStart': form.value.timeStart,
+        'category': form.value.category,
+        'imageB64': image.value == undefined ? '' : image.value,
+        'ocialClient': 0
+      }
+    }));
+
+    await router.push('/client');
+  } else {
+    scrolltoError('.p-invalid', { offset: 24 });
+  }
 };
 
 /**
@@ -185,7 +247,8 @@ onMounted(() => {
     }
 
     marker = L.marker(e.latlng).addTo(map);
-    markerLocation.value = [e.latlng.lat, e.latlng.lng];
+    form.value.latitude = e.latlng.lat;
+    form.value.longitude = e.latlng.lng;
   });
 });
 </script>
@@ -193,5 +256,11 @@ onMounted(() => {
 <style scoped>
 .input-box{
   margin-bottom: 1.5vh;
+}
+
+.error {
+  font-size: 14px;
+  color: red;
+  margin-top: 4px;
 }
 </style>
