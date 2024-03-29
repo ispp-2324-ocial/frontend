@@ -8,6 +8,8 @@
   "EventMustStartBeforeEnd": "El evento debe empezar antes de acabar",
   "EventMustStartInFuture": "El evento debe empezar en el futuro",
   "Evento": "Evento",
+  "Fecha Final": "Fecha Final",
+  "Fecha Inicio": "Fecha Inicio",
   "La geolocalización no es soportada por tu navegador": "La geolocalización no es soportada por tu navegador",
   "Lugar": "Lugar",
   "NotLogged": "No has iniciado sesión como cliente. No tienes permitido el acceso a esta página.",
