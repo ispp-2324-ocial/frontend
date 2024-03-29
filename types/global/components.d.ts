@@ -11,6 +11,7 @@ declare module 'vue' {
     Boton: typeof import('./../../src/components/Boton.vue')['default']
     Checkbox: typeof import('./../../src/components/checkbox.vue')['default']
     IIwwaSearch: typeof import('~icons/iwwa/search')['default']
+    IMdiImageBrokenVariant: typeof import('~icons/mdi/image-broken-variant')['default']
     LMap: typeof import('./../../src/components/LMap.vue')['default']
     Ondas: typeof import('./../../src/components/Ondas.vue')['default']
     Pin: typeof import('./../../src/components/Pin.vue')['default']
