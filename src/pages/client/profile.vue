@@ -113,6 +113,7 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router/auto';
 import { ref, computed } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { auth } from '@/store/auth';
 import { useApi } from '@/composables/apis';
 import { UsersApi, TypeClientEnum } from '@/api';
@@ -120,11 +121,10 @@ import { UsersApi, TypeClientEnum } from '@/api';
 
 const router = useRouter();
 
+const { t } = useI18n();
+
 const { data: loggedClient } = await useApi(UsersApi, 'usersClientGetList')();
 const { data: loggedDjangoUser } = await useApi(UsersApi, 'usersGetList')();
-
-console.log(loggedClient.value);
-console.log(loggedDjangoUser.value);
 
 const cateEnum = [TypeClientEnum.Artist, TypeClientEnum.BarRestaurant, TypeClientEnum.EventsAndConcerts, TypeClientEnum.LocalGuide, TypeClientEnum.SmallBusiness];
 
