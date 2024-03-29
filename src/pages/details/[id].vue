@@ -11,7 +11,7 @@
               <Title>
                 {{ eventDetail.name }}
               </Title>
-              <div>
+              <div class="flex justify-center items-center pt-12">
                 <img
                   v-if="eventDetail.image"
                   alt="Event"
@@ -42,7 +42,16 @@
                 <b>{{ $t('capacidad:') }}</b>&nbsp;{{ eventDetail.capacity }}
               </p>
               <p class="elemento">
-                <b>{{ $t('categoria:') }}</b>&nbsp;{{ eventDetail.category }}
+                <b>{{ $t('categoria:') }} </b> <span
+                  v-for="(category,indice) in cateEnum"
+                  :key="category">
+                  <span v-if="category == eventDetail.category">
+                    {{ categorias[indice] }}
+                  </span>
+                </span>
+              </p>
+              <p class="elemento">
+                <b>{{ $t('client:') }}</b>&nbsp;{{ nameClient }}
               </p>
             </div>
           </div>
@@ -55,9 +64,21 @@
 
 <script setup lang="ts">
 import { useRoute } from 'vue-router/auto';
-import { EventApi } from '@/api';
+import { computed } from 'vue';
+import { useI18n } from 'vue-i18n';
+import { EventApi, CategoryEnum } from '@/api';
 import { useEvent } from '@/composables/apis';
 import { auth } from '@/store/auth';
+
+const cateEnum = [CategoryEnum.Sports, CategoryEnum.Music, CategoryEnum.Markets, CategoryEnum.RelaxActivities, CategoryEnum.LiveConcert];
+const { t } = useI18n();
+const categorias = computed(() =>
+  [t('categoryDeporte'),
+   t('categoryMusica'),
+   t('categoryMercado'),
+   t('categoryRelax'),
+   t('categoryConcierto')]);
+
 
 const route = useRoute('/details/[id]');
 
