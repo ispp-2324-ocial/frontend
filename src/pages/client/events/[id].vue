@@ -4,22 +4,24 @@
     <ul style="list-style-type:none; margin-top: 10%;">
       <li>
         <div class="row mb-7 mr-3">
-          <div style="margin:auto; text-align: center;display: flex; align-items: center; justify-content: center;">
+          <div style="margin:auto; text-align: center; display: flex; align-items: center; justify-content: center;">
             <div
               class="ml-3"
-              style=" text-align: left; width: 100%;">
+              style=" text-align: center; width: 100%;">
               <Title>
                 {{ eventDetail.name }}
               </Title>
-              <img
-                v-if="eventDetail.image"
-                alt="Event"
-                :src="eventDetail.image.image"
-                class="center"
-                style="display: block; width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px;" />
-              <IMdiImageBrokenVariant
-                v-else
-                style="display: block; width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px;" />
+              <div>
+                <img
+                  v-if="eventDetail.image"
+                  alt="Event"
+                  :src="eventDetail.image.image"
+                  class="center"
+                  style="display: block; width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px" />
+                <IMdiImageBrokenVariant
+                  v-else
+                  style="display: block; width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px;" />
+              </div>
               <p
                 class="elemento"
                 style="margin-top: 7%;">
@@ -55,7 +57,7 @@
     class="mb-7"
     style="width: 100%;">
     <div
-      v-if="auth.isLoggedIn.value && auth.isClient.value"
+      v-if="auth.isLoggedIn.value && auth.isClient.value && false"
       style="justify-content: center; display: flex;"
       @click="router.push('/client/editEvent')">
       <Boton
@@ -82,21 +84,21 @@ const route = useRoute('/client/events/[id]');
 
 const router = useRouter();
 
-const { data: eventDetail} = await useEvent(EventApi, 'eventList')(() => ({
+const { data: eventDetail } = await useEvent(EventApi, 'eventList')(() => ({
   'id': route.params.id
 }));
 
-const {data: ocialClient} = await useEvent(EventApi, 'eventClientRetrieve')(() => ({
+const { data: ocialClient } = await useEvent(EventApi, 'eventClientRetrieve')(() => ({
   'id': route.params.id
 }));
 
 const nameClient = ocialClient.value.name;
 
+/**
+ * Cuando se haga editar evento, en el v-if del boton de editar evento hay que cambiar el false por comprobar que el cliente logueado sea el que creó ese evento
+ */
 if (auth.isLoggedIn.value) {
   const { data: loggedClient } = await useApi(UsersApi, 'usersClientGetList')();
-
-  console.log(loggedClient.value);
-  console.log(loggedClient.value[0]);
 }
 
 console.log(eventDetail.value);

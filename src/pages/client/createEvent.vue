@@ -8,7 +8,7 @@
     <Title>
       {{ $t('nuevoEvento') }}
     </Title>
-    <div style="margin-top: 10%; justify-content: center; display: flex;">
+    <div style="margin-top: 1%; justify-content: center; display: flex;">
       <div v-for="(event, index) in eventDetail">
         <BaseInput
           :key="index"
@@ -62,13 +62,13 @@
           style="height: 300px;" />
         <div />
       </div>
-      <Boton
-        type="rounded-blue"
-        style="margin-top: 5%;display: flex;"
-        @click="createE()">
-        {{ $t('crearEvento') }}
-      </Boton>
     </div>
+    <Boton
+      type="rounded-blue"
+      style="display: flex; margin-top: 1%"
+      @click="createE()">
+      {{ $t('crearEvento') }}
+    </Boton>
   </div>
   <div v-else>
     <Title>
