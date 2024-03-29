@@ -12,7 +12,7 @@
               class="ml-3"
               style="text-align: center; width: 100%;">
               <Title>
-                {{ loggedDjangouser.username }}
+                {{ loggedDjangoUser.username }}
               </Title>
               <p class="elemento">
                 <b>{{ $t('email:') }}</b> {{ loggedDjangoUser.email }}
