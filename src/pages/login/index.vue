@@ -22,7 +22,10 @@
     </Boton>
     <p
       class="message">
-      {{ $t('noTienesCuenta') }} <a href="/login/register">{{ $t('registrate') }}</a>
+      {{ $t('noTienesCuenta') }} <RouterLink
+        :to="`/login/register`">
+        {{ $t('registrate') }}
+      </RouterLink>
     </p>
   </form>
 </template>
