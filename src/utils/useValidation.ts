@@ -6,7 +6,7 @@ import { ref, watch, toValue, type MaybeRefOrGetter } from 'vue';
  *
  */
 export default function<T extends ZodTypeAny>(schema: T, data: MaybeRefOrGetter<Record<string, unknown>>, options?: { mode: 'eager' | 'lazy' }) {
-  const opts = Object.assign({}, { mode : 'lazy'}, options);
+  const opts = Object.assign({}, { mode : 'lazy' }, options);
 
   const isValid = ref(true);
 

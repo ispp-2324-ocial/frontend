@@ -61,8 +61,6 @@ import { auth } from '@/store/auth';
 
 const route = useRoute('/details/[id]');
 
-const router = useRouter();
-
 const { data: eventDetail } = await useEvent(EventApi, 'eventList')(() => ({
   'id': route.params.id
 }));
