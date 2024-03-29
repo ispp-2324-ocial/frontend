@@ -92,11 +92,11 @@
 
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
+import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
-import { EventApi, UsersApi, CategoryEnum } from '@/api';
-import { useApi, useEvent } from '@/composables/apis';
+import { EventApi, CategoryEnum } from '@/api';
+import { useEvent } from '@/composables/apis';
 import { auth } from '@/store/auth';
 
 const route = useRoute('/client/events/[id]');
@@ -119,7 +119,7 @@ const nameClient = ocialClient.value.name;
  * Cuando se haga editar evento, en el v-if del boton de editar evento hay que cambiar el false por comprobar que el cliente logueado sea el que creó ese evento
  */
 if (auth.isLoggedIn.value) {
-  const { data: loggedClient } = await useApi(UsersApi, 'usersClientGetList')();
+  //Const { data: loggedClient } = await useApi(UsersApi, 'usersClientGetList')();
 }
 
 const cateEnum = [CategoryEnum.Sports, CategoryEnum.Music, CategoryEnum.Markets, CategoryEnum.RelaxActivities, CategoryEnum.LiveConcert];
