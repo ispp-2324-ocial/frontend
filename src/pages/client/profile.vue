@@ -4,32 +4,35 @@
     <div style="margin-top: 10%;">
       <ul style="list-style-type:none; margin-top: 1vh;">
         <li
-          v-for="(item, index) in carProfile"
+          v-for="(item, index) in 1"
           :key="index">
           <div class="row mb-7 mr-3">
             <div style="margin:auto; text-align: center;display: flex; align-items: center; justify-content: center;">
               <div
                 class="ml-3"
-                style="text-align: left; width: 100%;">
+                style="text-align: center; width: 100%;">
                 <Title>
-                  {{ item.username }}
+                  {{ loggedClient.name }}
                 </Title>
-                <img
-                  alt="Event"
-                  src="@/assets/images/temp/alamillo.png"
-                  class="center"
-                  style="margin-bottom: 7% ;display: block; width: 40%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px" />
+                <div class="flex justify-center items-center pt-12">
+                  <img
+                    v-if="loggedClient.image"
+                    alt="Event"
+                    :src="loggedClient.image.image"
+                    class="center"
+                    style="width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px" />
+                  <IMdiImageBrokenVariant
+                    v-else
+                    style="width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px;" />
+                </div>
                 <p class="elemento">
-                  <b>{{ item.name }}</b>
+                  <b>{{ loggedDjangoUser.username }}</b>
                 </p>
                 <p class="elemento">
-                  <b>{{ $t('email:') }}</b> {{ item.email }}
+                  <b>{{ $t('email:') }}</b> {{ loggedDjangoUser.email }}
                 </p>
                 <p class="elemento">
-                  <b>{{ $t('localidad:' ) }}</b> {{ item.city }}
-                </p>
-                <p class="elemento">
-                  <b>{{ $t('organiza:' ) }}</b> {{ item.tipoCliente }}
+                  <b>{{ $t('organiza:' ) }}</b> {{ loggedClient.typeClient }}
                 </p>
               </div>
             </div>
@@ -89,6 +92,7 @@
     class="mb-7"
     style="width: 100%;">
     <div
+      v-if="false"
       style="justify-content: center; display: flex;"
       @click="router.push('/client/editProfile')">
       <Boton
@@ -108,19 +112,28 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router/auto';
+import { ref, computed } from 'vue';
 import { auth } from '@/store/auth';
+import { useApi } from '@/composables/apis';
+import { UsersApi, TypeClientEnum } from '@/api';
+
 
 const router = useRouter();
 
-const carProfile = [
-  {
-    name: 'Marta García Gómez',
-    username: 'Alamillo Eventos',
-    email: ' alamillo@local.jccm.es',
-    city: 'Sevilla',
-    tipoCliente: 'Eventos y conciertos'
-  }
-];
+const { data: loggedClient } = await useApi(UsersApi, 'usersClientGetList')();
+const { data: loggedDjangoUser } = await useApi(UsersApi, 'usersGetList')();
+
+console.log(loggedClient.value);
+console.log(loggedDjangoUser.value);
+
+const cateEnum = [TypeClientEnum.Artist, TypeClientEnum.BarRestaurant, TypeClientEnum.EventsAndConcerts, TypeClientEnum.LocalGuide, TypeClientEnum.SmallBusiness];
+
+const categorias = computed(() =>
+  [t('categoryArtist'),
+   t('categoryBarRestaurant'),
+   t('categoryEventsAndConcerts'),
+   t('categoryLocalGuide'),
+   t('categorySmallBusiness')]);
 
 /**
  * Cerrar sesion cliente
