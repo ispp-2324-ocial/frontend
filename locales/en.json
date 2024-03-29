@@ -1,6 +1,7 @@
 {
   "1eventoMensual": "· 1 event per month",
   "Capacidad": "Capacity",
+  "Cliente:": "Client:",
   "Crear": "Create",
   "EndDate:": "Ends:",
   "Error al obtener la ubicación": "Error at finding your location",
@@ -8,8 +9,8 @@
   "EventMustStartBeforeEnd": "The event must start before it ends",
   "EventMustStartInFuture": "The event must start in the future",
   "Evento": "Event",
-  "Fecha": "Date",
-  "Hora": "Hour",
+  "Fecha Final": "End Date",
+  "Fecha Inicio": "Start Date",
   "La geolocalización no es soportada por tu navegador": "Geolocation is not supported by your browser",
   "Lugar": "Place",
   "NotLogged": "You are not logged as a client. You are not allowed to enter this page.",
