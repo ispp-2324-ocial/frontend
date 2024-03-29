@@ -32,7 +32,13 @@
                   <b>{{ $t('email:') }}</b> {{ loggedDjangoUser.email }}
                 </p>
                 <p class="elemento">
-                  <b>{{ $t('organiza:' ) }}</b> {{ loggedClient.typeClient }}
+                  <b>{{ $t('organiza:') }} </b> <span
+                    v-for="(category,indice) in cateEnum"
+                    :key="category">
+                    <span v-if="category == loggedClient.typeClient">
+                      {{ categorias[indice] }}
+                    </span>
+                  </span>
                 </p>
               </div>
             </div>
@@ -112,7 +118,7 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router/auto';
-import { ref, computed } from 'vue';
+import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { auth } from '@/store/auth';
 import { useApi } from '@/composables/apis';
