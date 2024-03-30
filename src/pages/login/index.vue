@@ -15,11 +15,18 @@
     <div class="error">
       {{ getError('password') }}
     </div>
-    <Boton type="auth">
+    <Boton
+      style="margin-bottom: 1rem"
+      type="auth">
       <div @click="Login()">
         {{ $t('iniciarSesion') }}
       </div>
     </Boton>
+    <p class="message">
+      {{ $t('soloUsuarios') }}
+    </p>
+    <GoogleLogin :callback="callback" />
+
     <p
       class="message">
       {{ $t('noTienesCuenta') }} <RouterLink
@@ -36,6 +43,7 @@
 </route>
 
 <script setup lang="ts">
+import { GoogleLogin } from 'vue3-google-login';
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
@@ -69,7 +77,6 @@ const { validate, isValid, getError, scrolltoError } = useValidation(validationS
  * Login de usuario y cliente
  */
 async function Login() : Promise<void> {
-
   await validate();
 
   if (isValid.value) {
@@ -87,6 +94,29 @@ async function Login() : Promise<void> {
     scrolltoError('.p-invalid', { offset: 24 });
   }
 };
+
+/**
+ * Google login callback
+ */
+
+interface GoogleResponseObject {
+  clientId: string;
+  client_id: string;
+  credential: string;
+  select_by: string;
+}
+
+const callback = async (response : GoogleResponseObject): Promise<void> => {
+  const { data: UserCreated } = await useApi(UsersApi, 'usersUserGoogleOauth2Create', { skipCache: { request: true } } )(() => ({
+    googleSocialAuth: {
+      'auth_token': response.credential
+    }
+  }));
+
+  auth.authenticate(UserCreated.value.user.username, UserCreated.value.isClient, UserCreated.value.token);
+  await router.push('/map');
+};
+
 
 const placeholders = computed(() =>
   [t('placeholderUsername'),
