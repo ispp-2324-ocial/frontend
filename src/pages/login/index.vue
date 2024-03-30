@@ -15,11 +15,16 @@
     <div class="error">
       {{ getError('password') }}
     </div>
-    <Boton type="auth">
+    <Boton style="margin-bottom: 1rem" type="auth">
       <div @click="Login()">
         {{ $t('iniciarSesion') }}
       </div>
     </Boton>
+    <p class="message">
+      {{ $t('soloUsuarios') }}
+    </p>
+    <GoogleLogin :callback='callback' />
+    
     <p
       class="message">
       {{ $t('noTienesCuenta') }} <RouterLink
@@ -87,6 +92,31 @@ async function Login() : Promise<void> {
     scrolltoError('.p-invalid', { offset: 24 });
   }
 };
+
+/**
+ * Google login callback
+ */
+
+ interface GoogleResponseObject {
+  clientId: string;
+  client_id: string;
+  credential: string;
+  select_by: string;
+}
+
+const callback = async (response : GoogleResponseObject) => {
+  let credential = response.credential;
+
+  const { data: UserCreated } = await useApi(UsersApi, 'usersUserGoogleOauth2Create')(() => ({
+      googleSocialAuth: {
+        'auth_token': credential,
+      }
+  }));
+
+  auth.authenticate(UserCreated.value.user.username, UserCreated.value.isClient, UserCreated.value.token);
+  await router.push('/map');
+}
+
 
 const placeholders = computed(() =>
   [t('placeholderUsername'),
