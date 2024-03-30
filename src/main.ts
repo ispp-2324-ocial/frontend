@@ -9,6 +9,7 @@ import Root from '@/App.vue';
 import { hideDirective } from '@/plugins/directives';
 import { vuePlugin as i18n } from '@/plugins/i18n';
 import { router } from '@/plugins/router';
+import vue3GoogleLogin from 'vue3-google-login'
 /**
  * TODO: Eliminar de aquí una vez se importe el store
  * en alguna parte del código.
@@ -37,7 +38,9 @@ const app = createApp(Root);
 app.use(i18n);
 app.use(router);
 app.directive('hide', hideDirective);
-
+app.use(vue3GoogleLogin, {
+  clientId: '224489231445-sim93fap18uklaoh054aiteh8r24m5v3.apps.googleusercontent.com'
+})
 /**
  * Esto asegura que la transición se ejecute: https://router.vuejs.org/guide/migration/#all-navigations-are-now-always-asynchronous
  */
