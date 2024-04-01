@@ -88,7 +88,7 @@ async function Login() : Promise<void> {
     }));
 
     auth.authenticate(form.value.username, UserCreated.value.isClient, UserCreated.value.token);
-    await router.push('/map');
+    await router.replace('/');
 
   } else {
     scrolltoError('.p-invalid', { offset: 24 });

@@ -4,17 +4,12 @@ import {
   createRouter,
   createWebHashHistory
 } from 'vue-router/auto';
-/**
- * TODO: Implementar cuando el login esté terminado
- */
+import { loginGuard } from './middlewares/login';
 import { metaGuard } from './middlewares/meta';
 import { isStr } from '@/utils/validation';
 
 export const router = createRouter({
   history: createWebHashHistory(),
-  /**
-   * TODO: Arreglar esto, de forma que solo se realice el scroll en cuanto Suspense resuelva
-   */
   scrollBehavior(_to, _from, savedPosition) {
     return savedPosition ?? { top: 0 };
   }
@@ -26,7 +21,7 @@ export const router = createRouter({
  * Cada uno de ellos se ejecutará antes de que accedamos a una ruta.
  */
 router.beforeEach(metaGuard);
-// Router.beforeEach(loginGuard);
+router.beforeEach(loginGuard);
 
 /**
  * Reemplaza la función 'back', teniendo en cuenta si hay una página anterior o no.
