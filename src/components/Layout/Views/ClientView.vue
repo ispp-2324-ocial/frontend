@@ -1,5 +1,5 @@
 <template>
-  <div v-if="auth.isLoggedIn.value && auth.isClient.value">
+  <div>
     <div
       style="justify-content: center; display: flex; margin-top: 10%;"
       @click="router.push('/client/createEvent')">
@@ -57,17 +57,6 @@
         </li>
       </ul>
     </div>
-  </div>
-  <div v-else>
-    <Title>
-      {{ $t('NotLogged') }}
-    </Title>
-    <Boton
-      type="rounded-blue"
-      style="margin-top: 5%;display: flex;"
-      @click="router.push('/login')">
-      {{ $t('iniciaSesion') }}
-    </Boton>
   </div>
 </template>
 
