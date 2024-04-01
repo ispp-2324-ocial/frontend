@@ -67,7 +67,7 @@
       style="width: 100%;">
       <div
         style="justify-content: center; display: flex;"
-        @click="Logout()">
+        @click="auth.logout">
         <Boton
           type="rounded-blue"
           class="ocial-button"
@@ -127,15 +127,6 @@ const categorias = computed(() =>
    t('categoryEventsAndConcerts'),
    t('categoryLocalGuide'),
    t('categorySmallBusiness')]);
-
-/**
- * Cerrar sesion cliente
- */
-async function Logout() : Promise<void> {
-  auth.logout();
-  await router.push('/login');
-}
-
 </script>
 
 <style scoped>
