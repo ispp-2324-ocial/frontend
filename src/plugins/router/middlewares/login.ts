@@ -8,9 +8,8 @@ import { useToast } from '@/composables/use-toast';
 import { i18n } from '@/plugins/i18n';
 
 const loginUrl = '/login';
-const registerUrl = '/login/register';
 const homeUrl = '/';
-const loginRoutes = new Set([loginUrl, registerUrl]);
+const loginRoutes = new Set([loginUrl, '/register', '/register/client']);
 const routes = new Set([...loginRoutes, homeUrl]);
 
 /**
