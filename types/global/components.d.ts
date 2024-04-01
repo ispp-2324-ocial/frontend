@@ -7,19 +7,19 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    BaseInput: typeof import('./../../src/components/BaseInput.vue')['default']
-    Boton: typeof import('./../../src/components/Boton.vue')['default']
-    Checkbox: typeof import('./../../src/components/checkbox.vue')['default']
+    BaseInput: typeof import('./../../src/components/Forms/BaseInput.vue')['default']
+    Boton: typeof import('./../../src/components/Forms/Boton.vue')['default']
+    Checkbox: typeof import('./../../src/components/Forms/checkbox.vue')['default']
     IIwwaSearch: typeof import('~icons/iwwa/search')['default']
     IMdiImageBrokenVariant: typeof import('~icons/mdi/image-broken-variant')['default']
-    LMap: typeof import('./../../src/components/LMap.vue')['default']
-    Ondas: typeof import('./../../src/components/Ondas.vue')['default']
-    Pin: typeof import('./../../src/components/Pin.vue')['default']
+    LMap: typeof import('./../../src/components/Layout/LMap.vue')['default']
+    Ondas: typeof import('./../../src/components/Layout/Ondas.vue')['default']
+    Pin: typeof import('./../../src/components/Layout/Pin.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
-    Slider: typeof import('./../../src/components/Slider.vue')['default']
-    Suscripcion: typeof import('./../../src/components/Suscripcion.vue')['default']
-    Title: typeof import('./../../src/components/Title.vue')['default']
-    TransitionView: typeof import('./../../src/components/TransitionView.vue')['default']
+    Slider: typeof import('./../../src/components/Forms/Slider.vue')['default']
+    Suscripcion: typeof import('./../../src/components/Layout/Suscripcion.vue')['default']
+    Title: typeof import('./../../src/components/Layout/Title.vue')['default']
+    TransitionView: typeof import('./../../src/components/Layout/Views/TransitionView.vue')['default']
   }
 }
