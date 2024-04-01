@@ -62,13 +62,14 @@
     </Boton>
     <Boton
       type="auth"
-      @click="router.push('/login/registerClient')">
+      @click="router.push('/register/client')">
       {{ $t('cuentaCliente') }}
     </Boton>
   </form>
   <p class="message">
-    {{ $t('tienesCuenta') }} <RouterLink
-      :to="`/login`">
+    {{ $t('tienesCuenta') }}
+    <RouterLink
+      to="/login">
       {{ $t('iniciaSesion') }}
     </RouterLink>
   </p>
