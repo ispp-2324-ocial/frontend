@@ -87,7 +87,7 @@
     <div
       v-if="false"
       style="justify-content: center; display: flex;"
-      @click="router.push('/client/editProfile')">
+      @click="router.push('/profile/edit')">
       <Boton
         type="rounded-blue"
         class="ocial-button"

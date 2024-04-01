@@ -79,7 +79,6 @@ async function Logout() : Promise<void> {
   auth.logout();
   await router.push('/login');
 }
-
 </script>
 
 <style scoped>

@@ -35,7 +35,7 @@
       <div>
         <Boton
           class="h-10vh">
-          <div @click="redirectProfile()">
+          <div @click="router.push('/profile')">
             <img
               alt="Human Blue"
               src="@/assets/images/Human_Clear.png"
@@ -57,13 +57,14 @@ const router = useRouter();
  * Redirección botón evento
  */
 async function redirectEvent() : Promise<void> {
-  if (auth.token.value == undefined) {
-    await router.push('/login');
-  } else if (auth.isClient.value) {
-    await router.push('/client');
-  } else {
-    await router.push('/map'); //TO-DO Debe llevarte a la vista de lista de eventos
+  if (auth.isClient.value) {
+    await router.push('/');
   }
+  /*
+   * } else {
+   *   await router.push('/map'); //TO-DO Debe llevarte a la vista de lista de eventos
+   * }
+   */
 };
 
 /**
@@ -71,19 +72,6 @@ async function redirectEvent() : Promise<void> {
  */
 async function redirectMap() : Promise<void> {
   await (auth.token.value == undefined ? router.push('/login') : router.push('/map'));
-};
-
-/**
- * Redirección botón perfil
- */
-async function redirectProfile() : Promise<void> {
-  if (auth.token.value == undefined) {
-    await router.push('/login');
-  } else if (auth.isClient.value) {
-    await router.push('/client/profile');
-  } else {
-    await router.push('/user/profile');
-  }
 };
 </script>
 
