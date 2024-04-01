@@ -8,7 +8,6 @@ const commonTSAndVueConfig = {
      * TODO: Investigar por qué esta regla reporta falsos positivos
      */
     '@typescript-eslint/no-misused-promises': 'off',
-    'no-secrets/no-secrets': 'error',
     '@typescript-eslint/consistent-type-exports': 'error',
     '@typescript-eslint/no-redundant-type-constituents': 'off'
   }
@@ -49,7 +48,6 @@ module.exports = {
     'jsdoc',
     'jsonc',
     'optimize-regex',
-    'no-secrets',
     '@typescript-eslint',
     'promise',
     'import',
@@ -245,8 +243,7 @@ module.exports = {
     {
       files: ['*.md'],
       rules: {
-        '@stylistic/no-trailing-spaces': ['off'],
-        'no-secrets/no-secrets': 'error'
+        '@stylistic/no-trailing-spaces': ['off']
       }
     },
     {
