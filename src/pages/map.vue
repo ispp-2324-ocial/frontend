@@ -13,13 +13,8 @@
       </Boton>
     </div>
   </form>
-
-
-  <div v-if="contador > 0">
-    <LMap :markers="miArray" />
-  </div>
-  <div v-else>
-    <LMap :markers="eventList" />
+  <div>
+    <LMap :markers="miArray.length > 0 ? miArray : eventList" />
   </div>
 </template>
 
@@ -32,7 +27,6 @@ import { EventApi, type Event } from '@/api';
 const firstName = ref('');
 const { data: eventList } = await useEvent(EventApi, 'eventListList')();
 const miArray = ref<Event[]>([]);
-const contador = ref(0);
 
 
 /**
@@ -41,7 +35,6 @@ const contador = ref(0);
 function getEvents(text: string): void {
   miArray.value.length = 0;
   text = text.toLowerCase();
-  contador.value++;
 
   for (const event of eventList.value) {
 
