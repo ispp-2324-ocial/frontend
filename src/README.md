@@ -30,7 +30,7 @@ Tienen que tener esta estructura (en algunos ejemplos online, el orden de las et
 <!-- OPCIONAL: Ver plugins/router/middlewares/meta.ts y types/plugins.d.ts para una descripción de todos los valores aceptados -->
 <route lang="yaml">
 meta:
-  layout: login
+  layout: anonymous
 </route>
 
 <!-- OPCIONAL: Por si queremos declarar refs que estén compartidos entre todas las instancias que haya en la aplicación de este componentes -->
