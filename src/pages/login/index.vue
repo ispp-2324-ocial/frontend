@@ -107,12 +107,12 @@ async function Login() : Promise<void> {
 const callback = async (response : GoogleResponseObject) => {
   let credential = response.credential;
 
-  const { data: UserCreated } = await useApi(UsersApi, 'usersUserGoogleOauth2Create')(() => ({
+  const { data: UserCreated } = await useApi(UsersApi, 'usersUserGoogleOauth2Create', { skipCache: { request: true }} )(() => ({
       googleSocialAuth: {
         'auth_token': credential,
       }
   }));
-
+  console.log(UserCreated);
   auth.authenticate(UserCreated.value.user.username, UserCreated.value.isClient, UserCreated.value.token);
   await router.push('/map');
 }
