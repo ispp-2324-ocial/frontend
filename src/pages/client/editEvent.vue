@@ -65,7 +65,6 @@ import { ref, computed } from 'vue';
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
 import { CategoryEnum } from '@/api';
-import { auth } from '@/store/auth';
 
 const router = useRouter();
 
