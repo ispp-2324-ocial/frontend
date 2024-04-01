@@ -22,12 +22,11 @@ declare module 'vue-router/auto-routes' {
     '/client/events/[id]/': RouteRecordInfo<'/client/events/[id]/', '/client/events/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/client/events/[id]/edit': RouteRecordInfo<'/client/events/[id]/edit', '/client/events/:id/edit', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/client/events/create': RouteRecordInfo<'/client/events/create', '/client/events/create', Record<never, never>, Record<never, never>>,
-    '/client/profile': RouteRecordInfo<'/client/profile', '/client/profile', Record<never, never>, Record<never, never>>,
     '/client/subscription': RouteRecordInfo<'/client/subscription', '/client/subscription', Record<never, never>, Record<never, never>>,
     '/details/[id]': RouteRecordInfo<'/details/[id]', '/details/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/login': RouteRecordInfo<'/login', '/login', Record<never, never>, Record<never, never>>,
+    '/profile': RouteRecordInfo<'/profile', '/profile', Record<never, never>, Record<never, never>>,
     '/register/': RouteRecordInfo<'/register/', '/register', Record<never, never>, Record<never, never>>,
     '/register/client': RouteRecordInfo<'/register/client', '/register/client', Record<never, never>, Record<never, never>>,
-    '/user/profile': RouteRecordInfo<'/user/profile', '/user/profile', Record<never, never>, Record<never, never>>,
   }
 }
