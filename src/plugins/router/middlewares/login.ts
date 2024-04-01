@@ -4,6 +4,8 @@ import type {
   RouteLocationRaw
 } from 'vue-router/auto';
 import { auth } from '@/store/auth';
+import { useToast } from '@/composables/use-toast';
+import { i18n } from '@/plugins/i18n';
 
 const loginUrl = '/login';
 const registerUrl = '/login/register';
@@ -25,6 +27,11 @@ export function loginGuard (
     destinationRoute = { path: homeUrl, replace: true };
   }
 
-  return destinationRoute && to.path !== destinationRoute.path
-    ? destinationRoute : true;
+  if (destinationRoute && to.path !== destinationRoute.path) {
+    useToast(i18n.t('NotLogged'), 'error');
+
+    return destinationRoute;
+  }
+
+  return true;
 }
