@@ -2,7 +2,7 @@
 <!-- eslint-disable vue/require-v-for-key -->
 <template>
   <Ondas />
-  <div v-if="auth.isLoggedIn.value && auth.isClient.value">
+  <div>
     <Title style="margin-top: 10%;">
       {{ $t('editarEvento') }}
     </Title>
@@ -56,17 +56,6 @@
       style="margin-top: 10%;display: flex;"
       @click="editE('/client')">
       {{ $t('guardarCambios') }}
-    </Boton>
-  </div>
-  <div v-else>
-    <Title>
-      {{ $t('NotLogged') }}
-    </Title>
-    <Boton
-      type="rounded-blue"
-      style="margin-top: 5%;display: flex;"
-      @click="router.push('/login')">
-      {{ $t('iniciaSesion') }}
     </Boton>
   </div>
 </template>

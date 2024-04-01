@@ -1,5 +1,5 @@
 <template>
-  <div v-if="auth.isLoggedIn.value && auth.isClient.value">
+  <div>
     <Title style="margin-top: 3vh;">
       {{ $t('suscripciones') }}
     </Title>
@@ -73,17 +73,6 @@
         </Suscripcion>
       </div>
     </div>
-  </div>
-  <div v-else>
-    <Title>
-      {{ $t('NotLogged') }}
-    </Title>
-    <Boton
-      type="rounded-blue"
-      style="margin-top: 5%;display: flex;"
-      @click="router.push('/login')">
-      {{ $t('iniciaSesion') }}
-    </Boton>
   </div>
 </template>
 
