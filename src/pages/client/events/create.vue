@@ -185,7 +185,7 @@ async function createE() : Promise<void> {
         'timeEnd' : form.value.timeEnd,
         'timeStart': form.value.timeStart,
         'category': form.value.category,
-        'imageB64': image.value == undefined ? '' : image.value,
+        'imageB64': image?.value ?? '',
         'ocialClient': 0
       }
     }));
@@ -200,13 +200,12 @@ async function createE() : Promise<void> {
  * Pasar imagen del input a base64
  */
 function handleImage() : void {
-  var file = document.querySelector('input[type=file]')['files'][0];
+  const file = document.querySelector('input[type=file]')['files'][0];
 
-  var reader = new FileReader();
+  const reader = new FileReader();
 
   reader.addEventListener('load', () => {
     image.value = isNull(reader.result) ? undefined : reader.result;
-
   });
   reader.readAsDataURL(file);
 };
