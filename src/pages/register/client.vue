@@ -192,7 +192,7 @@ async function createAcc() : Promise<void> {
     await router.push('/login');
 
   } else {
-    scrolltoError('.p-invalid', { offset: 24 });
+    scrolltoError('.p-invalid', 24);
   }
 };
 

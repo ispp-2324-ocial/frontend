@@ -92,7 +92,7 @@ async function Login() : Promise<void> {
     await router.replace('/');
 
   } else {
-    scrolltoError('.p-invalid', { offset: 24 });
+    scrolltoError('.p-invalid', 24);
   }
 };
 

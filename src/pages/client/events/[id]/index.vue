@@ -89,7 +89,7 @@ import { EventApi, CategoryEnum } from '@/api';
 import { useEvent } from '@/composables/apis';
 import { auth } from '@/store/auth';
 
-const route = useRoute('/client/events/[id]');
+const route = useRoute('/client/events/[id]/');
 
 const router = useRouter();
 

@@ -1,22 +1,32 @@
 import type { ZodTypeAny, z } from 'zod';
 import { groupBy } from 'lodash-es';
-import { ref, watch, toValue, type MaybeRefOrGetter } from 'vue';
+import { ref, shallowRef, watch, toValue, type MaybeRefOrGetter, type Ref } from 'vue';
+
+interface ComposableReturnType {
+  validate: () => Promise<Ref<Record<string, z.ZodIssue[]> | undefined>>;
+  errors: Ref<Record<string, z.ZodIssue[]> | undefined>;
+  isValid: Ref<boolean>;
+  clearErrors: () => void;
+  getError: (path: string) => string | undefined;
+  scrolltoError: (selector?: string, offset?: number) => void;
+};
 
 /**
  * Funcion auxiliar para validacion zod
  */
-export function useValidation<T extends ZodTypeAny>(schema: T, data: MaybeRefOrGetter<Record<string, unknown>>, options?: { mode: 'eager' | 'lazy' }) {
-  const opts = Object.assign({}, { mode : 'lazy' }, options);
-
-  const isValid = ref(true);
-
-  const errors = ref<Record<string, z.ZodIssue[]> | undefined>(undefined);
+export function useValidation<T extends ZodTypeAny>(
+  schema: T,
+  data: MaybeRefOrGetter<Record<string, unknown>>,
+  options?: { mode: 'eager' | 'lazy' }): ComposableReturnType {
+  const opts = { mode : 'lazy', ...options };
+  const isValid = shallowRef(true);
+  const errors = ref<Record<string, z.ZodIssue[]> | undefined>();
 
   const clearErrors = (): void => {
     errors.value = undefined;
   };
 
-  const validate = async () => {
+  const validate = async (): Promise<typeof errors> => {
     clearErrors();
 
     const result = await schema.safeParseAsync(toValue(data));
@@ -30,11 +40,11 @@ export function useValidation<T extends ZodTypeAny>(schema: T, data: MaybeRefOrG
     return errors;
   };
 
-  const scrolltoError = (selector = '.is-error', options = { offset: 0 }) => {
+  const scrolltoError = (selector = '.is-error', offset = 0): void => {
     const element = document.querySelector(selector);
 
     if (element) {
-      const topOffset = element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - options.offset;
+      const topOffset = element.getBoundingClientRect().top - document.body.getBoundingClientRect().top - offset;
 
       window.scrollTo({
         behavior: 'smooth',
@@ -43,7 +53,8 @@ export function useValidation<T extends ZodTypeAny>(schema: T, data: MaybeRefOrG
     }
   };
 
-  const getError = (path: string) => errors.value ?? `${path.replaceAll('.', ',')}.0.message`;
+  const getError = (path: string): string | undefined =>
+    errors.value?.[path]?.[0]?.message;
 
   if (opts.mode === 'eager') {
     watch(
