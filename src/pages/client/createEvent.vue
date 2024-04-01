@@ -106,7 +106,7 @@ import { z } from 'zod';
 import { CategoryEnum , EventApi } from '@/api';
 import { useEvent } from '@/composables/apis';
 import { isNull } from '@/utils/validation';
-import useValidation from '@/utils/useValidation';
+import { useValidation } from '@/composables/use-validation';
 
 const { t } = useI18n();
 

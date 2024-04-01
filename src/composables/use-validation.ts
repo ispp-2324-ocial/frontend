@@ -1,35 +1,19 @@
 import type { ZodTypeAny, z } from 'zod';
-import { get, groupBy } from 'lodash-es';
+import { groupBy } from 'lodash-es';
 import { ref, watch, toValue, type MaybeRefOrGetter } from 'vue';
 
 /**
  * Funcion auxiliar para validacion zod
  */
-export default function<T extends ZodTypeAny>(schema: T, data: MaybeRefOrGetter<Record<string, unknown>>, options?: { mode: 'eager' | 'lazy' }) {
+export function useValidation<T extends ZodTypeAny>(schema: T, data: MaybeRefOrGetter<Record<string, unknown>>, options?: { mode: 'eager' | 'lazy' }) {
   const opts = Object.assign({}, { mode : 'lazy' }, options);
 
   const isValid = ref(true);
 
-  let unwatch: null | (() => void) = null;
+  const errors = ref<Record<string, z.ZodIssue[]> | undefined>(undefined);
 
-  const errors = ref<Record<string, z.ZodIssue[]> | null>(null);
-
-  const clearErrors = () => {
-    errors.value = null;
-  };
-
-  const validationWatch = () => {
-    if (unwatch !== null) {
-      return;
-    }
-
-    unwatch = watch(
-      () => toValue(data),
-      async () => {
-        await validate();
-      },
-      { deep: true }
-    );
+  const clearErrors = (): void => {
+    errors.value = undefined;
   };
 
   const validate = async () => {
@@ -41,7 +25,6 @@ export default function<T extends ZodTypeAny>(schema: T, data: MaybeRefOrGetter<
 
     if (!result.success) {
       errors.value = groupBy(result.error.issues, 'path');
-      validationWatch();
     }
 
     return errors;
@@ -60,10 +43,16 @@ export default function<T extends ZodTypeAny>(schema: T, data: MaybeRefOrGetter<
     }
   };
 
-  const getError = (path: string) => get(errors.value, `${path.replaceAll('.', ',')}.0.message`);
+  const getError = (path: string) => errors.value ?? `${path.replaceAll('.', ',')}.0.message`;
 
   if (opts.mode === 'eager') {
-    validationWatch();
+    watch(
+      () => toValue(data),
+      async () => {
+        await validate();
+      },
+      { deep: true }
+    );
   }
 
   return { validate, errors, isValid, clearErrors, getError, scrolltoError };

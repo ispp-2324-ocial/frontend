@@ -114,7 +114,7 @@ import { z } from 'zod';
 import { UsersApi, TypeClientEnum } from '@/api';
 import { useApi } from '@/composables/apis';
 import { isNull } from '@/utils/validation';
-import useValidation from '@/utils/useValidation';
+import { useValidation } from '@/composables/use-validation';
 
 const { t } = useI18n();
 
