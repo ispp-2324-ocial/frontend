@@ -1,4 +1,3 @@
-<!-- eslint-disable @intlify/vue-i18n/no-raw-text -->
 <template style="display: block; justify-content: center">
   <Ondas />
   <div class="logo-container">
