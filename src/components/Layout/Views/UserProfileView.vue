@@ -25,7 +25,7 @@
     style="width: 100%;">
     <div
       style="justify-content: center; display: flex;"
-      @click="Logout()">
+      @click="auth.logout">
       <Boton
         type="rounded-blue"
         class="ocial-button"
@@ -70,15 +70,6 @@ import { auth } from '@/store/auth';
 const router = useRouter();
 
 const { data: loggedDjangoUser } = await useApi(UsersApi, 'usersGetList')();
-
-
-/**
- * Cerrar sesion usuario
- */
-async function Logout() : Promise<void> {
-  auth.logout();
-  await router.push('/login');
-}
 </script>
 
 <style scoped>
