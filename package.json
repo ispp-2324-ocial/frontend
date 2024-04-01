@@ -41,7 +41,7 @@
     "inter-ui": "4.0.2",
     "leaflet": "1.9.4",
     "lodash-es": "4.17.21",
-    "radix-vue": "1.5.3",
+    "radix-vue": "1.6.1",
     "vue": "3.4.21",
     "vue-i18n": "9.10.2",
     "vue-router": "4.3.0",
