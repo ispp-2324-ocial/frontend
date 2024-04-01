@@ -54,7 +54,7 @@
     <Boton
       type="rounded-blue"
       style="margin-top: 10%;display: flex;"
-      @click="editE('/client')">
+      @click="editE()">
       {{ $t('guardarCambios') }}
     </Boton>
   </div>
@@ -94,8 +94,8 @@ const categorias = computed(() =>
  * Cuando se fusione con back hay que añadir en la primera línea este código
  * This.finds.push({ value: '' });
  */
-async function editE(path:string) : Promise<void> {
-  await router.push(path);
+function editE() : Promise<void> {
+  router.back();
 };
 
 const { t } = useI18n();

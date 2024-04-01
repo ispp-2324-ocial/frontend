@@ -190,7 +190,7 @@ async function createE() : Promise<void> {
       }
     }));
 
-    await router.push('/client');
+    await router.push('/');
   } else {
     scrolltoError('.p-invalid', { offset: 24 });
   }

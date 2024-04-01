@@ -10,6 +10,7 @@ declare module 'vue' {
     BaseInput: typeof import('./../../src/components/Forms/BaseInput.vue')['default']
     Boton: typeof import('./../../src/components/Forms/Boton.vue')['default']
     Checkbox: typeof import('./../../src/components/Forms/checkbox.vue')['default']
+    ClientProfileView: typeof import('./../../src/components/Layout/Views/ClientProfileView.vue')['default']
     ClientView: typeof import('./../../src/components/Layout/Views/ClientView.vue')['default']
     IIwwaSearch: typeof import('~icons/iwwa/search')['default']
     IMdiImageBrokenVariant: typeof import('~icons/mdi/image-broken-variant')['default']
@@ -23,5 +24,6 @@ declare module 'vue' {
     Suscripcion: typeof import('./../../src/components/Layout/Suscripcion.vue')['default']
     Title: typeof import('./../../src/components/Layout/Title.vue')['default']
     TransitionView: typeof import('./../../src/components/Layout/Views/TransitionView.vue')['default']
+    UserProfileView: typeof import('./../../src/components/Layout/Views/UserProfileView.vue')['default']
   }
 }
