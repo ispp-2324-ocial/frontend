@@ -30,7 +30,7 @@ jobs:
           submodules: recursive
 
       - name: Setup node environment ⚙️
-        uses: actions/setup-node@v4.0.1
+        uses: actions/setup-node@v4.0.2
         with:
           node-version: 20
           check-latest: true
@@ -47,4 +47,4 @@ jobs:
           path: dist
 
       - name: Deploy to GitHub Pages 🚀
-        uses: actions/deploy-pages@v4.0.4
+        uses: actions/deploy-pages@v4.0.5
