@@ -71,14 +71,16 @@
       <a
         href="https://ocial.es/privacy"
         style="color:var(--o-color-theme)"
-        target="_blank">
+        target="_blank"
+        rel="noopener">
         {{ $t('policy') }}
       </a>
       {{ $t('and') }}
       <a
         href="https://ocial.es/customeragreement"
         style="color:var(--o-color-theme)"
-        target="_blank">
+        target="_blank"
+        rel="noopener">
         {{ $t('terms') }}
       </a>
     </Checkbox>
