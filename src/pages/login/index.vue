@@ -51,7 +51,7 @@ import { z } from 'zod';
 import { UsersApi } from '@/api';
 import { useApi } from '@/composables/apis';
 import { auth } from '@/store/auth';
-import useValidation from '@/utils/useValidation';
+import { useValidation } from '@/composables/use-validation';
 
 const router = useRouter();
 

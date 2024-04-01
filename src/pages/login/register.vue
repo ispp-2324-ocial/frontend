@@ -84,7 +84,7 @@ import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
 import { z } from 'zod';
-import useValidation from '@/utils/useValidation';
+import { useValidation } from '@/composables/use-validation';
 import { UsersApi } from '@/api';
 import { useApi } from '@/composables/apis';
 
