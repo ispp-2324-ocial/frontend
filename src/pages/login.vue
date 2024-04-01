@@ -29,8 +29,9 @@
 
     <p
       class="message">
-      {{ $t('noTienesCuenta') }} <RouterLink
-        :to="`/login/register`">
+      {{ $t('noTienesCuenta') }}
+      <RouterLink
+        to="/register">
         {{ $t('registrate') }}
       </RouterLink>
     </p>
