@@ -66,6 +66,25 @@
         accept="image/*"
         @change="handleImage" />
     </div>
+    <Checkbox v-model="form.acceptCondition">
+      {{ $t('accept') }}
+      <a
+        href="https://ocial.es/privacy"
+        style="color:var(--o-color-theme)"
+        target="_blank">
+        {{ $t('policy') }}
+      </a>
+      {{ $t('and') }}
+      <a
+        href="https://ocial.es/customeragreement"
+        style="color:var(--o-color-theme)"
+        target="_blank">
+        {{ $t('terms') }}
+      </a>
+    </Checkbox>
+    <div class="error">
+      {{ getError('acceptCondition') }}
+    </div>
     <Boton
       type="auth"
       @click="createAcc()">
@@ -104,10 +123,14 @@ const validationSchema = z.object({
   password2: z.string().min(8, t('validPassword')),
   email: z.string().email(t('validEmail')),
   dni: z.string().length(9, t('validDocumentation')),
-  category: z.string().min(1, t('categoryRequired'))
+  category: z.string().min(1, t('categoryRequired')),
+  acceptCondition: z.boolean()
 }).refine((data) => data.password === data.password2, {
   message: t('passwordMatch'),
   path: ['password2']
+}).refine((data) => data.acceptCondition === true, {
+  message: t('acceptConditions'),
+  path: ['acceptCondition']
 });
 
 const form = ref({
@@ -117,7 +140,8 @@ const form = ref({
   email: '',
   name: '',
   dni: '',
-  category: TypeClientEnum.Artist
+  category: TypeClientEnum.Artist,
+  acceptCondition: false
 });
 
 const { validate, isValid, getError, scrolltoError } = useValidation(validationSchema, form, {
@@ -205,5 +229,8 @@ const placeholders = computed(() =>
   font-size: 14px;
   color: red;
   margin-top: 4px;
+}
+a:hover {
+  text-decoration-line: underline;
 }
 </style>
