@@ -192,7 +192,7 @@ async function createE() : Promise<void> {
 
     await router.push('/');
   } else {
-    scrolltoError('.p-invalid', { offset: 24 });
+    scrolltoError('.p-invalid', 24);
   }
 };
 
