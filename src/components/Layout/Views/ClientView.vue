@@ -2,7 +2,7 @@
   <div>
     <div
       style="justify-content: center; display: flex; margin-top: 10%;"
-      @click="router.push('/client/createEvent')">
+      @click="router.push('/client/events/create')">
       <Boton type="rounded-blue">
         <div>
           <p>
@@ -64,13 +64,11 @@
 import { useRouter } from 'vue-router/auto';
 import { EventApi } from '@/api';
 import { useEvent } from '@/composables/apis';
-import { auth } from '@/store/auth';
 
 const router = useRouter();
 
 /**
- *TODO: pasar a eventListClientList cuando el registro
- *      e inicio de sesión de cliente sea funcional
+ *TODO: pasar a eventListClientList cuando el registro e inicio de sesión de cliente sea funcional
  */
 const { data: eventList } = await useEvent(EventApi, 'eventListClientList')();
 
