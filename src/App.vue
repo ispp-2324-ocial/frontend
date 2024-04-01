@@ -31,7 +31,7 @@ import { whenever } from '@vueuse/core';
 import { ref, type Component as VueComponent } from 'vue';
 import type { RouteMeta } from 'vue-router/auto';
 import DefaultLayout from '@/layouts/default.vue';
-import LoginLayout from '@/layouts/login.vue';
+import AnonymousLayout from '@/layouts/anonymous.vue';
 
 const apploaded = ref(false);
 
@@ -78,6 +78,6 @@ const stop = whenever(apploaded, () => {
  */
 function getLayoutComponent(layout: RouteMeta['layout']): VueComponent {
   /* eslint-disable-next-line @typescript-eslint/no-unsafe-return */
-  return layout === 'login' ? LoginLayout as VueComponent : DefaultLayout;
+  return layout === 'anonymous' ? AnonymousLayout as VueComponent : DefaultLayout;
 }
 </script>

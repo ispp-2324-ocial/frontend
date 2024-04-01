@@ -39,7 +39,7 @@
 
 <route lang="yaml">
   meta:
-    layout: login
+    layout: anonymous
 </route>
 
 <script setup lang="ts">
