@@ -184,7 +184,7 @@ async function createAcc() : Promise<void> {
         'typeClient': form.value.category, //OcialClientDetail.value.category,
         'defaultLongitude':0,
         'djangoUser': 0,
-        'imageB64': image.value == undefined ? '' : image.value //Cambiar
+        'imageB64': image?.value ?? '' //Cambiar
       }
     }));
 
@@ -200,13 +200,12 @@ async function createAcc() : Promise<void> {
  * Pasar imagen del input a base64
  */
 function handleImage() : void {
-  var file = document.querySelector('input[type=file]')['files'][0];
+  const file = document.querySelector('input[type=file]')['files'][0];
 
-  var reader = new FileReader();
+  const reader = new FileReader();
 
   reader.addEventListener('load', () => {
     image.value = isNull(reader.result) ? undefined : reader.result;
-
   });
   reader.readAsDataURL(file);
 };

@@ -94,7 +94,7 @@ const categorias = computed(() =>
  * Cuando se fusione con back hay que añadir en la primera línea este código
  * This.finds.push({ value: '' });
  */
-function editE() : Promise<void> {
+function editE() : void {
   router.back();
 };
 

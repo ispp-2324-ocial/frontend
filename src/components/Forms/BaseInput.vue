@@ -2,7 +2,9 @@
   <div
     :class="{ 'auth': variant === 'auth',
               'inputWrap': variant === 'default'}">
-    <label>{{ label }}</label>
+    <label>
+      {{ label }}
+    </label>
     <input
       v-model="value"
       v-bind="$attrs"

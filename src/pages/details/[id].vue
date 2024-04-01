@@ -82,11 +82,11 @@ const categorias = computed(() =>
 const route = useRoute('/details/[id]');
 
 const { data: eventDetail } = await useEvent(EventApi, 'eventList')(() => ({
-  'id': route.params.id
+  'id': Number(route.params.id)
 }));
 
 const { data: ocialClient } = await useEvent(EventApi, 'eventClientRetrieve')(() => ({
-  'id': route.params.id
+  'id': Number(route.params.id)
 }));
 
 const nameClient = ocialClient.value.name;
