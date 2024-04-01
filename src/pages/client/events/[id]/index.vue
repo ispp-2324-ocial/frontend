@@ -61,10 +61,11 @@
     <div
       class="mb-7"
       style="width: 100%;">
+      <!-- TODO: Reemplazar -->
       <div
         v-if="false"
         style="justify-content: center; display: flex;"
-        @click="router.push('/client/editEvent')">
+        @click="router.push(`/client/events/${route.params.id}`)">
         <Boton
           type="rounded-blue"
           style="width: 80%; padding-top: 1vh; padding-bottom: 1vh;">
@@ -95,11 +96,11 @@ const router = useRouter();
 const { t } = useI18n();
 
 const { data: eventDetail } = await useEvent(EventApi, 'eventList')(() => ({
-  'id': route.params.id
+  'id': Number(route.params.id)
 }));
 
 const { data: ocialClient } = await useEvent(EventApi, 'eventClientRetrieve')(() => ({
-  'id': route.params.id
+  'id': Number(route.params.id)
 }));
 
 const nameClient = ocialClient.value.name;
