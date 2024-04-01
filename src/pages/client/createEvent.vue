@@ -104,7 +104,6 @@ import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
 import { z } from 'zod';
 import { CategoryEnum , EventApi } from '@/api';
-import { auth } from '@/store/auth';
 import { useEvent } from '@/composables/apis';
 import { isNull } from '@/utils/validation';
 import useValidation from '@/utils/useValidation';

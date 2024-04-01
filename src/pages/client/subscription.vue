@@ -76,14 +76,6 @@
   </div>
 </template>
 
-
-<script setup lang="ts">
-import { useRouter } from 'vue-router/auto';
-import { auth } from '@/store/auth';
-
-const router = useRouter();
-</script>
-
 <style scoped>
 .column {
   padding: 10px;

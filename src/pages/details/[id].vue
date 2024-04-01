@@ -68,7 +68,6 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { EventApi, CategoryEnum } from '@/api';
 import { useEvent } from '@/composables/apis';
-import { auth } from '@/store/auth';
 
 const cateEnum = [CategoryEnum.Sports, CategoryEnum.Music, CategoryEnum.Markets, CategoryEnum.RelaxActivities, CategoryEnum.LiveConcert];
 const { t } = useI18n();
