@@ -17,12 +17,12 @@ export const router = createRouter({
 });
 
 /**
- * Lógica de middlewares: El orden ES IMPORTANTE (meta siempre debe ir primero)
+ * Lógica de middlewares: El orden ES IMPORTANTE (meta siempre debe ir el último)
  *
  * Cada uno de ellos se ejecutará antes de que accedamos a una ruta.
  */
-router.beforeEach(metaGuard);
 router.beforeEach(loginGuard);
+router.beforeEach(metaGuard);
 
 /**
  * Reemplaza la función 'back', teniendo en cuenta si hay una página anterior o no.
