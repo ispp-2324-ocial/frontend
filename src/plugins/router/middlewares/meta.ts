@@ -25,7 +25,7 @@ const reactiveMeta = reactive(structuredClone(defaultMeta));
  *
  * <route lang="yaml">
  *  meta:
- *    layout: login
+ *    layout: anonymous
  * </route>
  *
  * Ese bloque también es necesario cuando una propiedad necesita resolverse antes
