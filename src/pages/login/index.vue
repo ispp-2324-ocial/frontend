@@ -115,7 +115,6 @@ const callback = async (response : GoogleResponseObject): Promise<void> => {
     }
   }));
 
-  console.log(UserCreated);
   auth.authenticate(UserCreated.value.user.username, UserCreated.value.isClient, UserCreated.value.token);
   await router.push('/map');
 };
