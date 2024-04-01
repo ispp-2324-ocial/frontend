@@ -3,7 +3,6 @@
 <template>
   <Ondas />
   <div
-    v-if="auth.isLoggedIn.value && auth.isClient.value"
     style="margin-top: 10%; ">
     <Title>
       {{ $t('nuevoEvento') }}
@@ -94,17 +93,6 @@
       style="display: flex; margin-top: 1%"
       @click="createE()">
       {{ $t('crearEvento') }}
-    </Boton>
-  </div>
-  <div v-else>
-    <Title>
-      {{ $t('NotLogged') }}
-    </Title>
-    <Boton
-      type="rounded-blue"
-      style="margin-top: 5%;display: flex;"
-      @click="router.push('/login')">
-      {{ $t('iniciaSesion') }}
     </Boton>
   </div>
 </template>

@@ -1,6 +1,6 @@
 <template>
   <Ondas />
-  <div v-if="auth.isLoggedIn.value && auth.isClient.value">
+  <div>
     <ul style="list-style-type:none; margin-top: 10%;">
       <li>
         <div class="row mb-7 mr-3">
@@ -62,7 +62,7 @@
       class="mb-7"
       style="width: 100%;">
       <div
-        v-if="auth.isLoggedIn.value && auth.isClient.value && false"
+        v-if="false"
         style="justify-content: center; display: flex;"
         @click="router.push('/client/editEvent')">
         <Boton
@@ -76,17 +76,6 @@
         </Boton>
       </div>
     </div>
-  </div>
-  <div v-else>
-    <Title>
-      {{ $t('NotLogged') }}
-    </Title>
-    <Boton
-      type="rounded-blue"
-      style="margin-top: 5%;display: flex;"
-      @click="router.push('/login')">
-      {{ $t('iniciaSesion') }}
-    </Boton>
   </div>
 </template>
 
