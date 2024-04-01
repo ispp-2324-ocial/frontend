@@ -15,7 +15,9 @@
     <div class="error">
       {{ getError('password') }}
     </div>
-    <Boton style="margin-bottom: 1rem" type="auth">
+    <Boton
+      style="margin-bottom: 1rem"
+      type="auth">
       <div @click="Login()">
         {{ $t('iniciarSesion') }}
       </div>
@@ -23,8 +25,8 @@
     <p class="message">
       {{ $t('soloUsuarios') }}
     </p>
-    <GoogleLogin :callback='callback' />
-    
+    <GoogleLogin :callback="callback" />
+
     <p
       class="message">
       {{ $t('noTienesCuenta') }} <RouterLink
@@ -97,25 +99,26 @@ async function Login() : Promise<void> {
  * Google login callback
  */
 
- interface GoogleResponseObject {
+interface GoogleResponseObject {
   clientId: string;
   client_id: string;
   credential: string;
   select_by: string;
 }
 
-const callback = async (response : GoogleResponseObject) => {
+const callback = async (response : GoogleResponseObject): Promise<void> => {
   let credential = response.credential;
 
-  const { data: UserCreated } = await useApi(UsersApi, 'usersUserGoogleOauth2Create', { skipCache: { request: true }} )(() => ({
-      googleSocialAuth: {
-        'auth_token': credential,
-      }
+  const { data: UserCreated } = await useApi(UsersApi, 'usersUserGoogleOauth2Create', { skipCache: { request: true } } )(() => ({
+    googleSocialAuth: {
+      'auth_token': credential
+    }
   }));
+
   console.log(UserCreated);
   auth.authenticate(UserCreated.value.user.username, UserCreated.value.isClient, UserCreated.value.token);
   await router.push('/map');
-}
+};
 
 
 const placeholders = computed(() =>
