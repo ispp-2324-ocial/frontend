@@ -28,9 +28,3 @@
       style="color:#c5deff" />
   </svg>
 </template>
-
-<script setup lang = 'ts'>
-</script>
-
-<style scoped>
-</style>
