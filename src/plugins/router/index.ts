@@ -1,11 +1,12 @@
 import { useTitle } from '@vueuse/core';
-import { computed } from 'vue';
+import { computed, watch } from 'vue';
 import {
   createRouter,
   createWebHashHistory
 } from 'vue-router/auto';
 import { loginGuard } from './middlewares/login';
 import { metaGuard } from './middlewares/meta';
+import { auth } from '@/store/auth';
 import { isStr } from '@/utils/validation';
 
 export const router = createRouter({
@@ -54,6 +55,20 @@ router.back = (): ReturnType<typeof router.back> => {
       )
   );
 };
+
+/**
+ * Este watcher redirige al usuario a la página de inicio de sesión si no está autenticado.
+ *
+ * A diferencia del middleware, este watcher se ejecuta al momento de cambiar el estado de la autenticación,
+ * sin importar si se ha ejecutado una navegación o no.
+ *
+ * Igualmente, ambos son necesarios: https://github.com/ispp-2324-ocial/frontend/pull/104#pullrequestreview-1964894975
+ */
+watch(auth.isLoggedIn, async () => {
+  if (!auth.isLoggedIn.value) {
+    await router.replace('/login');
+  }
+});
 
 /**
  * Gestiona los cambios de título de la página

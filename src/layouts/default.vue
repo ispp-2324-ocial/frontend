@@ -22,15 +22,19 @@
         </Boton>
       </div>
       <div>
-        <Boton
-          class="h-10vh">
-          <div @click="redirectMap()">
-            <img
-              alt="Mapa Claro"
-              src="@/assets/images/Map_Clear.png"
-              style="padding: 7%;" />
-          </div>
-        </Boton>
+        <RouterLink
+          v-slot="{ navigate }"
+          to="/">
+          <Boton
+            class="h-10vh">
+            <div @click="navigate">
+              <img
+                alt="Mapa Claro"
+                src="@/assets/images/Map_Clear.png"
+                style="padding: 7%;" />
+            </div>
+          </Boton>
+        </RouterLink>
       </div>
       <div>
         <Boton
@@ -65,13 +69,6 @@ async function redirectEvent() : Promise<void> {
    *   await router.push('/map'); //TO-DO Debe llevarte a la vista de lista de eventos
    * }
    */
-};
-
-/**
- * Redirección botón mapa
- */
-async function redirectMap() : Promise<void> {
-  await (auth.token.value == undefined ? router.push('/login') : router.push('/map'));
 };
 </script>
 
