@@ -8,43 +8,43 @@ project:
   members:
     member1:
       name: 'Adrian'
-      surname: 'Romero' 
+      surname: 'Romero'
       githubUsername: 'adrrf'
     member2:
       name: 'Aitor'
-      surname: 'Rodriguez' 
+      surname: 'Rodriguez'
       githubUsername: 'AitorRD'
     member3:
       name: 'Carlos'
-      surname: 'Varela' 
+      surname: 'Varela'
       githubUsername: 'carvarsou'
     member4:
       name: 'Eduardo'
-      surname: 'Pizarro' 
+      surname: 'Pizarro'
       githubUsername: 'Domi-ATLAS'
     member5:
       name: 'Fernando'
-      surname: 'Fernandez' 
+      surname: 'Fernandez'
       githubUsername: 'ferferga'
     member6:
       name: 'Francisco'
-      surname: 'Villalobos' 
+      surname: 'Villalobos'
       githubUsername: 'fravilpae'
     member7:
       name: 'Horacio'
-      surname: 'García' 
+      surname: 'García'
       githubUsername: 'horgarler'
     member8:
       name: 'Iñigo'
-      surname: 'Ruiz' 
+      surname: 'Ruiz'
       githubUsername: 'iniruimar'
     member9:
       name: 'Jesus'
-      surname: 'Zambrana' 
+      surname: 'Zambrana'
       githubUsername: 'Jeszamgue'
     member10:
       name: 'Jose Carlos'
-      surname: 'Ortiz' 
+      surname: 'Ortiz'
       githubUsername: 'josecaog26'
     member11:
       name: 'Juan Jose'
@@ -52,13 +52,13 @@ project:
       githubUsername: 'lDrakohh'
     member12:
       name: 'Paula'
-      surname: 'Peña' 
+      surname: 'Peña'
       githubUsername: 'paupenfer1'
     member13:
       name: 'Ramon'
-      surname: 'Guerrero' 
+      surname: 'Guerrero'
       githubUsername: 'Ramguerom'
     member14:
       name: 'Raul'
-      surname: 'Montalban' 
+      surname: 'Montalban'
       githubUsername: 'raumonmar1'
