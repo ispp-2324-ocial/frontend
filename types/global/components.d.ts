@@ -7,6 +7,7 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
+    '(chore(like)': refactor and api import)
     '(ci(sonarcloud)': added badges (#13))
     BaseInput: typeof import('./../../src/components/Forms/BaseInput.vue')['default']
     Boton: typeof import('./../../src/components/Forms/Boton.vue')['default']
@@ -20,7 +21,7 @@ declare module 'vue' {
     IMdiHeartOutline: typeof import('~icons/mdi/heart-outline')['default']
     IMdiImageBrokenVariant: typeof import('~icons/mdi/image-broken-variant')['default']
     IMdiSearch: typeof import('~icons/mdi/search')['default']
-    Like: typeof import('./../../src/components/Like.vue')['default']
+    Like: typeof import('./../../src/components/Forms/Like.vue')['default']
     LMap: typeof import('./../../src/components/Layout/LMap.vue')['default']
     MapView: typeof import('./../../src/components/Layout/Views/MapView.vue')['default']
     OFooter: typeof import('./../../src/components/Layout/OFooter.vue')['default']
