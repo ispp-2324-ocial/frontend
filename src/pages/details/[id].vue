@@ -27,6 +27,15 @@
                 style="margin-top: 7%;">
                 <b>{{ eventDetail.name }}</b>
               </p>
+              <p class="elemento">
+                <b>{{ $t('¿Te gusta el evento?') }}</b>
+              </p>
+              <p class="elemento">
+                <b>{{ $t('¡Dale like y guárdalo!') }}</b>
+              </p>
+              <p>
+                <Like />
+              </p>
               <p
                 class="elemento"
                 style="margin-top: 4%;">
@@ -52,10 +61,6 @@
               </p>
               <p class="elemento">
                 <b>{{ $t('client:') }}</b>&nbsp;{{ eventDetail.ocialClient.name }}
-              </p>
-              <p class="elemento">
-                <b>{{ $t('¿Te gusta el evento?') }}</b>
-                <Like />
               </p>
             </div>
           </div>

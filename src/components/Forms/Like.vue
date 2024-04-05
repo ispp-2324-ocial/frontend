@@ -3,7 +3,7 @@
     class="checkbox-container"
     @mouseover="isHovered = true"
     @mouseout="isHovered = false"
-    @click="value = !value">
+    @click="toggleLike">
     <input
       v-model="value"
       type="checkbox"
@@ -34,10 +34,29 @@
 </template>
 
 <script setup lang="ts">
-import { defineModel, ref } from 'vue';
+import { ref } from 'vue';
+import { useRoute } from 'vue-router/auto';
+import { useEvent } from '@/composables/apis';
+import { EventApi } from '@/api';
 
-const value = defineModel<boolean>();
+const value = ref(false);
 const isHovered = ref(false);
+const route = useRoute('/details/[id]');
+
+/**
+ * Función que añade el like cuando el corazón el pulsado
+ */
+async function toggleLike(): Promise<void> {
+  value.value = !value.value;
+
+  await value.value ? useEvent(EventApi, 'eventLikeCreate') : useEvent(EventApi, 'eventLikeDestroy');
+};
+
+const { data: likedEvents } = await useEvent(EventApi, 'eventLikeList')(() => ({
+  'id': Number(route.params.id)
+}));
+
+console.log(likedEvents.value);
 </script>
 
 <style scoped>
