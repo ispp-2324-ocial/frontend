@@ -59,16 +59,8 @@
           <div class="error">
             {{ getError('capacity') }}
           </div>
-          <select
-            v-model="form.category"
-            class="input-box">
-            <option
-              v-for="(category,indice) in cateEnum"
-              :key="category"
-              :value="category">
-              {{ categorias[indice] }}
-            </option>
-          </select>
+          <SelectCategory
+            v-model="form.category" />
           <div class="error">
             {{ getError('category') }}
           </div>
@@ -150,15 +142,6 @@ const image = ref('');
 const { validate, isValid, getError, scrolltoError } = useValidation(validationSchema, form, {
   mode: 'lazy'
 });
-
-const cateEnum = [CategoryEnum.Sports, CategoryEnum.Music, CategoryEnum.Markets, CategoryEnum.RelaxActivities, CategoryEnum.LiveConcert];
-
-const categorias = computed(() =>
-  [t('categoryDeporte'),
-   t('categoryMusica'),
-   t('categoryMercado'),
-   t('categoryRelax'),
-   t('categoryConcierto')]);
 
 
 /**

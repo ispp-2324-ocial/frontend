@@ -20,6 +20,7 @@ declare module 'vue' {
     Pin: typeof import('./../../src/components/Layout/Pin.vue')['default']
     RouterLink: typeof import('vue-router')['RouterLink']
     RouterView: typeof import('vue-router')['RouterView']
+    SelectCategory: typeof import('./../../src/components/Forms/SelectCategory.vue')['default']
     Slider: typeof import('./../../src/components/Forms/Slider.vue')['default']
     Suscripcion: typeof import('./../../src/components/Layout/Suscripcion.vue')['default']
     Title: typeof import('./../../src/components/Layout/Title.vue')['default']
