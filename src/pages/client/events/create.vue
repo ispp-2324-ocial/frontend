@@ -59,8 +59,7 @@
           <div class="error">
             {{ getError('capacity') }}
           </div>
-          <SelectCategory
-            v-model="form.category" />
+          <SelectCategory />
           <div class="error">
             {{ getError('category') }}
           </div>
