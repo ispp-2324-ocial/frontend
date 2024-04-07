@@ -77,4 +77,17 @@ const isHovered = ref(false);
   margin: auto;
   text-align: center;
 }
+
+.share {
+  text-transform: uppercase;
+  background: #aacfff;
+  width: 100%;
+  border: 2px solid #3e80d7;
+  padding: 10px 3px 10px 3px;
+  border-radius: 15px;
+  font-size: clamp(10px,3.5vw,15px);
+  font-weight: 400;
+  margin: auto;
+  text-align: center;
+}
 </style>
