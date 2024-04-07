@@ -26,14 +26,18 @@
             style="border-top: solid 1px #b0b0b0; padding: 0%;"
             @click="getDetailsEvent(event.id)">
             <div style=" cursor: pointer;margin:auto; text-align: center;display: flex; align-items: center; justify-content: left;">
-              <img
-                v-if="event.image"
-                alt="Event"
-                :src="event.image.image"
-                style="display: block; width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px;" />
-              <IMdiImageBrokenVariant
-                v-else
-                style="display: block; width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px;" />
+              <div
+                class="rect-img-container"
+                style="overflow:hidden; display: block; width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px;">
+                <img
+                  v-if="event.image"
+                  class="rect-img"
+                  alt="Event"
+                  :src="event.image.image" />
+                <IMdiImageBrokenVariant
+                  v-else
+                  style="display: block; width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px;" />
+              </div>
               <div
                 class="ml-3"
                 style="text-align: left; width: 70%;">
@@ -82,6 +86,22 @@ async function getDetailsEvent(eventId: number | undefined) : Promise<void> {
 </script>
 
 <style scoped>
+.rect-img-container {
+  position: relative;
+}
+
+.rect-img-container::after {
+  content: "";
+  display: block;
+  padding-bottom: 100%;
+}
+
+.rect-img {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
 .nombre{
   font-size: clamp(15px, 6vw, 30px);
   font-weight: bold;
