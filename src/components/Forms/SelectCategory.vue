@@ -12,13 +12,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { CategoryEnum } from '@/api';
 
 const { t } = useI18n();
 
-const selectedCategory = ref<CategoryEnum>(CategoryEnum.Sports);
+const selectedCategory = defineModel<CategoryEnum>(CategoryEnum.Sports);
 
 interface CategoryOption {
   value: CategoryEnum;
