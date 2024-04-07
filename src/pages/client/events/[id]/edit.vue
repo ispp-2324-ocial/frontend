@@ -6,49 +6,14 @@
     <Title style="margin-top: 10%;">
       {{ $t('editarEvento') }}
     </Title>
-    <div style="margin-top: 10% ;justify-content: center; display: flex;">
+    <div>
       <div
         v-for="(event, index) in eventDetail">
         <BaseInput
           :key="index"
           v-model="event.name"
           class="input-box"
-          :placeholder="placeholders[0]" />
-        <BaseInput
-          :key="index"
-          v-model="event.place"
-          class="input-box"
-          :placeholder="placeholders[1]" />
-        <BaseInput
-          :key="index"
-          v-model="event.event"
-          class="input-box"
-          :placeholder="placeholders[2]" />
-        <BaseInput
-          :key="index"
-          v-model="event.date"
-          class="input-box"
-          tipo="date" />
-        <BaseInput
-          :key="index"
-          v-model="event.hour"
-          class="input-box"
-          tipo="time" />
-        <BaseInput
-          :key="index"
-          v-model="event.capacity"
-          class="input-box"
-          tipo="number"
-          :placeholder="placeholders[3]" />
-        <select
-          v-model="event.category"
-          class="input-box">
-          <option
-            v-for="(category,indice) in cateEnum"
-            :key="category">
-            {{ categorias[indice] }}
-          </option>
-        </select>
+          :placeholder="placeholders[index]" />
       </div>
     </div>
     <Boton
@@ -62,47 +27,68 @@
 
 <script setup lang="ts">
 import { ref, computed } from 'vue';
-import { useRouter } from 'vue-router/auto';
+import { useRoute, useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
-import { CategoryEnum } from '@/api';
+import { CategoryEnum , EventApi } from '@/api';
+import { useEvent } from '@/composables/apis';
+
+const { t } = useI18n();
 
 const router = useRouter();
 
-const eventDetail = ref([
-  {
-    name: 'Yoga Outdoor',
-    place: 'Parque del Alamillo',
-    event: 'Clase de yoga al aire libre.',
-    date: '16/03/24',
-    hour: '16:00',
-    capacity: '60',
-    category: 'Deporte',
-    image: '@/assets/images/temp/yoga.png'
-  }]);
+const route = useRoute('/client/events/[id]/edit');
 
-const cateEnum = [CategoryEnum.Sports, CategoryEnum.Music, CategoryEnum.Markets, CategoryEnum.RelaxActivities, CategoryEnum.LiveConcert];
+const { data: eventDetail } = await useEvent(EventApi, 'eventList')(() => ({
+  'id': Number(route.params.id)
+}));
 
-const categorias = computed(() =>
-  [t('categoryDeporte'),
-   t('categoryMusica'),
-   t('categoryMercado'),
-   t('categoryRelax'),
-   t('categoryConcierto')]);
+/**
+ * Se intenta rellenar estos campos con los obtenidos en eventDetail para sincronizar
+ *     los datos que salen en la vista con los que se quieren guardar en la base de datos
+ */
+const form = ref({
+  name: '',
+  place: '',
+  event: '',
+  timeStart: '',
+  timeEnd: '',
+  capacity: 1,
+  category: CategoryEnum.Sports
+});
 
 /**
  * Esta función guarda la información en la base de datos y luego redirige a otra vista
  * Cuando se fusione con back hay que añadir en la primera línea este código
  * This.finds.push({ value: '' });
  */
-function editE() : void {
-  router.back();
-};
+async function editE() : Promise<void> {
+  await useEvent(EventApi, 'eventCreateCreate')(() => ({
+    eventCreate: {
+      'event': form.value.event,
+      'place': form.value.place,
+      'capacity': form.value.capacity,
+      'name': form.value.name,
+      'timeEnd' : form.value.timeEnd,
+      'timeStart': form.value.timeStart,
+      'category': form.value.category,
+      'ocialClient': 0
+    }
+  }));
 
-const { t } = useI18n();
+  await router.push('/');
+};
 
 const placeholders = computed(() =>
   [t('placeholderNombreEvento'),
    t('placeholderLugar'),
+   t('placeholderDescripcion'),
+   t('placeholderDescripcion'),
+   t('placeholderDescripcion'),
+   t('placeholderDescripcion'),
+   t('placeholderDescripcion'),
+   t('placeholderDescripcion'),
+   t('placeholderDescripcion'),
+   t('placeholderDescripcion'),
    t('placeholderDescripcion'),
    t('placeholderCapacidad')]);
 </script>
@@ -110,5 +96,8 @@ const placeholders = computed(() =>
 <style scoped>
 .input-box{
   margin-bottom: 1.5vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 </style>
