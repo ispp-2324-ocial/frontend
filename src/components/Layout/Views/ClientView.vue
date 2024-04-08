@@ -26,18 +26,10 @@
             style="border-top: solid 1px #b0b0b0; padding: 0%;"
             @click="getDetailsEvent(event.id)">
             <div style=" cursor: pointer;margin:auto; text-align: center;display: flex; align-items: center; justify-content: left;">
-              <div
-                class="rect-img-container"
-                style="overflow:hidden; display: block; width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px;">
-                <img
-                  v-if="event.image"
-                  class="rect-img"
-                  alt="Event"
-                  :src="event.image.image" />
-                <IMdiImageBrokenVariant
-                  v-else
-                  style="display: block; width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px;" />
-              </div>
+              <RoundImage
+                :is-image="event.image"
+                :alt="'Event picture'"
+                :src="event.image.image" />
               <div
                 class="ml-3"
                 style="text-align: left; width: 70%;">

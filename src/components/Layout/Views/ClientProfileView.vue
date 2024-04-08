@@ -12,17 +12,11 @@
                 <Title>
                   {{ loggedClient.name }}
                 </Title>
-                <div class="flex justify-center items-center pt-12">
-                  <img
-                    v-if="loggedClient.image"
-                    alt="Event"
-                    :src="loggedClient.image.image"
-                    class="center"
-                    style="width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px" />
-                  <IMdiImageBrokenVariant
-                    v-else
-                    style="width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px;" />
-                </div>
+                <RoundImage
+                  class="center"
+                  :is-image="loggedClient.image"
+                  :alt="'Avatar picture'"
+                  :src="loggedClient.image.image" />
                 <p class="elemento">
                   <b>{{ loggedDjangoUser.username }}</b>
                 </p>
