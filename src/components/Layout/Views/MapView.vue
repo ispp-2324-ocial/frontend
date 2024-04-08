@@ -11,6 +11,9 @@
         <IIwwaSearch class="size-6 text-muted-foreground" />
       </Boton>
     </div>
+    <div>
+      <Dropdown />
+    </div>
   </form>
   <div>
     <LMap :markers="eventList" />
