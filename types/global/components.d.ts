@@ -12,6 +12,7 @@ declare module 'vue' {
     Checkbox: typeof import('./../../src/components/Forms/checkbox.vue')['default']
     ClientProfileView: typeof import('./../../src/components/Layout/Views/ClientProfileView.vue')['default']
     ClientView: typeof import('./../../src/components/Layout/Views/ClientView.vue')['default']
+    Dropdown: typeof import('./../../src/components/Forms/Dropdown.vue')['default']
     IIwwaSearch: typeof import('~icons/iwwa/search')['default']
     IMdiImageBrokenVariant: typeof import('~icons/mdi/image-broken-variant')['default']
     LMap: typeof import('./../../src/components/Layout/LMap.vue')['default']
