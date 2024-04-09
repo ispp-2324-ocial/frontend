@@ -116,8 +116,8 @@ const router = useRouter();
 
 const { t } = useI18n();
 
-const { data: loggedClient } = await useApi(UsersApi, 'usersClientGetList')();
-const { data: loggedDjangoUser } = await useApi(UsersApi, 'usersGetList')();
+const { data: loggedClient } = await useApi(UsersApi, 'usersClientGetRetrieve')();
+const { data: loggedDjangoUser } = await useApi(UsersApi, 'usersGetRetrieve')();
 
 const cateEnum = [TypeClientEnum.Artist, TypeClientEnum.BarRestaurant, TypeClientEnum.EventsAndConcerts, TypeClientEnum.LocalGuide, TypeClientEnum.SmallBusiness];
 

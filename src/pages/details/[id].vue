@@ -25,18 +25,18 @@
               <p
                 class="elemento"
                 style="margin-top: 7%;">
-                <b>{{ eventDetail.event }}</b>
+                <b>{{ eventDetail.name }}</b>
               </p>
               <p
                 class="elemento"
                 style="margin-top: 4%;">
-                <b>{{ $t('lugar:') }}</b>&nbsp;{{ $t('lugar', {place: eventDetail.place} ) }}
+                <b>{{ $t('lugar:') }}</b>&nbsp;{{ $t('lugar', { place: eventDetail.place } ) }}
               </p>
               <p class="elemento">
-                <b>{{ $t('Fecha Inicio') }}:</b>&nbsp;{{ $t('fecha', {date: eventDetail.timeStart?.split('T')[0], hour: eventDetail.timeStart?.split('T')[1].split('.')[0].slice(0,5)} ) }}
+                <b>{{ $t('Fecha Inicio') }}:</b>&nbsp;{{ $t('fecha', { date: eventDetail.timeStart?.split('T')[0], hour: eventDetail.timeStart?.split('T')[1].split('.')[0].slice(0,5)} ) }}
               </p>
               <p class="elemento">
-                <b>{{ $t('Fecha Final') }}:</b>&nbsp;{{ $t('fecha', {date: eventDetail.timeEnd?.split('T')[0], hour: eventDetail.timeEnd?.split('T')[1].split('.')[0].slice(0,5)} ) }}
+                <b>{{ $t('Fecha Final') }}:</b>&nbsp;{{ $t('fecha', { date: eventDetail.timeEnd?.split('T')[0], hour: eventDetail.timeEnd?.split('T')[1].split('.')[0].slice(0,5)} ) }}
               </p>
               <p class="elemento">
                 <b>{{ $t('capacidad:') }}</b>&nbsp;{{ eventDetail.capacity }}
@@ -51,7 +51,7 @@
                 </span>
               </p>
               <p class="elemento">
-                <b>{{ $t('client:') }}</b>&nbsp;{{ nameClient }}
+                <b>{{ $t('client:') }}</b>&nbsp;{{ eventDetail.ocialClient.name }}
               </p>
             </div>
           </div>
@@ -81,15 +81,10 @@ const categorias = computed(() =>
 
 const route = useRoute('/details/[id]');
 
-const { data: eventDetail } = await useEvent(EventApi, 'eventList')(() => ({
+const { data: eventDetail } = await useEvent(EventApi, 'eventRetrieve')(() => ({
   'id': Number(route.params.id)
 }));
 
-const { data: ocialClient } = await useEvent(EventApi, 'eventClientRetrieve')(() => ({
-  'id': Number(route.params.id)
-}));
-
-const nameClient = ocialClient.value.name;
 
 </script>
 

@@ -9,9 +9,8 @@
     </Title>
     <div style="margin-top: 1%; justify-content: center; display: flex;">
       <form @submit.prevent="()=>{}">
-        <div v-for="(event, index) in 1">
+        <div>
           <BaseInput
-            :key="index"
             v-model="form.name"
             class="input-box"
             :placeholder="placeholders[0]" />
@@ -19,7 +18,6 @@
             {{ getError('name') }}
           </div>
           <BaseInput
-            :key="index"
             v-model="form.place"
             class="input-box"
             :placeholder="placeholders[1]" />
@@ -27,15 +25,13 @@
             {{ getError('place') }}
           </div>
           <BaseInput
-            :key="index"
-            v-model="form.event"
+            v-model="form.description"
             class="input-box"
             :placeholder="placeholders[2]" />
           <div class="error">
             {{ getError('event') }}
           </div>
           <BaseInput
-            :key="index"
             v-model="form.timeStart"
             class="input-box"
             tipo="datetime-local" />
@@ -43,7 +39,6 @@
             {{ getError('timeStart') }}
           </div>
           <BaseInput
-            :key="index"
             v-model="form.timeEnd"
             class="input-box"
             tipo="datetime-local" />
@@ -51,8 +46,7 @@
             {{ getError('timeEnd') }}
           </div>
           <BaseInput
-            :key="index"
-            v-model="form.capacity"
+            v-model="parseableCapacity"
             class="input-box"
             tipo="number"
             :placeholder="placeholders[3]" />
@@ -89,15 +83,15 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, onMounted } from 'vue';
+import { ref, computed, onMounted, shallowRef } from 'vue';
 import * as L from 'leaflet';
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
 import { z } from 'zod';
 import { CategoryEnum , EventApi } from '@/api';
 import { useEvent } from '@/composables/apis';
-import { isNull } from '@/utils/validation';
 import { useValidation } from '@/composables/use-validation';
+import { toBase64 } from '@/utils/data-manipulation';
 
 const { t } = useI18n();
 
@@ -125,7 +119,7 @@ const validationSchema = z.object({
 const form = ref({
   name: '',
   place: '',
-  event: '',
+  description: '',
   timeStart: '',
   timeEnd: '',
   capacity: 1,
@@ -134,9 +128,18 @@ const form = ref({
   longitude: -999
 });
 
+const parseableCapacity = computed({
+  get() {
+    return String(form.value.capacity);
+  },
+  set(val: string) {
+    form.value.capacity = Number(val);
+  }
+});
+
 const router = useRouter();
 
-const image = ref('');
+const image = shallowRef<string>();
 
 const { validate, isValid, getError, scrolltoError } = useValidation(validationSchema, form, {
   mode: 'lazy'
@@ -158,17 +161,16 @@ async function createE() : Promise<void> {
 
     await useEvent(EventApi, 'eventCreateCreate')(() => ({
       eventCreate: {
-        'event': form.value.event,
-        'place': form.value.place,
-        'capacity': form.value.capacity,
-        'name': form.value.name,
-        'latitude': form.value.latitude,
-        'longitude': form.value.longitude,
-        'timeEnd' : form.value.timeEnd,
-        'timeStart': form.value.timeStart,
-        'category': form.value.category,
-        'imageB64': image?.value ?? '',
-        'ocialClient': 0
+        description: form.value.description,
+        place: form.value.place,
+        capacity: form.value.capacity,
+        name: form.value.name,
+        latitude: form.value.latitude,
+        longitude: form.value.longitude,
+        timeEnd: form.value.timeEnd,
+        timeStart: form.value.timeStart,
+        category: form.value.category,
+        imageB64: image?.value ?? ''
       }
     }));
 
@@ -181,15 +183,8 @@ async function createE() : Promise<void> {
 /**
  * Pasar imagen del input a base64
  */
-function handleImage() : void {
-  const file = document.querySelector('input[type=file]')['files'][0];
-
-  const reader = new FileReader();
-
-  reader.addEventListener('load', () => {
-    image.value = isNull(reader.result) ? undefined : reader.result;
-  });
-  reader.readAsDataURL(file);
+async function handleImage(event: Event): Promise<void> {
+  image.value = await toBase64(event);
 };
 
 const placeholders = computed(() =>

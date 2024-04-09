@@ -109,12 +109,12 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
-import { ref, computed } from 'vue';
+import { ref, shallowRef, computed } from 'vue';
 import { z } from 'zod';
 import { UsersApi, TypeClientEnum } from '@/api';
 import { useApi } from '@/composables/apis';
-import { isNull } from '@/utils/validation';
 import { useValidation } from '@/composables/use-validation';
+import { toBase64 } from '@/utils/data-manipulation';
 
 const { t } = useI18n();
 
@@ -152,7 +152,7 @@ const { validate, isValid, getError, scrolltoError } = useValidation(validationS
 
 const router = useRouter();
 
-const image = ref('');
+const image = shallowRef<string>();
 
 const cateEnum = [TypeClientEnum.Artist, TypeClientEnum.BarRestaurant, TypeClientEnum.EventsAndConcerts, TypeClientEnum.LocalGuide, TypeClientEnum.SmallBusiness];
 
@@ -169,7 +169,6 @@ const categorias = computed(() =>
  * This.finds.push({ value: '' });
  */
 async function createAcc() : Promise<void> {
-
   await validate();
 
   if (isValid.value) {
@@ -199,15 +198,8 @@ async function createAcc() : Promise<void> {
 /**
  * Pasar imagen del input a base64
  */
-function handleImage() : void {
-  const file = document.querySelector('input[type=file]')['files'][0];
-
-  const reader = new FileReader();
-
-  reader.addEventListener('load', () => {
-    image.value = isNull(reader.result) ? undefined : reader.result;
-  });
-  reader.readAsDataURL(file);
+async function handleImage(event: Event): Promise<void> {
+  image.value = await toBase64(event);
 };
 
 const placeholders = computed(() =>

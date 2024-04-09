@@ -8,8 +8,12 @@
     <div class="popup">
       <strong>{{ t('Evento') }}:</strong> {{ selectedEvent.name }}<br />
       <strong>{{ t('Lugar') }}:</strong> {{ selectedEvent.place }}<br />
-      <strong>{{ t('Fecha Inicio') }}:</strong> {{ formatDate(selectedEvent.timeStart) }}<br />
-      <strong>{{ t('Fecha Final') }}:</strong> {{ formatDate(selectedEvent.timeEnd) }}<br />
+      <template v-if="selectedEvent.timeStart">
+        <strong>{{ t('Fecha Inicio') }}:</strong> {{ parseDate(selectedEvent.timeStart) }}<br />
+      </template>
+      <template v-if="selectedEvent.timeEnd">
+        <strong>{{ t('Fecha Final') }}:</strong> {{ parseDate(selectedEvent.timeEnd) }}<br />
+      </template>
       <strong>{{ t('Capacidad') }}:</strong> {{ selectedEvent.capacity }}<br />
       <RouterLink
         v-if="selectedEvent.id"
@@ -26,6 +30,7 @@ import 'leaflet/dist/leaflet.css';
 import { map, icon, marker, tileLayer, type Marker, Popup } from 'leaflet';
 import { useI18n } from 'vue-i18n';
 import { usePermission } from '@vueuse/core';
+import { parseDate } from '@/utils/data-manipulation';
 import { CategoryEnum, type Event } from '@/api';
 import Azul from '@/assets/pin/Pin_Azul.png';
 import Verde from '@/assets/pin/Pin_Verde.png';
@@ -66,13 +71,6 @@ const userIcon = icon({
   iconAnchor: [10, 10]
 });
 const selectedEvent = computed(() => props.markers.find((e) => e.id === selectedEventId.value));
-
-const formatDate = (dateTime: string): string => {
-  const [date, time] = dateTime.split('T');
-  const formattedTime = time.split('.')[0].slice(0, 5); // Formatea la hora quitando los milisegundos
-
-  return `${date} - ${formattedTime}`;
-};
 
 /**
  * Coloca los marcadores en el mapa
