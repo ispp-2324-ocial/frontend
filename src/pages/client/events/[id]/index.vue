@@ -76,6 +76,12 @@
           </div>
         </Boton>
       </div>
+      <Boton
+        type="rounded-red"
+        style="margin-top: 10%;display: flex;"
+        @click="deleteE()">
+        {{ $t('eliminarEvento') }}
+      </Boton>
     </div>
   </div>
 </template>
@@ -121,6 +127,16 @@ const categorias = computed(() =>
    t('categoryRelax'),
    t('categoryConcierto')]);
 
+/**
+ *
+ */
+async function deleteE() : Promise<void> {
+  console.log('HOLA');
+  await useEvent(EventApi, 'eventDeleteDestroy')(() => ({
+    id: Number(route.params.id)
+  }));
+  await router.push('/');
+};
 </script>
 
 <style scoped>

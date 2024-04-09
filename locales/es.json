@@ -1,6 +1,8 @@
 {
   "1eventoMensual": "· 1 evento mensual",
+  "Cancelar": "Cancelar",
   "Capacidad": "Capacidad",
+  "Continuar": "Continuar",
   "Crear": "Crear",
   "EndDate:": "Termina:",
   "Error al obtener la ubicación": "Error al obtener la ubicación",
@@ -42,12 +44,15 @@
   "creaEvento": "Crear nuevo evento",
   "crearEvento": "Crear Evento",
   "cuentaCliente": "Cuenta de negocio",
+  "deleteAlerta": "Esta acción no se puede revertir. Esto eliminará permanentemente tu evento.",
   "dot10": "· 10",
   "edicionEventos": "· Edición de eventos",
   "editarEvento": "Editar Evento",
   "editarPerfil": "Editar Perfil",
+  "eliminarEvento": "Eliminar Evento",
   "email:": "Email:",
   "envioNotificaciones": "· Envío de notificaciones",
+  "estasSeguro?": "Are you absolutely sure?",
   "eventRequired": "La descripción es obligatoria",
   "eventosDestacados": "· Eventos destacados",
   "eventosIlimitados": "· Eventos ilimitados",
@@ -83,6 +88,7 @@
   "prioridad": "· Prioridad",
   "pro": "Pro",
   "registrate": "Regístrate",
+  "soloUsuarios": "Solo para usuarios.",
   "soporte24h": "En soporte 24h",
   "soporteLimitado": "· Soporte 24h limitado",
   "suscripciones": "Suscripciones",
@@ -99,6 +105,5 @@
   "¡Notificación Exitosa!": "¡Notificación Exitosa!",
   "¡Notificación de Advertencia!": "¡Notificación de Advertencia!",
   "¡Notificación de Errónea!": "¡Notificación de Errónea!",
-  "¡Notificación de Información!": "¡Notificación de Información!",
-  "soloUsuarios": "Solo para usuarios."
+  "¡Notificación de Información!": "¡Notificación de Información!"
 }
