@@ -66,10 +66,9 @@ import { useApi } from '@/composables/apis';
 import { UsersApi } from '@/api';
 import { auth } from '@/store/auth';
 
-
 const router = useRouter();
 
-const { data: loggedDjangoUser } = await useApi(UsersApi, 'usersGetList')();
+const { data: loggedDjangoUser } = await useApi(UsersApi, 'usersGetRetrieve')();
 </script>
 
 <style scoped>
