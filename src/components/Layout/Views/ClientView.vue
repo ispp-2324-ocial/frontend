@@ -43,13 +43,13 @@
                   </p>
                 </div>
                 <p class="tiempo inicial">
-                  {{ $t('fecha', {date: event.timeStart?.split('T')[0], hour: event.timeStart?.split('T')[1].split('.')[0].slice(0,5)} ) }}
+                  {{ $t('Fecha Inicio') }}: {{ parseDate(event.timeStart) }}
                 </p>
                 <p class="tiempo final">
-                  {{ $t('fecha', {date: event.timeEnd?.split('T')[0], hour: event.timeEnd?.split('T')[1].split('.')[0].slice(0,5)} ) }}
+                  {{ $t('Fecha Final') }}: {{ parseDate(event.timeStart) }}
                 </p>
                 <p class="lugar">
-                  {{ $t('lugar', {place: event.place} ) }}
+                  {{ $t('lugar', { place: event.place } ) }}
                 </p>
               </div>
             </div>
@@ -64,6 +64,7 @@
 import { useRouter } from 'vue-router/auto';
 import { EventApi } from '@/api';
 import { useEvent } from '@/composables/apis';
+import { parseDate } from '@/utils/data-manipulation';
 
 const router = useRouter();
 
