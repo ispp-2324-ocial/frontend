@@ -95,7 +95,7 @@ const router = useRouter();
 
 const { t } = useI18n();
 
-const { data: eventDetail } = await useEvent(EventApi, 'eventRetrieve')(() => ({
+const { data: eventDetail } = await useEvent(EventApi, 'eventList')(() => ({
   'id': Number(route.params.id)
 }));
 
