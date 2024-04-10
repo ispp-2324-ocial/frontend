@@ -23,11 +23,11 @@
           {{ getError('place') }}
         </div>
         <BaseInput
-          v-model="form.event"
+          v-model="form.description"
           class="input-box"
           :placeholder="placeholders[2]" />
         <div class="error">
-          {{ getError('event') }}
+          {{ getError('description') }}
         </div>
         <BaseInput
           v-model="form.timeStart"
@@ -97,7 +97,7 @@ const { t } = useI18n();
 const validationSchema = z.object({
   place: z.string().min(1, t('placeRequired')),
   name: z.string().min(1, t('nameRequired')),
-  event: z.string().min(1, t('eventRequired')),
+  description: z.string().min(1, t('eventRequired')),
   timeStart: z.string().datetime({ precision: 3, message: t('timeStartRequired') }),
   timeEnd: z.string().datetime({ precision: 3, message: t('timeEndRequired') }),
   capacity: z.number().min(1, t('capacityRequired')),
@@ -130,7 +130,7 @@ const { data: eventDetail } = await useEvent(EventApi, 'eventList')(() => ({
 const form = ref({
   name: eventDetail.value.name,
   place: eventDetail.value.place,
-  event: eventDetail.value.event,
+  description: eventDetail.value.description,
   timeStart: eventDetail.value.timeStart.slice(0,16),
   timeEnd: eventDetail.value.timeEnd.slice(0,16),
   capacity: eventDetail.value.capacity,
@@ -158,7 +158,7 @@ async function editE() : Promise<void> {
     await useEvent(EventApi, 'eventUpdateUpdate')(() => ({
       id: Number(route.params.id),
       eventCreate: {
-        'event': form.value.event,
+        'description': form.value.description,
         'place': form.value.place,
         'capacity': form.value.capacity,
         'name': form.value.name,
