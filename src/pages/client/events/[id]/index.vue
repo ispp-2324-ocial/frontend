@@ -128,7 +128,7 @@ const categorias = computed(() =>
    t('categoryConcierto')]);
 
 /**
- *
+ * Esta función elimina el evento de la vista
  */
 async function deleteE() : Promise<void> {
   console.log('HOLA');
