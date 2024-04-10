@@ -20,12 +20,7 @@ const { t } = useI18n();
 
 const selectedCategory = defineModel<CategoryEnum>(CategoryEnum.Sports);
 
-interface CategoryOption {
-  value: CategoryEnum;
-  label: string;
-}
-
-const categories: CategoryOption[] = computed(() => [
+const categories = computed(() => [
   { value: CategoryEnum.Sports, label: t('categoryDeporte') },
   { value: CategoryEnum.Music, label: t('categoryMusica') },
   { value: CategoryEnum.Markets, label: t('categoryMercado') },

@@ -19,7 +19,7 @@
               <p
                 class="elemento"
                 style="margin-top: 7%;">
-                <b>{{ eventDetail.event }}</b>
+                <b>{{ eventDetail.description }}</b>
               </p>
               <p
                 class="elemento"
@@ -45,7 +45,7 @@
                 </span>
               </p>
               <p class="elemento">
-                <b>{{ $t('client:') }}</b>&nbsp;{{ nameClient }}
+                <b>{{ $t('client:') }}</b>&nbsp;{{ eventDetail.ocialClient.name }}
               </p>
             </div>
           </div>
@@ -89,15 +89,9 @@ const router = useRouter();
 
 const { t } = useI18n();
 
-const { data: eventDetail } = await useEvent(EventApi, 'eventList')(() => ({
+const { data: eventDetail } = await useEvent(EventApi, 'eventRetrieve')(() => ({
   'id': Number(route.params.id)
 }));
-
-const { data: ocialClient } = await useEvent(EventApi, 'eventClientRetrieve')(() => ({
-  'id': Number(route.params.id)
-}));
-
-const nameClient = ocialClient.value.name;
 
 /**
  * Cuando se haga editar evento, en el v-if del boton de editar evento hay que cambiar el false por comprobar que el cliente logueado sea el que creó ese evento
