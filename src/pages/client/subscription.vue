@@ -38,7 +38,7 @@
         <Suscripcion>
           <template #left>
             <div class="flex flex-row justify-center">
-              <img
+              <OImg
                 class="flex-self-center"
                 alt="star"
                 src="@/assets/images/star.png"
@@ -46,7 +46,7 @@
               <p>
                 <span class="price">{{ $t('pro') }}</span>
               </p>
-              <img
+              <OImg
                 class="flex-self-center"
                 alt="star"
                 src="@/assets/images/star.png"

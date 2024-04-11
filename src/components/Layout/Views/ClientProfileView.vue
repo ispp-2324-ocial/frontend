@@ -13,15 +13,9 @@
                   {{ loggedClient.name }}
                 </Title>
                 <div class="flex justify-center items-center pt-12">
-                  <img
-                    v-if="loggedClient.image"
-                    alt="Event"
-                    :src="loggedClient.image.image"
-                    class="center"
-                    style="width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px" />
-                  <IMdiImageBrokenVariant
-                    v-else
-                    style="width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px;" />
+                  <BlurhashImage
+                    :item="loggedClient.image"
+                    class="center img" />
                 </div>
                 <p class="elemento">
                   <b>{{ loggedDjangoUser.username }}</b>
@@ -136,6 +130,7 @@ const categorias = computed(() =>
   margin-right: auto;
   width: 50%;
 }
+
 .elemento {
   font-size: clamp(15px, 5.5vw, 30px);
   font-weight: normal;
@@ -143,5 +138,15 @@ const categorias = computed(() =>
   margin-left: 4vw;
   margin-bottom: 1vh;
   margin-top: 4%;
+}
+
+.img {
+  width: 30%;
+  border-radius: 50%;
+  max-width: 220px;
+  max-height: 220px;
+  min-width: 90px;
+  min-height: 90px;
+  margin: 16px
 }
 </style>
