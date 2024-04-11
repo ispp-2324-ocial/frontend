@@ -23,7 +23,7 @@
       </div>
     </form>
   </OHeader>
-  <div class="grow h-1">
+  <div class="h-full">
     <LMap
       :markers="eventList" />
   </div>
