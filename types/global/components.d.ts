@@ -49,6 +49,7 @@ declare module 'vue' {
     Title: typeof import('./../../src/components/Layout/Title.vue')['default']
     Tooltip: typeof import('./../../src/components/Layout/Tooltip.vue')['default']
     TransitionView: typeof import('./../../src/components/Layout/Views/TransitionView.vue')['default']
+    UserLikeView: typeof import('./../../src/components/Layout/Views/UserLikeView.vue')['default']
     UserProfileView: typeof import('./../../src/components/Layout/Views/UserProfileView.vue')['default']
   }
 }
