@@ -25,8 +25,10 @@ declare module 'vue-router/auto-routes' {
     '/client/subscription': RouteRecordInfo<'/client/subscription', '/client/subscription', Record<never, never>, Record<never, never>>,
     '/details/[id]': RouteRecordInfo<'/details/[id]', '/details/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
     '/login': RouteRecordInfo<'/login', '/login', Record<never, never>, Record<never, never>>,
+    '/map/': RouteRecordInfo<'/map/', '/map', Record<never, never>, Record<never, never>>,
     '/profile': RouteRecordInfo<'/profile', '/profile', Record<never, never>, Record<never, never>>,
     '/register/': RouteRecordInfo<'/register/', '/register', Record<never, never>, Record<never, never>>,
     '/register/client': RouteRecordInfo<'/register/client', '/register/client', Record<never, never>, Record<never, never>>,
+    '/user/events/[id]/': RouteRecordInfo<'/user/events/[id]/', '/user/events/:id', { id: ParamValue<true> }, { id: ParamValue<false> }>,
   }
 }

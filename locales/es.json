@@ -100,13 +100,17 @@
   "timeEndRequired": "El tiempo final es obligatorio",
   "timeStartRequired": "El tiempo de inicio es obligatorio",
   "tusEventos": "Tus eventos",
+  "tusEventosFav": "Tus Eventos Favoritos",
   "usernameRequired": "El usuario es obligatorio",
   "validDocumentation": "Por favor, añade una documentación válida",
   "validEmail": "Por favor, añade un email válido",
   "validPassword": "Por favor, añade una contraseña válida",
   "{distance} km": "{distance} km",
+  "¡Dale like!": "¡Dale like!",
   "¡Notificación Exitosa!": "¡Notificación Exitosa!",
   "¡Notificación de Advertencia!": "¡Notificación de Advertencia!",
   "¡Notificación de Errónea!": "¡Notificación de Errónea!",
   "¡Notificación de Información!": "¡Notificación de Información!"
+  "¡Notificación de Información!": "¡Notificación de Información!",
+  "¿Te gusta el evento?": "¿Te gusta el evento?"
 }
