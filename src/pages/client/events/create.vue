@@ -29,7 +29,7 @@
             class="input-box"
             :placeholder="placeholders[2]" />
           <div class="error">
-            {{ getError('event') }}
+            {{ getError('description') }}
           </div>
           <BaseInput
             v-model="form.timeStart"
@@ -98,7 +98,7 @@ const { t } = useI18n();
 const validationSchema = z.object({
   place: z.string().min(1, t('placeRequired')),
   name: z.string().min(1, t('nameRequired')),
-  event: z.string().min(1, t('eventRequired')),
+  description: z.string().min(1, t('eventRequired')),
   timeStart: z.string().datetime({ precision: 3, message: t('timeStartRequired') }),
   timeEnd: z.string().datetime({ precision: 3, message: t('timeEndRequired') }),
   capacity: z.number().min(1, t('capacityRequired')),
@@ -170,7 +170,8 @@ async function createE() : Promise<void> {
         timeEnd: form.value.timeEnd,
         timeStart: form.value.timeStart,
         category: form.value.category,
-        imageB64: image?.value ?? ''
+        imageB64: image?.value ?? '',
+        ocialClient: 0
       }
     }));
 
