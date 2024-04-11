@@ -1,5 +1,6 @@
 <template>
   <button
+    type="button"
     :class="{ 'scaled': isHovered,
               'checkbox-class': type === 'default',
               'rounded-blue': type === 'rounded-blue',
