@@ -2,7 +2,7 @@
   <div
     :class="{ 'auth': variant === 'auth',
               'inputWrap': variant === 'default'}">
-    <label>
+    <component :is="props.label ? 'label' : ONoop">
       <input
         v-model="value"
         v-bind="$attrs"
@@ -13,13 +13,14 @@
       <slot name="label">
         {{ label }}
       </slot>
-    </label>
+    </component>
   </div>
 </template>
 
 <script setup lang="ts">
 import { computed } from 'vue';
 import { isStr } from '@/utils/validation';
+import ONoop from '@/components/lib/ONoop.vue';
 
 const props = withDefaults(defineProps<{
   label?: string,
