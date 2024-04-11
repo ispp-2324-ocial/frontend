@@ -5,13 +5,13 @@
       class="flex justify-center m-0"
       style="background-color: #deecff">
       <Boton
-        @click="router.push('/')">
+        @click="router.push('/event')">
         <img
           alt="Logo Ocial"
           src="@/assets/images/Ocial_Clear.png" />
       </Boton>
       <Boton
-        @click="router.push('/map')">
+        @click="router.push('/')">
         <img
           alt="Mapa Claro"
           src="@/assets/images/Map_Clear.png" />
