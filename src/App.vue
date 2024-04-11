@@ -5,7 +5,7 @@
         <Suspense @resolve="apploaded = true">
           <div
             :key="route.meta.layout"
-            class="flex h-full w-full flex-col origin-center min-h-dvh relative">
+            class="origin-center h-full w-full">
             <component
               :is="getLayoutComponent(route.meta.layout)"
               :key="route.meta.layout">
@@ -13,7 +13,7 @@
                 <Suspense suspensible>
                   <div
                     :key="route.path"
-                    class="flex h-full w-full flex-col origin-center min-h-dvh relative">
+                    class="origin-center h-full w-full">
                     <component
                       :is="Component"
                       :key="route.path" />
