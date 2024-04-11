@@ -7,15 +7,12 @@ export {}
 
 declare module 'vue' {
   export interface GlobalComponents {
-    '(chore(like)': refactor and api import)
-    '(ci(sonarcloud)': added badges (#13))
     BaseInput: typeof import('./../../src/components/Forms/BaseInput.vue')['default']
     Boton: typeof import('./../../src/components/Forms/Boton.vue')['default']
     Checkbox: typeof import('./../../src/components/Forms/checkbox.vue')['default']
     ClientProfileView: typeof import('./../../src/components/Layout/Views/ClientProfileView.vue')['default']
     ClientView: typeof import('./../../src/components/Layout/Views/ClientView.vue')['default']
     Dropdown: typeof import('./../../src/components/Forms/Dropdown.vue')['default']
-    IIwwaSearch: typeof import('~icons/iwwa/search')['default']
     IMdiFilter: typeof import('~icons/mdi/filter')['default']
     IMdiHeart: typeof import('~icons/mdi/heart')['default']
     IMdiHeartOutline: typeof import('~icons/mdi/heart-outline')['default']
