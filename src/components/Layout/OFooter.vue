@@ -5,13 +5,13 @@
       class="flex justify-center m-0"
       style="background-color: #deecff">
       <Boton
-        @click="redirectEvent()">
+        @click="router.push('/')">
         <img
           alt="Logo Ocial"
           src="@/assets/images/Ocial_Clear.png" />
       </Boton>
       <Boton
-        @click="router.push('/')">
+        @click="router.push('/map')">
         <img
           alt="Mapa Claro"
           src="@/assets/images/Map_Clear.png" />
@@ -28,23 +28,9 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router/auto';
-import { auth } from '@/store/auth';
 
 const router = useRouter();
 
-/**
- * Redirección botón evento
- */
-async function redirectEvent() : Promise<void> {
-  if (auth.isClient.value) {
-    await router.push('/');
-  }
-  /*
-   * } else {
-   *   await router.push('/map'); //TO-DO Debe llevarte a la vista de lista de eventos
-   * }
-   */
-};
 </script>
 
 <style scoped>
