@@ -27,7 +27,6 @@ declare module 'vue' {
     Ondas: typeof import('./../../src/components/Layout/Ondas.vue')['default']
     ONoop: typeof import('./../../src/components/lib/ONoop.vue')['default']
     OTransition: typeof import('./../../src/components/lib/OTransition.vue')['default']
-    Pin: typeof import('./../../src/components/Layout/Pin.vue')['default']
     RDropdownMenuCheckboxItem: typeof import('radix-vue')['DropdownMenuCheckboxItem']
     RDropdownMenuContent: typeof import('radix-vue')['DropdownMenuContent']
     RDropdownMenuItem: typeof import('radix-vue')['DropdownMenuItem']
