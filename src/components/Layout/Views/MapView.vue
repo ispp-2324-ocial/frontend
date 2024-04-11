@@ -1,46 +1,44 @@
 <template>
-  <form @submit.prevent="()=>{}">
-    <div
-      style="display:flex;
-      width: 100%;
-      justify-content: center;">
-      <BaseInput
-        v-model="firstName" />
-      <Boton
-        class="transparente p-1">
-        <IMdiSearch class="size-6" />
-      </Boton>
-      <Dropdown>
-        <template #trigger>
-          <Tooltip>
-            <Boton class="transparente p-1">
-              <IMdiFilter class="size-6" />
-            </Boton>
-            <template #tooltip>
-              {{ $t('Filtra eventos') }}
-            </template>
-          </Tooltip>
-        </template>
-      </Dropdown>
-    </div>
-  </form>
-  <div>
-    <LMap :markers="eventList" />
+  <OHeader>
+    <form @submit.prevent="()=>{}">
+      <div
+        class="flex justify-center">
+        <BaseInput />
+        <Boton
+          class="transparent p-1">
+          <IMdiSearch class="size-6" />
+        </Boton>
+        <Dropdown>
+          <template #trigger>
+            <Tooltip>
+              <Boton class="transparent p-1">
+                <IMdiFilter class="size-6" />
+              </Boton>
+              <template #tooltip>
+                {{ $t('Filtra eventos') }}
+              </template>
+            </Tooltip>
+          </template>
+        </Dropdown>
+      </div>
+    </form>
+  </OHeader>
+  <div class="grow h-1">
+    <LMap
+      :markers="eventList" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { shallowRef } from 'vue';
 import { useEvent } from '@/composables/apis';
 import { EventApi } from '@/api';
 
-const firstName = shallowRef('');
 const { data: eventList } = await useEvent(EventApi, 'eventListList')();
 </script>
 
 <style scoped>
-.transparente {
-  background-color: transparent;
-  border-color: transparent;
+.transparent {
+  background-color: transparent !important;
+  border: none;
 }
 </style>

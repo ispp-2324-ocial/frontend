@@ -1,18 +1,20 @@
-<template style="display: block; justify-content: center">
-  <Ondas />
-  <div class="logo-container">
-    <img
-      alt="Ocial Name Logo"
-      class="logo"
-      src="@/assets/images/Texto_Ocial.png"
-      style="width:70%; height: auto;" />
-  </div>
-
-  <div class="login-page">
-    <div class="form">
-      <slot />
+<template>
+  <main>
+    <Ondas />
+    <div class="logo-container">
+      <img
+        alt="Ocial Name Logo"
+        class="logo"
+        src="@/assets/images/Texto_Ocial.png"
+        style="width:70%; height: auto;" />
     </div>
-  </div>
+
+    <div class="login-page">
+      <div class="form">
+        <slot />
+      </div>
+    </div>
+  </main>
 </template>
 
 <style scoped>
