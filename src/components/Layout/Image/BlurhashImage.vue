@@ -3,7 +3,7 @@
     <OImg
       class="absolute-cover"
       :src="imageUrl"
-      :alt="isImage(props.item) ? $t('Desconocido') : props.item.name"
+      :alt="isImage(props.item) || isNil(props.item?.name) ? $t('Desconocido') : props.item.name"
       v-bind="$attrs">
       <template #placeholder>
         <BlurhashCanvas
@@ -26,10 +26,10 @@
 <script setup lang="ts">
 import { computed, shallowRef } from 'vue';
 import type { Event, Image } from '@/api';
-import { isObj } from '@/utils/validation';
+import { isObj, isNil } from '@/utils/validation';
 
 const props = defineProps<{
-  item: Event | Image;
+  item?: Event | Image;
   width?: number;
   height?: number;
   punch?: number;
@@ -44,8 +44,8 @@ function isImage(obj: unknown): obj is Image {
   return isObj(obj) && 'image' in obj;
 }
 
-const hash = computed(() => isImage(props.item) ? props.item.blurhash : props.item.image?.blurhash);
-const imageUrl = computed(() => isImage(props.item) ? props.item.image : props.item.image?.image);
+const hash = computed(() => isImage(props.item) ? props.item.blurhash : props.item?.image?.blurhash);
+const imageUrl = computed(() => isImage(props.item) ? props.item.image : props.item?.image?.image);
 </script>
 
 <style scoped>

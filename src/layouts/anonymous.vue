@@ -2,11 +2,10 @@
   <main>
     <Ondas />
     <div class="logo-container">
-      <img
+      <OImg
         alt="Ocial Name Logo"
         class="logo"
-        src="@/assets/images/Texto_Ocial.png"
-        style="width:70%; height: auto;" />
+        src="@/assets/images/Texto_Ocial.png" />
     </div>
 
     <div class="login-page">
@@ -18,6 +17,10 @@
 </template>
 
 <style scoped>
+.logo {
+  width:70%;
+}
+
 .logo-container {
   position: relative;
   z-index: 1;
