@@ -1,7 +1,8 @@
 <template>
   <div
     ref="mapContainer"
-    class="mapContainer" />
+    class="h-full w-full"
+    v-bind="$attrs" />
   <Teleport
     v-if="selectedEvent"
     to=".leaflet-popup-content-wrapper">
@@ -46,7 +47,6 @@ const locationAccess = usePermission('geolocation');
 const { t } = useI18n();
 
 const TILE_LAYER_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-const ATTRIBUTION = '© OpenStreetMap contributors';
 
 const mapContainer = shallowRef<HTMLDivElement>();
 const mapInstance = shallowRef<ReturnType<typeof map>>();
@@ -110,9 +110,7 @@ function createMapLayer(): void {
   if (!mapInstance.value && mapContainer.value) {
     mapInstance.value = map(mapContainer.value);
 
-    tileLayer(TILE_LAYER_URL, {
-      attribution: ATTRIBUTION
-    }).addTo(mapInstance.value);
+    tileLayer(TILE_LAYER_URL).addTo(mapInstance.value);
     /**
      * Ubicación de sevilla
      */
@@ -247,11 +245,6 @@ onBeforeUnmount(dispose);
 </script>
 
 <style scoped>
-.mapContainer {
-  width: 100%;
-  height: 90vh;
-}
-
 .popup {
   width: 100%;
   height: 100%;

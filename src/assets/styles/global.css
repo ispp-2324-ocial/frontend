@@ -1,8 +1,13 @@
 html {
   overscroll-behavior: none;
   font-family: 'InterVariable', system-ui;
+  user-select: none;
 }
 
 html.no-forced-scrollbar {
   overflow-y: unset !important;
+}
+
+#app {
+  display: flex;
 }

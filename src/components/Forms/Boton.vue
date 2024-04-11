@@ -12,14 +12,13 @@
 </template>
 
 <script setup lang = 'ts'>
-import { ref } from 'vue';
+import { shallowRef } from 'vue';
 
 withDefaults(defineProps<{
   type?: 'rounded-blue'| 'default' | 'auth';
 }>(), { type: 'default' });
 
-const isHovered = ref(false);
-
+const isHovered = shallowRef(false);
 </script>
 
 <style scoped>
@@ -45,7 +44,6 @@ const isHovered = ref(false);
 }
 
 .checkbox-class {
-  height: auto;
   background-color: var(--o-color-theme);
   color: #000;
 }
