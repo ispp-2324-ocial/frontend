@@ -113,7 +113,7 @@ jobs:
           submodules: recursive
 
       - name: Configure Docker Buildx ⚙️
-        uses: docker/setup-buildx-action@v3.2.0
+        uses: docker/setup-buildx-action@v3.3.0
 
       - name: Build Docker images 🛠️
         uses: docker/build-push-action@v5.3.0
