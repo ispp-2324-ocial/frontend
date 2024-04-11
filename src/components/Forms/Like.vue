@@ -3,77 +3,66 @@
     class="checkbox-container"
     @mouseover="isHovered = true"
     @mouseout="isHovered = false"
-    @click="toggleLike">
+    @click.stop.prevent="isFavorite = !isFavorite">
     <input
-      v-model="value"
+      v-model="isFavorite"
       type="checkbox"
       class="hidden" />
     <IMdiHeartOutline
-      v-if="!value"
+      v-if="!isFavorite"
       class="heart-outline" />
     <IMdiHeart
       v-else
       class="heart-outline" />
     <p class="elemento">
-      {{ counter }}
+      {{ isFavorite ? counter+1 : counter }}
     </p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { computed, ref } from 'vue';
 import { useRoute } from 'vue-router/auto';
-import { useApi, useEvent } from '@/composables/apis';
+import { useApi } from '@/composables/apis';
 import { EventApi, UsersApi } from '@/api';
 
-const value = ref(false);
 const isHovered = ref(false);
 const route = useRoute('/details/[id]');
 
-const { data: likedEvents } = await useEvent(EventApi, 'eventLikeList')(() => ({
+const methodToExecute = ref<'eventLikeCreate' | 'eventLikeDestroy' | undefined>();
+const { data: like } = await useApi(EventApi, methodToExecute, { skipCache: { request: true }, globalLoading: false })(() => ({
+  id: Number(route.params.id),
+  like: {
+    event: 0,
+    user: 0
+  }
+}));
+
+const isFavorite = computed({
+  get() {
+    return Boolean(like.value);
+  },
+  set(newValue) {
+    methodToExecute.value = newValue ? 'eventLikeCreate' : 'eventLikeDestroy';
+  }
+});
+
+const { data: likedEvents } = await useApi(EventApi, 'eventLikeList')(() => ({
   id: Number(route.params.id)
 }));
 
 const counter = ref(likedEvents.value ? likedEvents.value.length : 0);
 
-console.log(counter.value);
-console.log(likedEvents.value);
-
 const { data: user } = await useApi(UsersApi, 'usersUserGetRetrieve')();
-
-console.log(user.value);
 
 if(likedEvents.value != undefined){
   for ( const e of likedEvents.value) {
     if (e.user == user.value.id) {
-      value.value = true;
+      counter.value--;
       break;
     }
   }
 }
-
-/**
- * Función que añade el like cuando el corazón el pulsado
- */
-async function toggleLike(): Promise<void> {
-  if (value.value) {
-    counter.value--;
-  } else {
-    counter.value++;
-  }
-
-  value.value = !value.value;
-
-  await (value.value ? useEvent(EventApi, 'eventLikeCreate')(() => ({
-    like: {
-      event: 0,
-      user: 0
-    }, id: Number(route.params.id)
-  })) : useEvent(EventApi, 'eventLikeDestroy')(() => ({
-    id: Number(route.params.id)
-  })));
-};
-
 
 </script>
 
