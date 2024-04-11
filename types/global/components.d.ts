@@ -8,6 +8,8 @@ export {}
 declare module 'vue' {
   export interface GlobalComponents {
     BaseInput: typeof import('./../../src/components/Forms/BaseInput.vue')['default']
+    BlurhashCanvas: typeof import('./../../src/components/Layout/Image/BlurhashCanvas.vue')['default']
+    BlurhashImage: typeof import('./../../src/components/Layout/Image/BlurhashImage.vue')['default']
     Boton: typeof import('./../../src/components/Forms/Boton.vue')['default']
     Checkbox: typeof import('./../../src/components/Forms/checkbox.vue')['default']
     ClientProfileView: typeof import('./../../src/components/Layout/Views/ClientProfileView.vue')['default']
@@ -21,8 +23,10 @@ declare module 'vue' {
     MapView: typeof import('./../../src/components/Layout/Views/MapView.vue')['default']
     OFooter: typeof import('./../../src/components/Layout/OFooter.vue')['default']
     OHeader: typeof import('./../../src/components/Layout/OHeader.vue')['default']
+    OImg: typeof import('./../../src/components/lib/OImg.vue')['default']
     Ondas: typeof import('./../../src/components/Layout/Ondas.vue')['default']
     ONoop: typeof import('./../../src/components/lib/ONoop.vue')['default']
+    OTransition: typeof import('./../../src/components/lib/OTransition.vue')['default']
     Pin: typeof import('./../../src/components/Layout/Pin.vue')['default']
     RDropdownMenuCheckboxItem: typeof import('radix-vue')['DropdownMenuCheckboxItem']
     RDropdownMenuContent: typeof import('radix-vue')['DropdownMenuContent']
