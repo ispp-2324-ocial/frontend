@@ -2,17 +2,26 @@
   <form @submit.prevent="()=>{}">
     <div
       style="display:flex;
-    width: 100%;
-    justify-content: center;">
+      width: 100%;
+      justify-content: center;">
       <BaseInput
         v-model="firstName" />
       <Boton
-        class="transparente">
-        <IIwwaSearch class="size-6 text-muted-foreground" />
+        class="transparente p-1">
+        <IMdiSearch class="size-6" />
       </Boton>
-    </div>
-    <div>
-      <Dropdown />
+      <Dropdown>
+        <template #trigger>
+          <Tooltip>
+            <Boton class="transparente p-1">
+              <IMdiFilter class="size-6" />
+            </Boton>
+            <template #tooltip>
+              {{ $t('Filtra eventos') }}
+            </template>
+          </Tooltip>
+        </template>
+      </Dropdown>
     </div>
   </form>
   <div>
@@ -33,6 +42,5 @@ const { data: eventList } = await useEvent(EventApi, 'eventListList')();
 .transparente {
   background-color: transparent;
   border-color: transparent;
-  margin-left: 3%;
 }
 </style>
