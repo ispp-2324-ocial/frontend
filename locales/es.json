@@ -2,8 +2,6 @@
   "1eventoMensual": "· 1 evento mensual",
   "Capacidad": "Capacidad",
   "Categoría": "Categoría",
-  "¿Te gusta el evento?": "¿Te gusta el evento?",
-  "¡Dale like!":"¡Dale like!",
   "Crear": "Crear",
   "Distancia": "Distancia",
   "EndDate:": "Termina:",
@@ -110,7 +108,6 @@
   "¡Notificación Exitosa!": "¡Notificación Exitosa!",
   "¡Notificación de Advertencia!": "¡Notificación de Advertencia!",
   "¡Notificación de Errónea!": "¡Notificación de Errónea!",
-  "¡Notificación de Información!": "¡Notificación de Información!"
   "¡Notificación de Información!": "¡Notificación de Información!",
   "¿Te gusta el evento?": "¿Te gusta el evento?"
 }
