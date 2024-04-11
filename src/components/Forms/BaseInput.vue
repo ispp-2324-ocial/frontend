@@ -3,15 +3,17 @@
     :class="{ 'auth': variant === 'auth',
               'inputWrap': variant === 'default'}">
     <label>
-      {{ label }}
+      <input
+        v-model="value"
+        v-bind="$attrs"
+        :type="tipo"
+        :required="isRequired"
+        class="validate-style rounded-xl border focus-visible:outline-none"
+        :placeholder="placeholder" />
+      <slot name="label">
+        {{ label }}
+      </slot>
     </label>
-    <input
-      v-model="value"
-      v-bind="$attrs"
-      :type="tipo"
-      :required="isRequired"
-      class="validate-style rounded-xl border focus-visible:outline-none"
-      :placeholder="placeholder" />
   </div>
 </template>
 
