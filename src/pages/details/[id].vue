@@ -12,15 +12,9 @@
                 {{ eventDetail.name }}
               </Title>
               <div class="flex justify-center items-center pt-12">
-                <img
-                  v-if="eventDetail.image"
-                  alt="Event"
-                  :src="eventDetail.image.image"
-                  class="center"
-                  style="display: block; width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px" />
-                <IMdiImageBrokenVariant
-                  v-else
-                  style="display: block; width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px;" />
+                <BlurhashImage
+                  :item="eventDetail.image"
+                  class="center img" />
               </div>
               <p
                 class="elemento"
@@ -125,11 +119,23 @@ async function startShare() : Promise<void> {
   margin-right: auto;
   width: 50%;
 }
+
 .elemento {
   font-size: clamp(15px, 5.5vw, 30px);
   font-weight: normal;
   width: 90%;
   margin-left: 4vw;
   margin-bottom: 1vh;
+}
+
+.img {
+  display: block;
+  width: 30%;
+  border-radius: 50%;
+  max-width: 220px;
+  max-height: 220px;
+  min-width: 90px;
+  min-height: 90px;
+  margin: 16px
 }
 </style>

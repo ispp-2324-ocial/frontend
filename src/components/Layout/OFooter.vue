@@ -6,19 +6,22 @@
       style="background-color: #deecff">
       <Boton
         @click="router.push('/event')">
-        <img
+        <OImg
+          class="img"
           alt="Logo Ocial"
           src="@/assets/images/Ocial_Clear.png" />
       </Boton>
       <Boton
         @click="router.push('/')">
-        <img
+        <OImg
+          class="img"
           alt="Mapa Claro"
           src="@/assets/images/Map_Clear.png" />
       </Boton>
       <Boton
         @click="router.push('/profile')">
-        <img
+        <OImg
+          class="img"
           alt="Human Blue"
           src="@/assets/images/Human_Clear.png" />
       </Boton>
@@ -43,7 +46,7 @@ const router = useRouter();
   z-index: 1004;
 }
 
-.footer img {
+.footer .img {
   width: 50%;
   height: auto;
   margin: auto;
