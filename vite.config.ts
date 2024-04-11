@@ -1,6 +1,6 @@
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite';
-import virtual from '@rollup/plugin-virtual';
-import vue from '@vitejs/plugin-vue';
+import Virtual from '@rollup/plugin-virtual';
+import Vue from '@vitejs/plugin-vue';
 import browserslist from 'browserslist';
 import { browserslistToTargets } from 'lightningcss';
 import { visualizer } from 'rollup-plugin-visualizer';
@@ -11,7 +11,6 @@ import {
   VueUseDirectiveResolver
 } from 'unplugin-vue-components/resolvers';
 import RadixVueResolver from 'radix-vue/resolver';
-import { presetUno } from 'unocss';
 import UnoCSS from 'unocss/vite';
 import Components from 'unplugin-vue-components/vite';
 import VueRouter from 'unplugin-vue-router/vite';
@@ -26,18 +25,14 @@ export default defineConfig(({ mode }): UserConfig => {
     base: './',
     cacheDir: 'node_modules/.cache/vite',
     plugins: [
-      virtual(virtualModules),
-      UnoCSS({
-        presets: [
-          presetUno()
-        ]
-      }),
+      Virtual(virtualModules),
+      UnoCSS(),
       VueRouter({
         dts: './types/global/routes.d.ts',
         importMode: 'sync',
         routeBlockLang: 'yaml'
       }),
-      vue(),
+      Vue(),
       /**
        * Este plugin es el que permite que los componentes se importen de forma automática
        */
@@ -51,8 +46,6 @@ export default defineConfig(({ mode }): UserConfig => {
           IconsResolver(),
           VueUseComponentsResolver(),
           VueUseDirectiveResolver(),
-          /* eslint-disable-next-line @typescript-eslint/ban-ts-comment */
-          // @ts-expect-error - Comprobar si se puede hacer un PR para que se corrija el error
           RadixVueResolver({
             prefix: 'R'
           })
