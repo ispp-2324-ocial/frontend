@@ -1,6 +1,7 @@
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite';
 import Virtual from '@rollup/plugin-virtual';
 import Vue from '@vitejs/plugin-vue';
+import VueMacros from 'unplugin-vue-macros/vite';
 import browserslist from 'browserslist';
 import { browserslistToTargets } from 'lightningcss';
 import { visualizer } from 'rollup-plugin-visualizer';
@@ -32,7 +33,11 @@ export default defineConfig(({ mode }): UserConfig => {
         importMode: 'sync',
         routeBlockLang: 'yaml'
       }),
-      Vue(),
+      VueMacros({
+        plugins: {
+          vue: Vue()
+        }
+      }),
       /**
        * Este plugin es el que permite que los componentes se importen de forma automática
        */

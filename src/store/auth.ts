@@ -59,7 +59,6 @@ class AuthStore {
   public readonly token = computed(() => this._state.value.token);
 
   public authenticate = (username: string, isClient: boolean, token: string | undefined): void => {
-    // Todo: lógica de login call backend
     this._state.value.name = username;
     this._state.value.id = 0; // Cambiar
     this._state.value.isClient = isClient;
