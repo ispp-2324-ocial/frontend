@@ -80,18 +80,11 @@
 </template>
 
 <script setup lang="ts">
-import { computed } from 'vue';
-import { useRoute, useRouter } from 'vue-router/auto';
-import { useI18n } from 'vue-i18n';
-import { EventApi, SubscriptionApi, TypeSubscriptionEnum, UsersApi } from '@/api';
-import { useEvent, useApi } from '@/composables/apis';
+import { SubscriptionApi, TypeSubscriptionEnum } from '@/api';
+import { useApi } from '@/composables/apis';
 
 const { data : currentSubscription } = await useApi(SubscriptionApi, 'subscriptionGetRetrieve')(() => ({}));
-
-console.log(currentSubscription.value);
-
 const subsEnum = [TypeSubscriptionEnum.Free, TypeSubscriptionEnum.Basic, TypeSubscriptionEnum.Pro ];
-
 
 </script>
 
