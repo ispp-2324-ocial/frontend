@@ -171,6 +171,7 @@ async function createE() : Promise<void> {
         timeStart: form.value.timeStart,
         category: form.value.category,
         imageB64: image?.value ?? '',
+        highlighted: false,
         ocialClient: 0
       }
     }));
