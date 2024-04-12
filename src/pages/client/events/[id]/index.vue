@@ -61,19 +61,16 @@
     <div
       class="mb-7"
       style="width: 100%;">
-      <!-- TODO: Reemplazar -->
       <div
-        v-if="false"
+        v-if="ocialClient.name == loggedClient.name"
         style="justify-content: center; display: flex;"
-        @click="router.push(`/client/events/${route.params.id}`)">
+        @click="router.push(`/client/events/${route.params.id}/edit`)">
         <Boton
           type="rounded-blue"
           style="width: 80%; padding-top: 1vh; padding-bottom: 1vh;">
-          <div>
-            <p>
-              {{ $t('editarEvento') }}
-            </p>
-          </div>
+          <p>
+            {{ $t('editarEvento') }}
+          </p>
         </Boton>
       </div>
     </div>
@@ -85,9 +82,8 @@
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
-import { EventApi, CategoryEnum } from '@/api';
-import { useEvent } from '@/composables/apis';
-import { auth } from '@/store/auth';
+import { EventApi, CategoryEnum, UsersApi } from '@/api';
+import { useEvent, useApi } from '@/composables/apis';
 
 const route = useRoute('/client/events/[id]/');
 
@@ -99,12 +95,11 @@ const { data: eventDetail } = await useEvent(EventApi, 'eventRetrieve')(() => ({
   'id': Number(route.params.id)
 }));
 
-/**
- * Cuando se haga editar evento, en el v-if del boton de editar evento hay que cambiar el false por comprobar que el cliente logueado sea el que creó ese evento
- */
-if (auth.isLoggedIn.value) {
-  //Const { data: loggedClient } = await useApi(UsersApi, 'usersClientGetList')();
-}
+const { data: ocialClient } = await useEvent(EventApi, 'eventClientRetrieve')(() => ({
+  'id': Number(route.params.id)
+}));
+
+const { data: loggedClient } = await useApi(UsersApi, 'usersClientGetRetrieve')();
 
 const cateEnum = [CategoryEnum.Sports, CategoryEnum.Music, CategoryEnum.Markets, CategoryEnum.RelaxActivities, CategoryEnum.LiveConcert];
 
