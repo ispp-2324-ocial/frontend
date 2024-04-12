@@ -6,7 +6,7 @@
     <div style="justify-content: center; display: flex;">
       <div style="width: 90%;">
         <RouterLink :to="'/cancelPlan'">
-          <Suscripcion :is-plan="TypeSubscriptionEnum.Basic == currentSubscription">
+          <Suscripcion :is-plan="subsEnum[0] == currentSubscription.typeSubscription">
             <template #left>
               <span class="price">{{ $t('gratuito') }}</span>
               <br />
@@ -18,7 +18,7 @@
           </Suscripcion>
         </RouterLink>
         <RouterLink :to="'/basicPlan'">
-          <Suscripcion>
+          <Suscripcion :is-plan="subsEnum[1] == currentSubscription.typeSubscription">
             <template #left>
               <span class="price">{{ $t('basico') }}</span>
               <br />
@@ -38,7 +38,7 @@
           </Suscripcion>
         </RouterLink>
         <RouterLink :to="'/proPlan'">
-          <Suscripcion>
+          <Suscripcion :is-plan="subsEnum[2] == currentSubscription.typeSubscription">
             <template #left>
               <div class="flex flex-row justify-center">
                 <img
@@ -83,10 +83,16 @@
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
-import { EventApi, TypeSubscriptionEnum, UsersApi } from '@/api';
+import { EventApi, SubscriptionApi, TypeSubscriptionEnum, UsersApi } from '@/api';
 import { useEvent, useApi } from '@/composables/apis';
 
-const currentSubscription = useEvent(EventApi, 'subscriptionGetList')(() => ({}));
+const { data : currentSubscription } = await useApi(SubscriptionApi, 'subscriptionGetRetrieve')(() => ({}));
+
+console.log(currentSubscription.value);
+
+const subsEnum = [TypeSubscriptionEnum.Free, TypeSubscriptionEnum.Basic, TypeSubscriptionEnum.Pro ];
+
+
 </script>
 
 <style scoped>
