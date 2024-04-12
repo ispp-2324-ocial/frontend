@@ -64,7 +64,7 @@
               </p>
               <Boton
                 style="margin-bottom: 1rem"
-                type="auth">
+                type="share">
                 <div @click="startShare()">
                   {{ $t('compartirEvento') }}
                 </div>
@@ -84,7 +84,6 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { EventApi, CategoryEnum } from '@/api';
 import { useEvent } from '@/composables/apis';
-import { useShare } from '@vueuse/core';
 
 const cateEnum = [CategoryEnum.Sports, CategoryEnum.Music, CategoryEnum.Markets, CategoryEnum.RelaxActivities, CategoryEnum.LiveConcert];
 const { t } = useI18n();
@@ -102,19 +101,18 @@ const { data: eventDetail } = await useEvent(EventApi, 'eventRetrieve')(() => ({
   'id': Number(route.params.id)
 }));
 
-
-const { share, isSupported } = useShare();
-const resultPara = document.querySelector(".result");
-
 const shareData = {
-  title:"Evento",
-  url: location.href,
+  title:'Evento',
+  url: route.hash + '#' + route.path //Si se quita el hashtag cambiar por fullpath
 };
 
+/**
+ * Función para compartir evento
+ */
 async function startShare() : Promise<void> {
   await navigator.share(
     shareData
-  )
+  );
 
 }
 
