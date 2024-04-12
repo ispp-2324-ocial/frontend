@@ -172,7 +172,11 @@ async function createE() : Promise<void> {
         category: form.value.category,
         imageB64: image?.value ?? '',
         highlighted: false,
-        ocialClient: 0
+        ocialClient: {
+          name: 'a',
+          defaultLatitude: 0,
+          defaultLongitude: 0
+        }
       }
     }));
 
