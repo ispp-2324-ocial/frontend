@@ -62,19 +62,18 @@
       class="mb-7"
       style="width: 100%;">
       <div
-        v-if="ocialClient.name == loggedClient.name"
-        style="justify-content: center; display: flex;"
-        @click="router.push(`/client/events/${route.params.id}/edit`)">
+        v-if="ocialClient.name == loggedClient.name">
         <Boton
           type="rounded-blue"
-          style="width: 80%; padding-top: 1vh; padding-bottom: 1vh;">
+          style="margin-top: 1%; display: flex;"
+          @click="router.push(`/client/events/${route.params.id}/edit`)">
           <p>
             {{ $t('editarEvento') }}
           </p>
         </Boton>
         <Boton
           type="rounded-red"
-          style="margin-top: 10%;display: flex;"
+          style="margin-top: 3%; display: flex;"
           @click="deleteE()">
           {{ $t('eliminarEvento') }}
         </Boton>
@@ -120,11 +119,10 @@ const categorias = computed(() =>
  * Esta función elimina el evento de la vista
  */
 async function deleteE() : Promise<void> {
-  console.log('HOLA');
   await useEvent(EventApi, 'eventDeleteDestroy')(() => ({
     id: Number(route.params.id)
   }));
-  await router.push('/');
+
 };
 </script>
 
