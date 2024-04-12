@@ -5,7 +5,7 @@
     </Title>
     <div style="justify-content: center; display: flex;">
       <div style="width: 90%;">
-        <RouterLink :to="'/cancelPlan'">
+        <div @click="planFree()">
           <Suscripcion :is-plan="subsEnum[0] == currentSubscription.typeSubscription">
             <template #left>
               <span class="price">{{ $t('gratuito') }}</span>
@@ -16,8 +16,8 @@
               {{ $t('1eventoMensual') }}
             </template>
           </Suscripcion>
-        </RouterLink>
-        <RouterLink :to="'/basicPlan'">
+        </div>
+        <div @click="planBasic()">
           <Suscripcion :is-plan="subsEnum[1] == currentSubscription.typeSubscription">
             <template #left>
               <span class="price">{{ $t('basico') }}</span>
@@ -36,8 +36,8 @@
               </p>
             </template>
           </Suscripcion>
-        </RouterLink>
-        <RouterLink :to="'/proPlan'">
+        </div>
+        <div @click="planPro()">
           <Suscripcion :is-plan="subsEnum[2] == currentSubscription.typeSubscription">
             <template #left>
               <div class="flex flex-row justify-center">
@@ -73,7 +73,7 @@
                 {{ $t('funcionesAvanzadas') }}</span>
             </template>
           </Suscripcion>
-        </RouterLink>
+        </div>
       </div>
     </div>
   </div>
@@ -82,9 +82,43 @@
 <script setup lang="ts">
 import { SubscriptionApi, TypeSubscriptionEnum } from '@/api';
 import { useApi } from '@/composables/apis';
+import { router } from '@/plugins/router';
 
 const { data : currentSubscription } = await useApi(SubscriptionApi, 'subscriptionGetRetrieve')(() => ({}));
 const subsEnum = [TypeSubscriptionEnum.Free, TypeSubscriptionEnum.Basic, TypeSubscriptionEnum.Pro ];
+
+
+/**
+ * Función para el planFree
+ */
+async function planFree() : Promise<void> {
+  if (subsEnum[0] != currentSubscription.value.typeSubscription) {
+    //Const { data : redToURL } = await useApi(PaymentApi, 'subscriptionGetRetrieve')(() => ({}));
+    await router.push('/cancelPlan');
+  }
+};
+
+/**
+ * Función para el planBasic
+ */
+async function planBasic() : Promise<void> {
+  if (subsEnum[2] == currentSubscription.value.typeSubscription) {
+    await router.push('/cancelPlan');
+  } else if (subsEnum[0] == currentSubscription.value.typeSubscription) {
+    await router.push('/upgradePlan');
+  }
+};
+
+/**
+ * Función para el planPro
+ */
+async function planPro() : Promise<void> {
+  if (subsEnum[1] == currentSubscription.value.typeSubscription) {
+    await router.push('/cancelPlan');
+  } else if (subsEnum[0] == currentSubscription.value.typeSubscription) {
+    await router.push('/upgradePlan');
+  }
+};
 
 </script>
 
