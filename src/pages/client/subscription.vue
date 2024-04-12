@@ -95,10 +95,9 @@ const subsEnum = [TypeSubscriptionEnum.Free, TypeSubscriptionEnum.Basic, TypeSub
  */
 async function planFree() : Promise<void> {
   if (subsEnum[0] != currentSubscription.value.typeSubscription) {
-
-    // Const { data : redToURL } = await useApi(PaymentApi, 'subscriptionGetRetrieve')(() => ({}));
+    //Const { data : redToURL } = await useApi(PaymentApi, 'subscriptionGetRetrieve')(() => ({}));
     await router.push('/cancelPlan');
-    //Window.location.href = 'https://www.google.com/';
+    //window.open('https://www.google.com/', '_blank');
 
   }
 };
@@ -111,7 +110,7 @@ async function planBasic() : Promise<void> {
     await router.push('/cancelPlan');
   } else if (subsEnum[0] == currentSubscription.value.typeSubscription) {
     //Await router.push('/upgradePlan');
-    window.location.href = 'https://www.google.com/';
+    window.open('https://www.google.com/', '_blank');
   }
 };
 
@@ -123,7 +122,7 @@ async function planPro() : Promise<void> {
     await router.push('/cancelPlan');
   } else if (subsEnum[0] == currentSubscription.value.typeSubscription) {
     //Await router.push('/upgradePlan');
-    window.location.href = 'https://www.google.com/';
+    window.open('https://www.google.com/', '_blank');
   }
 };
 
