@@ -4,7 +4,8 @@
               'checkbox-class': type === 'default',
               'rounded-blue': type === 'rounded-blue',
               'rounded-red': type === 'rounded-red',
-              'auth': type === 'auth' }"
+              'auth': type === 'auth',
+              'share': type === 'share' }"
     @mouseover="isHovered = true"
     @mouseout="isHovered = false">
     <slot />
@@ -15,7 +16,7 @@
 import { ref } from 'vue';
 
 withDefaults(defineProps<{
-  type?: 'rounded-blue' | 'rounded-red' | 'default' | 'auth';
+  type?: 'rounded-blue' | 'rounded-red' | 'default' | 'auth' | 'share';
 }>(), { type: 'default' });
 
 const isHovered = ref(false);
@@ -81,7 +82,7 @@ const isHovered = ref(false);
 .share {
   text-transform: uppercase;
   background: #aacfff;
-  width: 100%;
+  width: 50%;
   border: 2px solid #3e80d7;
   padding: 10px 3px 10px 3px;
   border-radius: 15px;
