@@ -44,7 +44,7 @@
           {{ getError('timeEnd') }}
         </div>
         <BaseInput
-          v-model="form.capacity"
+          v-model="parseableCapacity"
           class="input-box"
           tipo="number"
           :placeholder="placeholders[3]" />
@@ -142,6 +142,15 @@ const form = ref({
   highlighted: eventDetail.value.highlighted
 });
 
+const parseableCapacity = computed({
+  get() {
+    return String(form.value.capacity);
+  },
+  set(val: string) {
+    form.value.capacity = Number(val);
+  }
+});
+
 const { validate, isValid, getError, scrolltoError } = useValidation(validationSchema, form, {
   mode: 'lazy'
 });
@@ -170,8 +179,12 @@ async function editE() : Promise<void> {
         'timeEnd' : form.value.timeEnd,
         'timeStart': form.value.timeStart,
         'category': form.value.category,
-        'ocialClient': 0,
-        'highlighted': form.value.highlighted
+        'highlighted': form.value.highlighted,
+        ocialClient: {
+          name: 'a',
+          defaultLatitude: 0,
+          defaultLongitude: 0
+        }
       }
     }));
     await router.push('/');
