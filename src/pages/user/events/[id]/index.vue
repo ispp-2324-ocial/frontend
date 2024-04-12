@@ -56,6 +56,13 @@
               <p>
                 <Like />
               </p>
+              <Boton
+                style="margin-bottom: 1rem"
+                type="share">
+                <div @click="startShare()">
+                  {{ $t('compartirEvento') }}
+                </div>
+              </Boton>
             </div>
           </div>
         </div>
@@ -89,7 +96,23 @@ const categorias = computed(() =>
    t('categoryRelax'),
    t('categoryConcierto')]);
 
+const shareData = {
+  title:'Evento',
+  url: route.hash + '#/details/' + route.params.id //Lleva a la vista de detalles de evento del mapa
+};
+
+/**
+ * Función para compartir evento
+ */
+async function startShare() : Promise<void> {
+  await navigator.share(
+    shareData
+  );
+
+}
+
 </script>
+
 
 <style scoped>
 .center {
