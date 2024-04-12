@@ -80,9 +80,11 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router/auto';
 import { SubscriptionApi, TypeSubscriptionEnum } from '@/api';
 import { useApi } from '@/composables/apis';
-import { router } from '@/plugins/router';
+
+const router = useRouter();
 
 const { data : currentSubscription } = await useApi(SubscriptionApi, 'subscriptionGetRetrieve')(() => ({}));
 const subsEnum = [TypeSubscriptionEnum.Free, TypeSubscriptionEnum.Basic, TypeSubscriptionEnum.Pro ];
@@ -93,8 +95,11 @@ const subsEnum = [TypeSubscriptionEnum.Free, TypeSubscriptionEnum.Basic, TypeSub
  */
 async function planFree() : Promise<void> {
   if (subsEnum[0] != currentSubscription.value.typeSubscription) {
-    //Const { data : redToURL } = await useApi(PaymentApi, 'subscriptionGetRetrieve')(() => ({}));
+
+    // Const { data : redToURL } = await useApi(PaymentApi, 'subscriptionGetRetrieve')(() => ({}));
     await router.push('/cancelPlan');
+    //Window.location.href = 'https://www.google.com/';
+
   }
 };
 
@@ -105,7 +110,8 @@ async function planBasic() : Promise<void> {
   if (subsEnum[2] == currentSubscription.value.typeSubscription) {
     await router.push('/cancelPlan');
   } else if (subsEnum[0] == currentSubscription.value.typeSubscription) {
-    await router.push('/upgradePlan');
+    //Await router.push('/upgradePlan');
+    window.location.href = 'https://www.google.com/';
   }
 };
 
@@ -116,7 +122,8 @@ async function planPro() : Promise<void> {
   if (subsEnum[1] == currentSubscription.value.typeSubscription) {
     await router.push('/cancelPlan');
   } else if (subsEnum[0] == currentSubscription.value.typeSubscription) {
-    await router.push('/upgradePlan');
+    //Await router.push('/upgradePlan');
+    window.location.href = 'https://www.google.com/';
   }
 };
 
