@@ -5,156 +5,89 @@
     </Title>
     <div style="justify-content: center; display: flex;">
       <div style="width: 90%;">
-        <Suscripcion :is-plan="true">
-          <template #left>
-            <span class="price">{{ $t('gratuito') }}</span>
-            <br />
-            <span class="price">{{ $t('gratis') }}</span>
-          </template>
-          <template #right>
-            {{ $t('1eventoMensual') }}
-          </template>
-        </Suscripcion>
-        <Title style="margin-top: 3vh;">
-          {{ $t('suscripciones') }}
-        </Title>
-        <div style="justify-content: center; display: flex;">
-          <div style="width: 90%;">
-            <!--TODO Poner la redirección correcta cuando se implemente-->
-            <RouterLink :to="'/cancelPlan'">
-              <Suscripcion :is-plan="true">
-                <template #left>
-                  <span class="price">{{ $t('gratuito') }}</span>
-                  <br />
-                  <span class="price">{{ $t('gratis') }}</span>
-                </template>
-                <template #right>
-                  {{ $t('1eventoMensual') }}
-                </template>
-              </Suscripcion>
-            </RouterLink>
-
-            <Suscripcion>
-              <template #left>
-                <span class="price">{{ $t('basico') }}</span>
-                <br />
-                <span class="price">{{ $t('medio') }}</span>
-              </template>
-              <template #right>
+        <RouterLink :to="'/cancelPlan'">
+          <Suscripcion :is-plan="TypeSubscriptionEnum.Basic == currentSubscription">
+            <template #left>
+              <span class="price">{{ $t('gratuito') }}</span>
+              <br />
+              <span class="price">{{ $t('gratis') }}</span>
+            </template>
+            <template #right>
+              {{ $t('1eventoMensual') }}
+            </template>
+          </Suscripcion>
+        </RouterLink>
+        <RouterLink :to="'/basicPlan'">
+          <Suscripcion>
+            <template #left>
+              <span class="price">{{ $t('basico') }}</span>
+              <br />
+              <span class="price">{{ $t('medio') }}</span>
+            </template>
+            <template #right>
+              <p>
+                <span class="highlight">{{ $t('dot10') }}</span>&nbsp;{{ $t('eventosMensuales') }}<br />
+                <span class="highlight">
+                  {{ $t('edicionEventos') }}
+                </span><br />
+                <span class="highlight">
+                  {{ $t('soporteLimitado') }}
+                </span>
+              </p>
+            </template>
+          </Suscripcion>
+        </RouterLink>
+        <RouterLink :to="'/proPlan'">
+          <Suscripcion>
+            <template #left>
+              <div class="flex flex-row justify-center">
+                <img
+                  class="flex-self-center"
+                  alt="star"
+                  src="@/assets/images/star.png"
+                  style="height: 18px;" />
                 <p>
-                  <span class="highlight">{{ $t('dot10') }}</span>&nbsp;{{ $t('eventosMensuales') }}<br />
-                  <span class="highlight">
-                    {{ $t('edicionEventos') }}
-                  </span><br />
-                  <span class="highlight">
-                    {{ $t('soporteLimitado') }}
-                  </span>
+                  <span class="price">{{ $t('pro') }}</span>
                 </p>
-              </template>
-            </Suscripcion>
-            <!--TODO Poner la redirección correcta cuando se implemente-->
-            <RouterLink :to="'/basicPlan'">
-              <Suscripcion>
-                <template #left>
-                  <span class="price">{{ $t('basico') }}</span>
-                  <br />
-                  <span class="price">{{ $t('medio') }}</span>
-                </template>
-                <template #right>
-                  <p>
-                    <span class="highlight">{{ $t('dot10') }}</span>&nbsp;{{ $t('eventosMensuales') }}<br />
-                    <span class="highlight">
-                      {{ $t('edicionEventos') }}
-                    </span><br />
-                    <span class="highlight">
-                      {{ $t('soporteLimitado') }}
-                    </span>
-                  </p>
-                </template>
-              </Suscripcion>
-            </RouterLink>
-
-            <Suscripcion>
-              <template #left>
-                <div class="flex flex-row justify-center">
-                  <img
-                    class="flex-self-center"
-                    alt="star"
-                    src="@/assets/images/star.png"
-                    style="height: 18px;" />
-                  <p>
-                    <span class="price">{{ $t('pro') }}</span>
-                  </p>
-                  <img
-                    class="flex-self-center"
-                    alt="star"
-                    src="@/assets/images/star.png"
-                    style="height: 18px;" />
-                </div>
-                <div style="line-height: 130%;">
-                  <div
-                    style="display: flex;"
-                    class="column flex-col">
-                    <div>
-                      <span class="price">{{ $t('caro') }}</span>
-                    </div>
+                <img
+                  class="flex-self-center"
+                  alt="star"
+                  src="@/assets/images/star.png"
+                  style="height: 18px;" />
+              </div>
+              <div style="line-height: 130%;">
+                <div
+                  style="display: flex;"
+                  class="column flex-col">
+                  <div>
+                    <span class="price">{{ $t('caro') }}</span>
                   </div>
                 </div>
-              </template>
-              <template #right>
-                <span class="highlight">{{ $t('eventosIlimitados') }}</span><br />
-                {{ $t('edicionEventos') }}<br />
-                <span class="highlight">{{ $t('prioridad') }}</span>&nbsp;{{ $t('soporte24h') }}<br />
-                <span class="highlight">{{ $t('eventosDestacados') }}<br />
-                  {{ $t('envioNotificaciones') }}<br />
-                  {{ $t('funcionesAvanzadas') }}</span>
-              </template>
-            </Suscripcion>
-          </div>
-          <!--TODO Poner la redirección correcta cuando se implemente-->
-          <RouterLink :to="'/ProPlan'">
-            <Suscripcion>
-              <template #left>
-                <div class="flex flex-row justify-center">
-                  <img
-                    class="flex-self-center"
-                    alt="star"
-                    src="@/assets/images/star.png"
-                    style="height: 18px;" />
-                  <p>
-                    <span class="price">{{ $t('pro') }}</span>
-                  </p>
-                  <img
-                    class="flex-self-center"
-                    alt="star"
-                    src="@/assets/images/star.png"
-                    style="height: 18px;" />
-                </div>
-                <div style="line-height: 130%;">
-                  <div
-                    style="display: flex;"
-                    class="column flex-col">
-                    <div>
-                      <span class="price">{{ $t('caro') }}</span>
-                    </div>
-                  </div>
-                </div>
-              </template>
-              <template #right>
-                <span class="highlight">{{ $t('eventosIlimitados') }}</span><br />
-                {{ $t('edicionEventos') }}<br />
-                <span class="highlight">{{ $t('prioridad') }}</span>&nbsp;{{ $t('soporte24h') }}<br />
-                <span class="highlight">{{ $t('eventosDestacados') }}<br />
-                  {{ $t('envioNotificaciones') }}<br />
-                  {{ $t('funcionesAvanzadas') }}</span>
-              </template>
-            </Suscripcion>
-          </RouterLink>
-        </div>
+              </div>
+            </template>
+            <template #right>
+              <span class="highlight">{{ $t('eventosIlimitados') }}</span><br />
+              {{ $t('edicionEventos') }}<br />
+              <span class="highlight">{{ $t('prioridad') }}</span>&nbsp;{{ $t('soporte24h') }}<br />
+              <span class="highlight">{{ $t('eventosDestacados') }}<br />
+                {{ $t('funcionesAvanzadas') }}</span>
+            </template>
+          </Suscripcion>
+        </RouterLink>
       </div>
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import { computed } from 'vue';
+import { useRoute, useRouter } from 'vue-router/auto';
+import { useI18n } from 'vue-i18n';
+import { EventApi, TypeSubscriptionEnum, UsersApi } from '@/api';
+import { useEvent, useApi } from '@/composables/apis';
+
+const currentSubscription = useEvent(EventApi, 'subscriptionGetList')(() => ({}));
+</script>
 
 <style scoped>
 .column {
