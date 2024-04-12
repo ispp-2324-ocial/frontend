@@ -72,6 +72,12 @@
             {{ $t('editarEvento') }}
           </p>
         </Boton>
+        <Boton
+          type="rounded-red"
+          style="margin-top: 10%;display: flex;"
+          @click="deleteE()">
+          {{ $t('eliminarEvento') }}
+        </Boton>
       </div>
     </div>
   </div>
@@ -110,6 +116,16 @@ const categorias = computed(() =>
    t('categoryRelax'),
    t('categoryConcierto')]);
 
+/**
+ * Esta función elimina el evento de la vista
+ */
+async function deleteE() : Promise<void> {
+  console.log('HOLA');
+  await useEvent(EventApi, 'eventDeleteDestroy')(() => ({
+    id: Number(route.params.id)
+  }));
+  await router.push('/');
+};
 </script>
 
 <style scoped>

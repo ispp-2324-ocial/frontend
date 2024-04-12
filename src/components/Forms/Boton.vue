@@ -1,9 +1,9 @@
 <template>
   <button
-    type="button"
     :class="{ 'scaled': isHovered,
               'checkbox-class': type === 'default',
               'rounded-blue': type === 'rounded-blue',
+              'rounded-red': type === 'rounded-red',
               'auth': type === 'auth' }"
     @mouseover="isHovered = true"
     @mouseout="isHovered = false">
@@ -12,13 +12,14 @@
 </template>
 
 <script setup lang = 'ts'>
-import { shallowRef } from 'vue';
+import { ref } from 'vue';
 
 withDefaults(defineProps<{
-  type?: 'rounded-blue'| 'default' | 'auth';
+  type?: 'rounded-blue' | 'rounded-red' | 'default' | 'auth';
 }>(), { type: 'default' });
 
-const isHovered = shallowRef(false);
+const isHovered = ref(false);
+
 </script>
 
 <style scoped>
@@ -43,7 +44,23 @@ const isHovered = shallowRef(false);
   padding-bottom: 1%;
 }
 
+.rounded-red {
+  text-transform: uppercase;
+  background-color: #ffaac2;
+  border: 2px solid #d73e5f;
+  color: #910e38;
+  border-radius: 15px;
+  font-size: clamp(20px,6vw,30px);
+  font-weight: bold;
+  margin: auto;
+  padding-left: 3%;
+  padding-right: 3%;
+  padding-top: 1%;
+  padding-bottom: 1%;
+}
+
 .checkbox-class {
+  height: auto;
   background-color: var(--o-color-theme);
   color: #000;
 }
