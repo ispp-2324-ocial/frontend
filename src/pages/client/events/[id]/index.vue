@@ -95,7 +95,7 @@ const { data: eventDetail } = await useEvent(EventApi, 'eventRetrieve')(() => ({
   'id': Number(route.params.id)
 }));
 
-const { data: ocialClient } = await useEvent(EventApi, 'eventClientRetrieve')(() => ({
+const { data: ocialClient } = await useApi(EventApi, 'eventClientRetrieve')(() => ({
   'id': Number(route.params.id)
 }));
 
