@@ -58,6 +58,7 @@ const { data: user } = await useApi(UsersApi, 'usersUserGetRetrieve')();
 if(likedEvents.value != undefined){
   for ( const e of likedEvents.value) {
     if (e.user == user.value.id) {
+      isFavorite.value = true;
       counter.value--;
       break;
     }
