@@ -9,13 +9,13 @@
       type="checkbox"
       class="hidden" />
     <IMdiHeartOutline
-      v-if="!isFavorite"
+      v-if="!likeValue"
       class="heart-outline" />
     <IMdiHeart
       v-else
       class="heart-outline" />
     <p class="elemento">
-      {{ isFavorite ? counter+1 : counter }}
+      {{ likeValue ? counter+1 : counter }}
     </p>
   </div>
 </template>
@@ -27,6 +27,7 @@ import { useApi } from '@/composables/apis';
 import { EventApi, UsersApi } from '@/api';
 
 const isHovered = ref(false);
+const likeValue = ref(false);
 const route = useRoute('/details/[id]');
 
 const methodToExecute = ref<'eventLikeCreate' | 'eventLikeDestroy' | undefined>();
@@ -42,8 +43,9 @@ const isFavorite = computed({
   get() {
     return Boolean(like.value);
   },
-  set(newValue) {
-    methodToExecute.value = newValue ? 'eventLikeCreate' : 'eventLikeDestroy';
+  set() {
+    methodToExecute.value = likeValue.value ? 'eventLikeDestroy' : 'eventLikeCreate';
+    likeValue.value = ! likeValue.value;
   }
 });
 
@@ -58,7 +60,7 @@ const { data: user } = await useApi(UsersApi, 'usersUserGetRetrieve')();
 if(likedEvents.value != undefined){
   for ( const e of likedEvents.value) {
     if (e.user == user.value.id) {
-      isFavorite.value = true;
+      likeValue.value = true;
       counter.value--;
       break;
     }
