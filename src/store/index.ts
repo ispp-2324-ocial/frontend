@@ -1,4 +1,4 @@
-import { refDebounced, useMediaQuery, useNetwork, useNow , useWindowSize } from '@vueuse/core';
+import { useMediaQuery, useNetwork, useNow , useWindowSize } from '@vueuse/core';
 /**
  * Este archivo contiene variables globales individuales (especialmente de VueUse) que se utilizan en varios lugares del cliente.
  * Los composables de VueUse establecerían nuevos *event handlers*, por lo que es más eficiente reutilizarlos, tanto en componentes como en archivos TS.
@@ -17,8 +17,4 @@ export const prefersNoMotion = useMediaQuery('(prefers-reduced-motion)');
  */
 export const network = useNetwork();
 
-
-const { width, height } = useWindowSize();
-
-export const windowWidth = refDebounced(width, 250);
-export const windowHeight = refDebounced(height, 250);
+export const { width: windowWidth, height: windowHeight } = useWindowSize();
