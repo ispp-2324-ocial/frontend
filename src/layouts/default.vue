@@ -9,17 +9,17 @@
 </template>
 
 <script setup lang="ts">
-import { watch, onUnmounted, shallowRef } from 'vue';
+import { onUnmounted, shallowRef , watch, type ComponentPublicInstance } from 'vue';
 import { windowWidth, windowHeight } from '@/store';
 
 const footerCssVarKey = '--o-footer-height';
-const footerRef = shallowRef<HTMLElement>();
+const footerRef = shallowRef<ComponentPublicInstance>();
 
 watch([windowWidth, windowHeight, footerRef], () => {
-  const footer = document.querySelector('footer');
+  const el = footerRef.value?.$el as HTMLElement;
 
-  if (footer) {
-    window.document.documentElement.style.setProperty(footerCssVarKey, `${footer.clientHeight}px`);
+  if (el) {
+    window.document.documentElement.style.setProperty(footerCssVarKey, `${el.clientHeight}px`);
   }
 });
 
