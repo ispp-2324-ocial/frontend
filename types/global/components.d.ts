@@ -16,6 +16,8 @@ declare module 'vue' {
     ClientView: typeof import('./../../src/components/Layout/Views/ClientView.vue')['default']
     Dropdown: typeof import('./../../src/components/Forms/Dropdown.vue')['default']
     IMdiFilter: typeof import('~icons/mdi/filter')['default']
+    IMdiHeart: typeof import('~icons/mdi/heart')['default']
+    IMdiHeartOutline: typeof import('~icons/mdi/heart-outline')['default']
     IMdiImageBrokenVariant: typeof import('~icons/mdi/image-broken-variant')['default']
     IMdiSearch: typeof import('~icons/mdi/search')['default']
     Like: typeof import('./../../src/components/Forms/Like.vue')['default']
