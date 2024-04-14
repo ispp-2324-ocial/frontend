@@ -7,23 +7,23 @@
       <Boton
         @click="router.push('/event')">
         <OImg
-          class="img"
+          class="icon"
           alt="Logo Ocial"
-          src="@/assets/images/Ocial_Clear.png" />
+          :src="Ocial_Clear" />
       </Boton>
       <Boton
         @click="router.push('/')">
         <OImg
-          class="img"
+          class="icon"
           alt="Mapa Claro"
-          src="@/assets/images/Map_Clear.png" />
+          :src="Map_Clear" />
       </Boton>
       <Boton
         @click="router.push('/profile')">
         <OImg
-          class="img"
+          class="icon"
           alt="Human Blue"
-          src="@/assets/images/Human_Clear.png" />
+          :src="Human" />
       </Boton>
     </div>
   </footer>
@@ -31,9 +31,11 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router/auto';
+import Human from '@/assets/images/Human_Clear.png';
+import Map_Clear from '@/assets/images/Map_Clear.png';
+import Ocial_Clear from '@/assets/images/Ocial_Clear.png';
 
 const router = useRouter();
-
 </script>
 
 <style scoped>
@@ -46,7 +48,7 @@ const router = useRouter();
   z-index: 1004;
 }
 
-.footer .img {
+:deep(.icon) {
   width: 50%;
   height: auto;
   margin: auto;
