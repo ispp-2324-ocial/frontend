@@ -15,7 +15,7 @@
                 <div class="flex justify-center items-center pt-12">
                   <BlurhashImage
                     :item="loggedClient.image"
-                    class="center img" />
+                    class="center" />
                 </div>
                 <p class="elemento">
                   <b>{{ loggedDjangoUser.username }}</b>
@@ -125,7 +125,6 @@ const categorias = computed(() =>
 
 <style scoped>
 .center {
-  display: block;
   margin-left: auto;
   margin-right: auto;
   width: 50%;
@@ -138,15 +137,5 @@ const categorias = computed(() =>
   margin-left: 4vw;
   margin-bottom: 1vh;
   margin-top: 4%;
-}
-
-.img {
-  width: 30%;
-  border-radius: 50%;
-  max-width: 220px;
-  max-height: 220px;
-  min-width: 90px;
-  min-height: 90px;
-  margin: 16px
 }
 </style>

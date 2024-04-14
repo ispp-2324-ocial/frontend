@@ -5,7 +5,7 @@
       <OImg
         alt="Ocial Name Logo"
         class="logo"
-        src="@/assets/images/Texto_Ocial.png" />
+        :src="Texto_Ocial" />
     </div>
 
     <div class="login-page">
@@ -16,8 +16,12 @@
   </main>
 </template>
 
+<script setup lang="ts">
+import Texto_Ocial from '@/assets/images/Texto_Ocial.png';
+</script>
+
 <style scoped>
-.logo {
+:deep(.logo) {
   width:70%;
 }
 
