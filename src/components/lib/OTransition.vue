@@ -13,7 +13,7 @@ import { Transition, TransitionGroup, type TransitionProps, type Component as Vu
 import ONoop from '@/components/lib/ONoop.vue';
 import { prefersNoMotion } from '@/store';
 
-export interface JTransitionProps extends BetterOmit<TransitionProps, 'name'> {
+export interface OTransitionProps extends BetterOmit<TransitionProps, 'name'> {
   name?: 'fade' | 'rotated-zoom' | 'slide-y-reverse' | 'slide-x' | 'slide-x-reverse';
   /**
    * Transition group props
@@ -26,7 +26,7 @@ export interface JTransitionProps extends BetterOmit<TransitionProps, 'name'> {
   group?: boolean
 }
 
-const props = withDefaults(defineProps<JTransitionProps>(), { name: 'fade' });
+const props = withDefaults(defineProps<OTransitionProps>(), { name: 'fade' });
 
 /**
  * Get the component to use based on props and the current motion preference
