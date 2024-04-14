@@ -29,7 +29,7 @@
           v-else-if="error"
           key="4"
           name="error">
-          <IMdiImageBrokenVariant />
+          <IMdiImageBrokenVariant v-bind="mergeProps($props, $attrs)" />
         </slot>
       </template>
     </component>
