@@ -8,9 +8,10 @@ interface BackdropPayload {
   opacity?: number;
 }
 interface RouteTransition {
-  enter: string;
-  leave?: string;
+  enter: NonNullable<JTransitionProps['name']>;
+  leave?: JTransitionProps['name'];
 }
+
 declare module 'vue-router' {
   interface RouteMeta {
     readonly layout: 'default' | 'anonymous';
