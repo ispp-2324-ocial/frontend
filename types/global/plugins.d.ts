@@ -1,4 +1,5 @@
 import type en from '@/../locales/en.json';
+import type { OTransitionProps } from '@/components/lib/OTransition.vue';
 
 /**
  * The object that represents RouteMeta is defined at @/plugins/vue/router/middleware/meta
@@ -8,18 +9,16 @@ interface BackdropPayload {
   opacity?: number;
 }
 interface RouteTransition {
-  enter: NonNullable<JTransitionProps['name']>;
-  leave?: JTransitionProps['name'];
+  enter: NonNullable<OTransitionProps['name']>;
+  leave?: OTransitionProps['name'];
 }
 
 declare module 'vue-router' {
   interface RouteMeta {
     readonly layout: 'default' | 'anonymous';
-    transparentLayout?: boolean;
     transition?: RouteTransition;
     readonly admin: boolean;
     title?: string | null;
-    backdrop: BackdropPayload;
   }
 }
 

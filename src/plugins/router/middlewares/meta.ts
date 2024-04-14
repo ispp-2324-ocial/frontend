@@ -1,5 +1,6 @@
+/* eslint-disable @typescript-eslint/no-unsafe-assignment */
 import { defu } from 'defu';
-import { reactive } from 'vue';
+import { ref } from 'vue';
 import type {
   RouteLocationNormalized,
   RouteLocationRaw,
@@ -8,14 +9,10 @@ import type {
 
 const defaultMeta: RouteMeta = {
   layout: 'default',
-  transparentLayout: false,
-  admin: false,
-  backdrop: {
-    opacity: 0.25
-  }
+  admin: false
 };
 
-const reactiveMeta = reactive(structuredClone(defaultMeta));
+const reactiveMeta = ref(structuredClone(defaultMeta));
 
 /**
  * Este middleware gestiona la propiedad meta entre rutas
@@ -43,8 +40,8 @@ export function metaGuard(
   to: RouteLocationNormalized,
   from: RouteLocationNormalized
 ): boolean | RouteLocationRaw {
-  Object.assign(reactiveMeta, defu(to.meta, defaultMeta));
-  to.meta = reactiveMeta;
+  reactiveMeta.value = defu(to.meta, structuredClone(defaultMeta));
+  to.meta = reactiveMeta.value;
 
   if (from.meta.transition?.leave) {
     if (to.meta.transition) {
