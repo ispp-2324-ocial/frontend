@@ -1,9 +1,9 @@
 <template>
   <component
     :is="getComponent()"
-    class="j-transition"
+    class="o-transition"
     v-bind="mergeProps($props, $attrs)"
-    :name="`j-transition-${props.name}`">
+    :name="`o-transition-${props.name}`">
     <slot />
   </component>
 </template>
@@ -42,70 +42,70 @@ function getComponent(): VueComponent {
 }
 </script>
 
-<!-- TODO: Set scoped and remove .j-transition* prefix after: https://github.com/vuejs/core/issues/5148 -->
+<!-- TODO: Set scoped and remove .o-transition* prefix after: https://github.com/vuejs/core/issues/5148 -->
 
 <!-- eslint-disable-next-line vue-scoped-css/enforce-style-type -->
 <style>
-.j-transition {
+.o-transition {
   transition-duration: .15s !important;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
   transform-origin: center !important;
 }
 
 /** fade */
-.j-transition-fade-enter-from,
-.j-transition-fade-leave-to {
+.o-transition-fade-enter-from,
+.o-transition-fade-leave-to {
   opacity: 0 !important;
 }
 
-.j-transition-fade-enter-active,
-.j-transition-fade-leave-active {
+.o-transition-fade-enter-active,
+.o-transition-fade-leave-active {
   transition-property: opacity !important;
 }
 
 /** rotated-zoom */
-.j-transition-rotated-zoom-enter-from,
-.j-transition-rotated-zoom-leave-to {
+.o-transition-rotated-zoom-enter-from,
+.o-transition-rotated-zoom-leave-to {
   transform: scale(0) rotate(-45deg);
 }
 
-.j-transition-rotated-zoom-enter-active,
-.j-transition-rotated-zoom-leave-active {
+.o-transition-rotated-zoom-enter-active,
+.o-transition-rotated-zoom-leave-active {
   transition-property: transform !important;
 }
 
 /** slide-y-reverse */
-.j-transition-slide-y-reverse-enter-from,
-.j-transition-slide-y-reverse-leave-to {
+.o-transition-slide-y-reverse-enter-from,
+.o-transition-slide-y-reverse-leave-to {
   opacity: 0;
   transform: translateY(15px);
 }
 
-.j-transition-slide-y-reverse-enter-active,
-.j-transition-slide-y-reverse-leave-active {
+.o-transition-slide-y-reverse-enter-active,
+.o-transition-slide-y-reverse-leave-active {
   transition-property: transform, opacity !important;
 }
 
 /** slide-x-reverse */
-.j-transition-slide-x-reverse-enter-from,
-.j-transition-slide-x-reverse-leave-to {
+.o-transition-slide-x-reverse-enter-from,
+.o-transition-slide-x-reverse-leave-to {
   opacity: 0;
   transform: translateX(15px);
 }
 
-.j-transition-slide-x-reverse-enter-active,
-.j-transition-slide-x-reverse-leave-active {
+.o-transition-slide-x-reverse-enter-active,
+.o-transition-slide-x-reverse-leave-active {
   transition-property: transform, opacity !important;
 }
 /** slide-x */
-.j-transition-slide-x-enter-from,
-.j-transition-slide-x-leave-to {
+.o-transition-slide-x-enter-from,
+.o-transition-slide-x-leave-to {
   opacity: 0;
   transform: translateX(-15px);
 }
 
-.j-transition-slide-x-enter-active,
-.j-transition-slide-x-leave-active {
+.o-transition-slide-x-enter-active,
+.o-transition-slide-x-leave-active {
   transition-property: transform, opacity !important;
 }
 </style>
