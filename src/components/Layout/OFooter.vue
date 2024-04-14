@@ -53,6 +53,5 @@ const router = useRouter();
   height: auto;
   margin: auto;
   padding: 7%;
-  padding-right: 0%;
 }
 </style>

@@ -27,8 +27,7 @@
             @click="getDetailsEvent(event.id)">
             <div style=" cursor: pointer;margin:auto; text-align: center;display: flex; align-items: center; justify-content: left;">
               <BlurhashImage
-                :item="event.image"
-                class="img" />
+                :item="event.image" />
               <div
                 class="ml-3"
                 style="text-align: left; width: 70%;">
@@ -91,16 +90,5 @@ async function getDetailsEvent(eventId: number | undefined) : Promise<void> {
 .lugar {
   font-size: clamp(14px, 3vw, 18px);
   margin-top: 3px;
-}
-
-.img {
-  display: block;
-  width: 30%;
-  border-radius: 50%;
-  max-width: 220px;
-  max-height: 220px;
-  min-width: 90px;
-  min-height: 90px;
-  margin: 16px;
 }
 </style>

@@ -14,7 +14,7 @@
               <div class="flex justify-center items-center pt-12">
                 <BlurhashImage
                   :item="eventDetail.image"
-                  class="center img" />
+                  class="center" />
               </div>
               <p
                 class="elemento"
@@ -122,7 +122,6 @@ async function deleteE() : Promise<void> {
 
 <style scoped>
 .center {
-  display: block;
   margin-left: auto;
   margin-right: auto;
   width: 50%;
@@ -133,16 +132,5 @@ async function deleteE() : Promise<void> {
   width: 90%;
   margin-left: 4vw;
   margin-bottom: 1vh;
-}
-
-.img {
-  display: block;
-  width: 30%;
-  border-radius: 50%;
-  max-width: 220px;
-  max-height: 220px;
-  min-width: 90px;
-  min-height: 90px;
-  margin: 16px
 }
 </style>

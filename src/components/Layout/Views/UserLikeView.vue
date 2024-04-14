@@ -14,13 +14,10 @@
             style="border-top: solid 1px #b0b0b0; padding: 0%;"
             @click="getDetailsEvent(event.id)">
             <div style=" cursor: pointer;margin:auto; text-align: center;display: flex; align-items: center; justify-content: left;">
-              <img
+              <OImg
                 v-if="event.image"
                 alt="Event"
                 :src="event.image.image"
-                style="display: block; width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px;" />
-              <IMdiImageBrokenVariant
-                v-else
                 style="display: block; width: 30%; border-radius: 50%; max-width: 220px; max-height: 220px; min-width: 90px; min-height: 90px; margin: 16px;" />
               <div
                 class="ml-3"

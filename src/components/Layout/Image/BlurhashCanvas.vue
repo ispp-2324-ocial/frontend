@@ -4,6 +4,7 @@
     ref="canvas"
     v-bind="$attrs"
     :key="`canvas-${hash}`"
+    class="w-full h-full"
     :width="width"
     :height="height" />
   <slot v-else />
