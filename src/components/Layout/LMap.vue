@@ -135,8 +135,8 @@ function createMapLayer(): void {
         userMarker = marker([latitude, longitude], { icon: userIcon }).addTo(mapInstance.value!);
         userMarker.bindPopup(t('Tu ubicación'));
       },
-      (error) => {
-        useToast(`${t('Error al obtener la ubicación')}: ${error.message}`, 'error');
+      () => {
+        useToast(`${t('Error al obtener la ubicación')}`, 'error');
       },
       { enableHighAccuracy: true }
     );
