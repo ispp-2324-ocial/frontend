@@ -41,6 +41,7 @@ import Amarillo from '@/assets/pin/Pin_Amarillo.png';
 import Dot from '@/assets/pin/dot.png';
 import { useToast } from '@/composables/use-toast';
 import { isNil, isNumber } from '@/utils/validation';
+import { windowHeight, windowWidth } from '@/store';
 
 const props = defineProps<{ markers: Event[] }>();
 const locationAccess = usePermission('geolocation');
@@ -203,6 +204,17 @@ function dispose(): void {
 }
 
 /**
+ * This is needed so the map is redrawn after a transition or window size change
+ */
+function redraw(): void {
+  window.setTimeout(() => {
+    if (mapInstance.value) {
+      mapInstance.value.invalidateSize();
+    }
+  }, 300);
+}
+
+/**
  * Este watcher trackea cuando el elemento div cambia para crear el mapa (ahora mismo no cambia nunca
  * solo en mount, pero es posible que en un futuro, dependiendo del dispositivo, cambiemos el objeto DOM
  * al que haga referencia con un `<component :is="" ....>`)
@@ -218,7 +230,10 @@ watch(mapContainer, () => {
 watch([mapInstance, ():typeof props.markers => props.markers], ([, newMarkers]) => {
   disposeMarkers();
   setMarkers(newMarkers);
-}, { deep: true }) ;
+  redraw();
+});
+
+watch([windowHeight, windowWidth], redraw);
 
 /**
  * Este watch trackea si el usuario ha dado permisos de ubicación y si los da resetea la vista
