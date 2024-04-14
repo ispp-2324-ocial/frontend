@@ -8,7 +8,7 @@
       @load="onLoad"
       @error="onError" />
     <component
-      :is="props.transitionProps ? JTransition : ONoop"
+      :is="props.transitionProps ? OTransition : ONoop"
       v-bind="isObj(props.transitionProps) ? props.transitionProps : undefined">
       <img
         v-if="shown"
@@ -42,7 +42,7 @@
 <script setup lang="ts">
 import { computed, shallowRef, watch, type ImgHTMLAttributes, mergeProps } from 'vue';
 import { isObj } from '@/utils/validation';
-import JTransition, { type JTransitionProps } from '@/components/lib/OTransition.vue';
+import OTransition, { type OTransitionProps } from '@/components/lib/OTransition.vue';
 import ONoop from '@/components/lib/ONoop.vue';
 
 /**
@@ -66,7 +66,7 @@ interface Props extends BetterOmit<ImgHTMLAttributes, 'src'> {
    *
    * @default true
    */
-  transitionProps?: JTransitionProps | boolean;
+  transitionProps?: OTransitionProps | boolean;
 }
 
 /**

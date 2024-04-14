@@ -29,30 +29,29 @@ router.beforeEach(metaGuard);
  * Si no hay una página anterior en el historial, nos aseguramos de que queremos ir a la página de inicio
  * en vez de a una página que esté fuera de la aplicación.
  */
+const backTransition = 'slide-x';
+
 router.back = (): ReturnType<typeof router.back> => {
   const route = router.currentRoute;
-  const leaveTransition = 'scroll-x-transition';
 
   /**
-   * Reproduce la misma transición que hacemos en TransitionView.vue (scroll-x-reverse-transition)
-   * pero de forma inversa, para reproducir un efecto contrario al ir a la página anterior.
+   * Reproduce la misma transición que hacemos al navegar a una página,
+   * pero a la inversa, para reproducir un efecto diferente cuando vamos a la página
+   * anterior
    */
   if (!route.value.meta.transition) {
     route.value.meta.transition = {
-      enter: 'scroll-x-reverse-transition',
-      leave: leaveTransition
+      enter: 'slide-x-reverse',
+      leave: backTransition
     };
   } else if (!route.value.meta.transition.leave) {
-    route.value.meta.transition.leave = leaveTransition;
+    route.value.meta.transition.leave = backTransition;
   }
 
-  window.setTimeout(
-    async () =>
-      await router.replace(
-        isStr(router.options.history.state.back)
-          ? router.options.history.state.back
-          : '/'
-      )
+  void router.replace(
+    isStr(router.options.history.state.back)
+      ? router.options.history.state.back
+      : '/'
   );
 };
 

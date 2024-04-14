@@ -1,29 +1,33 @@
 <template>
   <div class="ocial-app h-full w-full flex-col min-h-dvh relative">
     <RouterView v-slot="{ Component, route }">
-      <TransitionView>
+      <OTransition
+        :name="route.meta.transition?.enter ?? defaultTransition"
+        :mode="defaultTransitionMode">
         <Suspense @resolve="apploaded = true">
           <div
             :key="route.meta.layout"
-            class="origin-center h-full w-full">
+            class="origin-center h-full w-full o-transition">
             <component
               :is="getLayoutComponent(route.meta.layout)"
               :key="route.meta.layout">
-              <TransitionView>
+              <OTransition
+                :name="route.meta.transition?.enter ?? defaultTransition"
+                :mode="defaultTransitionMode">
                 <Suspense suspensible>
                   <div
                     :key="route.path"
-                    class="origin-center h-full w-full">
+                    class="origin-center h-full w-full o-transition">
                     <component
                       :is="Component"
                       :key="route.path" />
                   </div>
                 </Suspense>
-              </TransitionView>
+              </OTransition>
             </component>
           </div>
         </Suspense>
-      </TransitionView>
+      </OTransition>
     </RouterView>
   </div>
 </template>
@@ -36,6 +40,8 @@ import DefaultLayout from '@/layouts/default.vue';
 import AnonymousLayout from '@/layouts/anonymous.vue';
 
 const apploaded = shallowRef(false);
+const defaultTransition = 'slide-x-reverse';
+const defaultTransitionMode = 'out-in';
 
 /**
  * - ELIMINACIÓN DE LA PANTALLA DE CARGA REMOVAL -
