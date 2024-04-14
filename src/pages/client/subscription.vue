@@ -41,7 +41,7 @@
               <OImg
                 class="flex-self-center"
                 alt="star"
-                src="@/assets/images/star.png"
+                :src="Star"
                 style="height: 18px;" />
               <p>
                 <span class="price">{{ $t('pro') }}</span>
@@ -49,7 +49,7 @@
               <OImg
                 class="flex-self-center"
                 alt="star"
-                src="@/assets/images/star.png"
+                :src="Star"
                 style="height: 18px;" />
             </div>
             <div style="line-height: 130%;">
@@ -75,6 +75,10 @@
     </div>
   </div>
 </template>
+
+<script setup lang="ts">
+import Star from '@/assets/images/star.png';
+</script>
 
 <style scoped>
 .column {

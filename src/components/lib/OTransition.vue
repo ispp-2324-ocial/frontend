@@ -47,7 +47,7 @@ function getComponent(): VueComponent {
 <!-- eslint-disable-next-line vue-scoped-css/enforce-style-type -->
 <style>
 .j-transition {
-  transition-duration: .3s !important;
+  transition-duration: .15s !important;
   transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1) !important;
   transform-origin: center !important;
 }

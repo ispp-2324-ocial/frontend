@@ -13,7 +13,6 @@
       <img
         v-if="shown"
         key="1"
-        class="j-img"
         v-bind="mergeProps($props, $attrs)"
         :alt="$props.alt" />
       <template v-else>
@@ -111,11 +110,3 @@ function onError(): void {
 
 watch(() => props.src, onLoadStart);
 </script>
-
-<style scoped>
-.j-img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-}
-</style>
