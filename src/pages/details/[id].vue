@@ -91,7 +91,7 @@ const categorias = computed(() =>
 
 const route = useRoute('/details/[id]');
 
-const { data: eventDetail } = await useEvent(EventApi, 'eventRetrieve')(() => ({
+const { data: eventDetail } = await useEvent(EventApi, 'eventList')(() => ({
   'id': Number(route.params.id)
 }));
 
