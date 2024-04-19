@@ -90,7 +90,7 @@ const router = useRouter();
 
 const { t } = useI18n();
 
-const { data: eventDetail } = await useEvent(EventApi, 'eventRetrieve')(() => ({
+const { data: eventDetail } = await useEvent(EventApi, 'eventList')(() => ({
   'id': Number(route.params.id)
 }));
 
@@ -98,7 +98,7 @@ const { data: ocialClient } = await useApi(EventApi, 'eventClientRetrieve')(() =
   'id': Number(route.params.id)
 }));
 
-const { data: loggedClient } = await useApi(UsersApi, 'usersClientGetRetrieve')();
+const { data: loggedClient } = await useApi(UsersApi, 'usersClientGetList')();
 
 const cateEnum = [CategoryEnum.Sports, CategoryEnum.Music, CategoryEnum.Markets, CategoryEnum.RelaxActivities, CategoryEnum.LiveConcert];
 

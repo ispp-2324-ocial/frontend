@@ -121,7 +121,7 @@ const router = useRouter();
 
 const route = useRoute('/client/events/[id]/edit');
 
-const { data: eventDetail } = await useEvent(EventApi, 'eventRetrieve')(() => ({
+const { data: eventDetail } = await useEvent(EventApi, 'eventList')(() => ({
   'id': Number(route.params.id)
 }));
 
