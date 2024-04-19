@@ -121,7 +121,7 @@ const router = useRouter();
 
 const route = useRoute('/client/events/[id]/edit');
 
-const { data: eventDetail } = await useEvent(EventApi, 'eventList')(() => ({
+const { data: eventDetail } = await useEvent(EventApi, 'eventRetrieve')(() => ({
   'id': Number(route.params.id)
 }));
 
@@ -167,7 +167,7 @@ async function editE() : Promise<void> {
   await validate();
 
   if (isValid.value) {
-    await useEvent(EventApi, 'eventUpdateUpdate')(() => ({
+    await useEvent(EventApi, 'eventPartialUpdate')(() => ({
       id: Number(route.params.id),
       eventCreate: {
         'description': form.value.description,

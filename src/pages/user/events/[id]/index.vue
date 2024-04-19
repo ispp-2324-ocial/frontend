@@ -48,7 +48,7 @@
                 </span>
               </p>
               <p class="elemento">
-                <b>{{ $t('client:') }}</b>&nbsp;{{ eventDetail.ocialClient.name }}
+                <b>{{ $t('client:') }}</b>&nbsp;{{ eventDetail.creator.name }}
               </p>
               <p>
                 <Like />
@@ -107,7 +107,6 @@ async function startShare() : Promise<void> {
   );
 
 }
-
 </script>
 
 

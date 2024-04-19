@@ -82,13 +82,13 @@ async function Login() : Promise<void> {
 
   if (isValid.value) {
     const { data: UserCreated } = await useApi(UsersApi, 'usersLoginCreate')(() => ({
-      loginUser: {
+      login: {
         'username': form.value.username,
         'password': form.value.password
       }
     }));
 
-    auth.authenticate(form.value.username, UserCreated.value.isClient, UserCreated.value.token);
+    auth.authenticate(form.value.username, UserCreated.value.user.is_client, UserCreated.value.token);
     await router.replace('/');
 
   } else {
@@ -114,7 +114,7 @@ const callback = async (response : GoogleResponseObject): Promise<void> => {
     }
   }));
 
-  auth.authenticate(UserCreated.value.user.username, UserCreated.value.isClient, UserCreated.value.token);
+  auth.authenticate(UserCreated.value.user.username, UserCreated.value.user.is_client, UserCreated.value.token);
   await router.push('/map');
 };
 

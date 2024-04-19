@@ -45,7 +45,7 @@
                 </span>
               </p>
               <p class="elemento">
-                <b>{{ $t('client:') }}</b>&nbsp;{{ eventDetail.ocialClient.name }}
+                <b>{{ $t('client:') }}</b>&nbsp;{{ eventDetail.creator.name }}
               </p>
             </div>
           </div>
@@ -56,7 +56,7 @@
       class="mb-7"
       style="width: 100%;">
       <div
-        v-if="ocialClient.name == loggedClient.name">
+        v-if="loggedClient.is_client">
         <Boton
           type="rounded-blue"
           style="margin-top: 1%; display: flex;"
@@ -90,15 +90,11 @@ const router = useRouter();
 
 const { t } = useI18n();
 
-const { data: eventDetail } = await useEvent(EventApi, 'eventList')(() => ({
+const { data: eventDetail } = await useEvent(EventApi, 'eventRetrieve')(() => ({
   'id': Number(route.params.id)
 }));
 
-const { data: ocialClient } = await useApi(EventApi, 'eventClientRetrieve')(() => ({
-  'id': Number(route.params.id)
-}));
-
-const { data: loggedClient } = await useApi(UsersApi, 'usersClientGetList')();
+const { data: loggedClient } = await useApi(UsersApi, 'usersMeRetrieve')();
 
 const cateEnum = [CategoryEnum.Sports, CategoryEnum.Music, CategoryEnum.Markets, CategoryEnum.RelaxActivities, CategoryEnum.LiveConcert];
 
@@ -113,7 +109,7 @@ const categorias = computed(() =>
  * Esta función elimina el evento de la vista
  */
 async function deleteE() : Promise<void> {
-  await useEvent(EventApi, 'eventDeleteDestroy')(() => ({
+  await useEvent(EventApi, 'eventDestroy')(() => ({
     id: Number(route.params.id)
   }));
 
