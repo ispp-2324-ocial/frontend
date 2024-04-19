@@ -45,7 +45,7 @@
                 </span>
               </p>
               <p class="elemento">
-                <b>{{ $t('client:') }}</b>&nbsp;{{ eventDetail.ocialClient.name }}
+                <b>{{ $t('client:') }}</b>&nbsp;{{ eventDetail.creator.name }}
               </p>
               <p class="elemento">
                 <b>{{ $t('¿Te gusta el evento?') }}</b>
@@ -91,7 +91,7 @@ const categorias = computed(() =>
 
 const route = useRoute('/details/[id]');
 
-const { data: eventDetail } = await useEvent(EventApi, 'eventList')(() => ({
+const { data: eventDetail } = await useEvent(EventApi, 'eventRetrieve')(() => ({
   'id': Number(route.params.id)
 }));
 
@@ -109,7 +109,6 @@ async function startShare() : Promise<void> {
   );
 
 }
-
 </script>
 
 <style scoped>

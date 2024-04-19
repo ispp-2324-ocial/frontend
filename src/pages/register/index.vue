@@ -128,7 +128,7 @@ async function createAcc() : Promise<void> {
 
   if (isValid.value) {
     const { response: r } = await useApi(UsersApi, 'usersUserRegisterCreate')(() => ({
-      user: {
+      ocialUserCreate: {
         'password': form.value.password,
         'email': form.value.email,
         'username': form.value.username,
