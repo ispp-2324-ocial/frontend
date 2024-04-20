@@ -1,3 +1,4 @@
+/// <reference types="vitest" />
 import VueI18nPlugin from '@intlify/unplugin-vue-i18n/vite';
 import Virtual from '@rollup/plugin-virtual';
 import Vue from '@vitejs/plugin-vue';
@@ -72,6 +73,10 @@ export default defineConfig(({ mode }): UserConfig => {
       }),
       UnpluginVueRouterSyncImportFix()
     ],
+    test: {
+      include: ['tests/unit/**/*.ts'],
+      environment: 'happy-dom'
+    },
     build: {
       /**
        * Ver main.ts para una explicación de este target
