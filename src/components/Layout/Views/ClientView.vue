@@ -62,10 +62,11 @@ import { parseDate } from '@/utils/data-manipulation';
 
 const router = useRouter();
 
-/**
- *TODO: pasar a eventListClientList cuando el registro e inicio de sesión de cliente sea funcional
- */
-const { data: eventList } = await useEvent(EventApi, 'eventListClientList')();
+const { data: user } = await useApi(UsersApi, 'usersMeRetrieve')();
+
+const { data: eventList } = await useEvent(EventApi, 'eventClientList')(() => ({
+  'id': Number(user.value.id)
+}));
 
 /**
  * Go to the details of that event

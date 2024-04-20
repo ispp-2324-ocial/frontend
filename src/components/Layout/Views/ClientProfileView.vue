@@ -18,16 +18,16 @@
                     class="center" />
                 </div>
                 <p class="elemento">
-                  <b>{{ loggedDjangoUser.username }}</b>
+                  <b>{{ loggedClient.username }}</b>
                 </p>
                 <p class="elemento">
-                  <b>{{ $t('email:') }}</b> {{ loggedDjangoUser.email }}
+                  <b>{{ $t('email:') }}</b> {{ loggedClient.email }}
                 </p>
                 <p class="elemento">
                   <b>{{ $t('organiza:') }} </b> <span
                     v-for="(category,indice) in cateEnum"
                     :key="category">
-                    <span v-if="category == loggedClient.typeClient">
+                    <span v-if="category == loggedClient.type_client">
                       {{ categorias[indice] }}
                     </span>
                   </span>
@@ -110,8 +110,7 @@ const router = useRouter();
 
 const { t } = useI18n();
 
-const { data: loggedClient } = await useApi(UsersApi, 'usersClientGetRetrieve')();
-const { data: loggedDjangoUser } = await useApi(UsersApi, 'usersGetRetrieve')();
+const { data: loggedClient } = await useApi(UsersApi, 'usersMeRetrieve')();
 
 const cateEnum = [TypeClientEnum.Artist, TypeClientEnum.BarRestaurant, TypeClientEnum.EventsAndConcerts, TypeClientEnum.LocalGuide, TypeClientEnum.SmallBusiness];
 
