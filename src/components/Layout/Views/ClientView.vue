@@ -65,7 +65,7 @@ const router = useRouter();
 const { data: user } = await useApi(UsersApi, 'usersMeRetrieve')();
 
 const { data: eventList } = await useEvent(EventApi, 'eventClientList')(() => ({
-  'id': Number(user.value.id)
+  'username': String(user.value.username)
 }));
 
 /**
