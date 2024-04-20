@@ -177,13 +177,12 @@ async function createAcc() : Promise<void> {
         'password': form.value.password,
         'email': form.value.email,
         'username': form.value.username,
+        'imageB64': image?.value ?? '', //Cambiar
         'name': form.value.name,
-        'identificationDocument': form.value.dni,
-        'defaultLatitude': 0,
-        'typeClient': form.value.category, //OcialClientDetail.value.category,
-        'defaultLongitude':0,
-        'djangoUser': 0,
-        'imageB64': image?.value ?? '' //Cambiar
+        'identification_document': form.value.dni,
+        'type_client': form.value.category, //OcialClientDetail.value.category,
+        'default_latitude': 0,
+        'default_longitude':0
       }
     }));
 

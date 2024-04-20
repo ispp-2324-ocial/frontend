@@ -170,15 +170,15 @@ async function editE() : Promise<void> {
     await useEvent(EventApi, 'eventPartialUpdate')(() => ({
       id: Number(route.params.id),
       eventCreate: {
-        'description': form.value.description,
-        'place': form.value.place,
-        'capacity': form.value.capacity,
         'name': form.value.name,
+        'place': form.value.place,
+        'description': form.value.description,
+        'timeStart': form.value.timeStart,
+        'timeEnd' : form.value.timeEnd,
+        'capacity': form.value.capacity,
+        'category': form.value.category,
         'latitude': form.value.latitude,
         'longitude': form.value.longitude,
-        'timeEnd' : form.value.timeEnd,
-        'timeStart': form.value.timeStart,
-        'category': form.value.category,
         'highlighted': form.value.highlighted,
         ocialClient: {
           name: 'a',

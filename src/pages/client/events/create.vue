@@ -161,16 +161,16 @@ async function createE() : Promise<void> {
 
     await useEvent(EventApi, 'eventCreateCreate')(() => ({
       eventCreate: {
-        description: form.value.description,
-        place: form.value.place,
-        capacity: form.value.capacity,
+        imageB64: image?.value ?? '',
         name: form.value.name,
+        place: form.value.place,
+        description: form.value.description,
+        timeStart: form.value.timeStart,
+        timeEnd: form.value.timeEnd,
+        capacity: form.value.capacity,
+        category: form.value.category,
         latitude: form.value.latitude,
         longitude: form.value.longitude,
-        timeEnd: form.value.timeEnd,
-        timeStart: form.value.timeStart,
-        category: form.value.category,
-        imageB64: image?.value ?? '',
         highlighted: false,
         ocialClient: {
           name: 'a',

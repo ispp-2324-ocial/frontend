@@ -33,7 +33,7 @@
 import { useEvent } from '@/composables/apis';
 import { EventApi } from '@/api';
 
-const { data: eventList } = await useEvent(EventApi, 'eventListList')();
+const { data: eventList } = await useEvent(EventApi, 'eventList')();
 </script>
 
 <style scoped>
