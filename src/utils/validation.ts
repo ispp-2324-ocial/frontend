@@ -50,10 +50,17 @@ export function isNil(value: unknown): value is null | undefined {
 }
 
 /**
+ * Comprueba si el parámetro es un array.
+ */
+export function isArray(object: unknown): object is unknown[] {
+  return Array.isArray(object);
+}
+
+/**
  * Comprueba si el parámetro es de tipo `object`.
  */
 export function isObj(value: unknown): value is object {
-  return typeof value === 'object' && !isNull(value);
+  return typeof value === 'object' && !isNull(value) && !isArray(value);
 }
 
 /**
@@ -61,11 +68,4 @@ export function isObj(value: unknown): value is object {
  */
 export function isAxiosError(object: unknown): object is AxiosError {
   return isObj(object) && 'isAxiosError' in object;
-}
-
-/**
- * Comprueba si el parámetro es un array.
- */
-export function isArray(object: unknown): object is unknown[] {
-  return Array.isArray(object);
 }

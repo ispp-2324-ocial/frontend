@@ -159,7 +159,7 @@ module.exports = {
     'import/no-extraneous-dependencies': [
       'error',
       {
-        devDependencies: ['*.config.ts', 'scripts/**/*.ts'],
+        devDependencies: ['*.config.ts', 'scripts/**/*.ts', 'tests/**/*.ts'],
         optionalDependencies: false,
         peerDependencies: false,
         bundledDependencies: false
