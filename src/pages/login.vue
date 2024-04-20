@@ -66,8 +66,7 @@ const validationSchema = z.object({
 const form = ref({
   username: '',
   password: '',
-  password2: '',
-  email: ''
+  password2: ''
 });
 
 const { validate, isValid, getError, scrolltoError } = useValidation(validationSchema, form, {

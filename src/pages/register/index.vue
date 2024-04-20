@@ -131,10 +131,7 @@ async function createAcc() : Promise<void> {
       ocialUserCreate: {
         'password': form.value.password,
         'email': form.value.email,
-        'username': form.value.username,
-        'lastKnowLocLat': 0, //TO-DO mejorar
-        'lastKnowLocLong': 0,
-        'djangoUser': 1
+        'username': form.value.username
       }
     }));
 

@@ -68,7 +68,7 @@ import { auth } from '@/store/auth';
 
 const router = useRouter();
 
-const { data: loggedDjangoUser } = await useApi(UsersApi, 'usersGetRetrieve')();
+const { data: loggedDjangoUser } = await useApi(UsersApi, 'usersMeRetrieve')();
 </script>
 
 <style scoped>

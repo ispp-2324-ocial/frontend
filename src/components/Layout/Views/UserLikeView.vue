@@ -53,7 +53,7 @@ import { parseDate } from '@/utils/data-manipulation';
 
 const router = useRouter();
 
-const { data: eventList } = await useEvent(EventApi, 'eventListList')(() => ({
+const { data: eventList } = await useEvent(EventApi, 'eventList')(() => ({
   liked: true
 }));
 

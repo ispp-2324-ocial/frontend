@@ -55,7 +55,7 @@ const { data: likedEvents } = await useApi(EventApi, 'eventLikeList')(() => ({
 
 const counter = ref(likedEvents.value ? likedEvents.value.length : 0);
 
-const { data: user } = await useApi(UsersApi, 'usersUserGetRetrieve')();
+const { data: user } = await useApi(UsersApi, 'usersMeRetrieve')();
 
 if(likedEvents.value != undefined){
   for ( const e of likedEvents.value) {
