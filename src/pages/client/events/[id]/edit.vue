@@ -176,9 +176,9 @@ async function editE() : Promise<void> {
   await validate();
 
   if (isValid.value) {
-    await useEvent(EventApi, 'eventPartialUpdate')(() => ({
+    await useApi(EventApi, 'eventPartialUpdate')(() => ({
       id: Number(route.params.id),
-      eventCreate: {
+      patchedEventCreate: {
         name: form.value.name,
         place: form.value.place,
         description: form.value.description,
