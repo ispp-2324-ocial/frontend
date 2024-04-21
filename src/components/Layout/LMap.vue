@@ -38,6 +38,7 @@ import Verde from '@/assets/pin/Pin_Verde.png';
 import Rojo from '@/assets/pin/Pin_Rojo.png';
 import Morado from '@/assets/pin/Pin_Morado.png';
 import Amarillo from '@/assets/pin/Pin_Amarillo.png';
+import Dorado from '@/assets/pin/Pin_Dorado.png';
 import Dot from '@/assets/pin/dot.png';
 import { useToast } from '@/composables/use-toast';
 import { isNil, isNumber } from '@/utils/validation';
@@ -81,11 +82,19 @@ function setMarkers(markers: Event[]): void {
     for (const event of markers) {
       const category = event.category ?? CategoryEnum.Sports;
       const customIconUrl = categoryIconMap[category] ?? Azul;
-      const customIcon = icon({
+      let customIcon = icon({
         iconUrl: customIconUrl,
         iconSize: [22, 30],
         iconAnchor: [11, 6]
       });
+
+      if (event.highlighted) {
+        customIcon = icon({
+          iconUrl: Dorado,
+          iconSize: [30, 42],
+          iconAnchor: [11, 6] });
+      }
+
       // Crear un objeto Popup y asociarlo al marcador
       const popup = new Popup();
       const mapMarker = marker([event.latitude, event.longitude], { icon: customIcon });
