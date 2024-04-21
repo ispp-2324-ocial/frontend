@@ -23,13 +23,13 @@
 
 <script setup lang="ts">
 withDefaults(defineProps<{
-  min: number;
-  max: number;
-  step: number;
+  min?: number;
+  max?: number;
+  step?: number;
 }>(), {
   min: 0,
-  max: 1000,
-  step: 10
+  max: 30,
+  step: 1
 });
 
 const value = defineModel<string>();
