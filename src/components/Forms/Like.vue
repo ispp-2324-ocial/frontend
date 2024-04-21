@@ -15,7 +15,7 @@
       v-else
       class="heart-outline" />
     <p class="elemento">
-      {{ isFavorite ? event.likes + 1 : event.likes }}
+      {{ likedEvents.length }}
     </p>
   </div>
 </template>
@@ -33,17 +33,28 @@ const props = defineProps<{
 const isHovered = shallowRef(false);
 
 const methodToExecute = shallowRef<'eventLikeCreate' | 'eventLikeDestroy' | undefined>();
-const { data: like } = await useApi(EventApi, methodToExecute, { skipCache: { request: true }, globalLoading: false })(() => ({
+
+const { response } = await useApi(EventApi, methodToExecute, { skipCache: { request: true }, globalLoading: false })(() => ({
   id: Number(props.event.id)
 }));
 
 const { data: likedEvents } = await useApi(EventApi, 'eventLikeList')(() => ({
-  id: Number(props.event.id)
+  id: Number(props.event.id),
+  // Refreshes the data when the user likes or unlikes the event
+  signal: response.value?.status
 }));
+
+const likedByMe = computed(() => likedEvents.value.some((l) => l.user.username === auth.user.value?.username));
 
 const isFavorite = computed({
   get() {
-    return like.value ? Boolean(like.value) : likedEvents.value.some((l) => l.user.username === auth.user.value?.username);
+    if (methodToExecute.value === 'eventLikeDestroy') {
+      return false;
+    } else if (methodToExecute.value === 'eventLikeCreate') {
+      return true;
+    } else {
+      return likedByMe.value;
+    }
   },
   set(newVal: boolean) {
     methodToExecute.value = newVal ? 'eventLikeCreate' : 'eventLikeDestroy';
