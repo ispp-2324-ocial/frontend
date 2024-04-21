@@ -2,7 +2,7 @@
   <div
     class="blurhash-image"
     :class="{
-      'b-rounded-36': props.variant === 'circle'
+      'b-rounded-5': props.variant === 'circle'
     }">
     <OImg
       :src="imageUrl"
@@ -11,7 +11,7 @@
         mode: 'out-in'
       }"
       :class="{
-        'b-rounded-36': props.variant === 'circle'
+        'b-rounded-5': props.variant === 'circle'
       }">
       <template #placeholder>
         <BlurhashCanvas
@@ -54,7 +54,7 @@ function isImage(obj: unknown): obj is Image {
 }
 
 const hash = computed(() => isImage(props.item) ? props.item.blurhash : props.item?.image?.blurhash);
-const imageUrl = computed(() => isImage(props.item) ? props.item.image : props.item?.image?.image);
+const imageUrl = computed(() => isImage(props.item) ? 'https://s3.backend.ocial.es' + props.item.image : props.item?.image?.image);
 </script>
 
 <style scoped>
@@ -65,9 +65,7 @@ const imageUrl = computed(() => isImage(props.item) ? props.item.image : props.i
 .blurhash-image {
   width: 30%;
   max-width: 220px;
-  max-height: 220px;
   min-width: 90px;
-  min-height: 90px;
   margin: 16px
 }
 </style>
