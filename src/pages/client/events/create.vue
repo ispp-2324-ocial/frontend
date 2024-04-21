@@ -158,8 +158,7 @@ async function createE() : Promise<void> {
   await validate();
 
   if (isValid.value) {
-
-    const { response: r } = await useApi(EventApi, 'eventCreateCreate')(() => ({
+    await useApi(EventApi, 'eventCreateCreate')(() => ({
       eventCreate: {
         imageB64: image?.value ?? '',
         name: form.value.name,
