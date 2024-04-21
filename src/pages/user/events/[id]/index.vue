@@ -51,7 +51,7 @@
                 <b>{{ $t('client:') }}</b>&nbsp;{{ eventDetail.creator.name }}
               </p>
               <p>
-                <Like />
+                <Like :event="eventDetail" />
               </p>
               <Boton
                 style="margin-bottom: 1rem"
@@ -105,7 +105,6 @@ async function startShare() : Promise<void> {
   await navigator.share(
     shareData
   );
-
 }
 </script>
 
