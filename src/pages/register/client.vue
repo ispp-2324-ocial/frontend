@@ -88,9 +88,10 @@
       {{ getError('acceptCondition') }}
     </div>
     <Boton
-      type="auth"
-      @click="createAcc()">
-      {{ $t('Crear') }}
+      type="auth">
+      <div @click="createAcc()">
+        {{ $t('Crear') }}
+      </div>
     </Boton>
     <p class="message">
       {{ $t('tienesCuenta') }} <RouterLink

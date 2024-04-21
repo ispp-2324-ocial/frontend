@@ -5,79 +5,128 @@
     </Title>
     <div style="justify-content: center; display: flex;">
       <div style="width: 90%;">
-        <Suscripcion :is-plan="true">
-          <template #left>
-            <span class="price">{{ $t('gratuito') }}</span>
-            <br />
-            <span class="price">{{ $t('gratis') }}</span>
-          </template>
-          <template #right>
-            {{ $t('1eventoMensual') }}
-          </template>
-        </Suscripcion>
-
-        <Suscripcion>
-          <template #left>
-            <span class="price">{{ $t('basico') }}</span>
-            <br />
-            <span class="price">{{ $t('medio') }}</span>
-          </template>
-          <template #right>
-            <p>
-              <span class="highlight">{{ $t('dot10') }}</span>&nbsp;{{ $t('eventosMensuales') }}<br />
-              <span class="highlight">
-                {{ $t('edicionEventos') }}
-              </span><br />
-              <span class="highlight">
-                {{ $t('soporteLimitado') }}
-              </span>
-            </p>
-          </template>
-        </Suscripcion>
-
-        <Suscripcion>
-          <template #left>
-            <div class="flex flex-row justify-center">
-              <OImg
-                class="flex-self-center"
-                alt="star"
-                :src="Star"
-                style="height: 18px;" />
+        <div @click="planFree()">
+          <Suscripcion :is-plan="subsEnum[0] == currentSubscription.typeSubscription">
+            <template #left>
+              <span class="price">{{ $t('gratuito') }}</span>
+              <br />
+              <span class="price">{{ $t('gratis') }}</span>
+            </template>
+            <template #right>
+              {{ $t('1eventoMensual') }}
+            </template>
+          </Suscripcion>
+        </div>
+        <div @click="planBasic()">
+          <Suscripcion :is-plan="subsEnum[1] == currentSubscription.typeSubscription">
+            <template #left>
+              <span class="price">{{ $t('basico') }}</span>
+              <br />
+              <span class="price">{{ $t('medio') }}</span>
+            </template>
+            <template #right>
               <p>
-                <span class="price">{{ $t('pro') }}</span>
+                <span class="highlight">{{ $t('dot10') }}</span>&nbsp;{{ $t('eventosMensuales') }}<br />
+                <span class="highlight">
+                  {{ $t('edicionEventos') }}
+                </span><br />
+                <span class="highlight">
+                  {{ $t('soporteLimitado') }}
+                </span>
               </p>
-              <OImg
-                class="flex-self-center"
-                alt="star"
-                :src="Star"
-                style="height: 18px;" />
-            </div>
-            <div style="line-height: 130%;">
-              <div
-                style="display: flex;"
-                class="column flex-col">
-                <div>
-                  <span class="price">{{ $t('caro') }}</span>
+            </template>
+          </Suscripcion>
+        </div>
+        <div @click="planPro()">
+          <Suscripcion :is-plan="subsEnum[2] == currentSubscription.typeSubscription">
+            <template #left>
+              <div class="flex flex-row justify-center">
+                <OImg
+                  class="flex-self-center"
+                  alt="star"
+                  :src="Star"
+                  style="height: 18px;" />
+                <p>
+                  <span class="price">{{ $t('pro') }}</span>
+                </p>
+                <OImg
+                  class="flex-self-center"
+                  alt="star"
+                  :src="Star"
+                  style="height: 18px;" />
+              </div>
+              <div style="line-height: 130%;">
+                <div
+                  style="display: flex;"
+                  class="column flex-col">
+                  <div>
+                    <span class="price">{{ $t('caro') }}</span>
+                  </div>
                 </div>
               </div>
-            </div>
-          </template>
-          <template #right>
-            <span class="highlight">{{ $t('eventosIlimitados') }}</span><br />
-            {{ $t('edicionEventos') }}<br />
-            <span class="highlight">{{ $t('prioridad') }}</span>&nbsp;{{ $t('soporte24h') }}<br />
-            <span class="highlight">{{ $t('eventosDestacados') }}<br />
-              {{ $t('envioNotificaciones') }}<br />
-              {{ $t('funcionesAvanzadas') }}</span>
-          </template>
-        </Suscripcion>
+            </template>
+            <template #right>
+              <span class="highlight">{{ $t('eventosIlimitados') }}</span><br />
+              {{ $t('edicionEventos') }}<br />
+              <span class="highlight">{{ $t('prioridad') }}</span>&nbsp;{{ $t('soporte24h') }}<br />
+              <span class="highlight">{{ $t('eventosDestacados') }}<br />
+                {{ $t('envioNotificaciones') }}<br />
+                {{ $t('funcionesAvanzadas') }}</span>
+            </template>
+          </Suscripcion>
+        </div>
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
+import { SubscriptionApi, PaymentsApi, TypeSubscriptionEnum, PaymentsCreateCheckoutSessionCreateTypeEnum } from '@/api';
+import { useApi } from '@/composables/apis';
 import Star from '@/assets/images/star.png';
+
+const { data : currentSubscription } = await useApi(SubscriptionApi, 'subscriptionRetrieve')(() => ({}));
+const subsEnum = [TypeSubscriptionEnum.Free, TypeSubscriptionEnum.Basic, TypeSubscriptionEnum.Pro ];
+const payEnum = [PaymentsCreateCheckoutSessionCreateTypeEnum.Basic, PaymentsCreateCheckoutSessionCreateTypeEnum.Pro];
+
+
+/**
+ * Función para el planFree
+ */
+async function planFree() : Promise<void> {
+  if (subsEnum[0] != currentSubscription.value.typeSubscription) {
+    await useApi(PaymentsApi, 'paymentsCancelDestroy')();
+  }
+};
+
+/**
+ * Función para el planBasic
+ */
+async function planBasic() : Promise<void> {
+  if (subsEnum[2] == currentSubscription.value.typeSubscription) {
+    await useApi(PaymentsApi, 'paymentsCancelDestroy')();
+  } else if (subsEnum[0] == currentSubscription.value.typeSubscription) {
+    const { data: paymentUrl } = await useApi(PaymentsApi, 'paymentsCreateCheckoutSessionCreate')(() => ({
+      type: payEnum[0] }));
+
+    window.open(String(paymentUrl), '_blank');
+  }
+};
+
+/**
+ * Función para el planPro
+ */
+async function planPro() : Promise<void> {
+  if (subsEnum[1] == currentSubscription.value.typeSubscription) {
+    await useApi(PaymentsApi, 'paymentsCancelDestroy')();
+  } else if (subsEnum[0] == currentSubscription.value.typeSubscription) {
+    const { data: paymentUrl } = await useApi(PaymentsApi, 'paymentsCreateCheckoutSessionCreate')(() => ({
+      type: payEnum[1] }));
+
+    window.open(String(paymentUrl), '_blank');
+  }
+};
+
 </script>
 
 <style scoped>
