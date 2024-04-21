@@ -4,11 +4,6 @@
       <div
         class="flex justify-center">
         <BaseInput v-model="search" />
-        <Boton
-          class="transparent p-1"
-          @click="getEvents(search)">
-          <IMdiSearch class="size-6" />
-        </Boton>
         <Dropdown>
           <template #trigger>
             <Tooltip>
@@ -26,40 +21,29 @@
   </OHeader>
   <div class="h-full">
     <LMap
-      :markers="miArray.length>0 ? miArray : eventList" />
-    <p>{{ console.log(miArray) }}</p>
+      :markers="events" />
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, computed } from 'vue';
 import { useEvent } from '@/composables/apis';
-import { EventApi, type Event } from '@/api';
+import { EventApi } from '@/api';
 
 const { data: eventList } = await useEvent(EventApi, 'eventList')();
 
 const search = ref('');
-const miArray = ref<Event[]>([]);
 
-/**
- * Buscador por nombre, descripción o cliente
- *
- */
-function getEvents(text: string): void {
-  miArray.value.length = 0;
-  text = text.toLowerCase();
-
-  for (const event of eventList.value) {
+const text = computed(() => search.value.toLowerCase());
+const events = computed(() => {
+  return text.value ? eventList.value.filter((event) => {
     const name = event.name.toLowerCase();
     const eventText = event.description.toLowerCase();
-    const creator = event.creator.name.toLowerCase();
+    const creator = event.creator.name!.toLowerCase();
 
-    if (name.includes(text) || eventText.includes(text) || creator.includes(text)){
-      miArray.value.push(event);
-
-    }
-  }
-}
+    return name.includes(text.value) || eventText.includes(text.value) || creator.includes(text.value);
+  }) : eventList.value;
+});
 
 </script>
 
