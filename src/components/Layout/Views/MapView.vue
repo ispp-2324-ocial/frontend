@@ -4,7 +4,7 @@
       <div
         class="flex justify-center">
         <BaseInput v-model="search" />
-        <Dropdown>
+        <Dropdown @update="(new_filters) => filters = new_filters">
           <template #trigger>
             <Tooltip>
               <Boton class="transparent p-1">
@@ -29,8 +29,19 @@
 import { ref, computed } from 'vue';
 import { useEvent } from '@/composables/apis';
 import { EventApi } from '@/api';
+import type { ConfigurationParameters } from '@/components/Forms/Dropdown.vue';
 
-const { data: eventList } = await useEvent(EventApi, 'eventList')();
+const filters = ref<ConfigurationParameters>();
+// eslint-disable @typescript-eslint/no-unsafe-member-access
+const { data: eventList } = await useEvent(EventApi, 'eventList')(() => ({
+  category: filters.value?.category ? String(filters.value.category) : undefined,
+  timeStart: filters.value?.date ? String(filters.value.date) : undefined,
+  timeEnd: filters.value?.date ? String(filters.value.date) : undefined,
+  radius: filters.value?.distance ? Number(filters.value.distance) : undefined,
+  liked: filters.value?.likes ? Boolean(filters.value.likes) : undefined,
+  highlighted: filters.value?.highlighted ? Boolean(filters.value.highlighted) : undefined
+}));
+// eslint-enable @typescript-eslint/no-unsafe-member-access
 
 const search = ref('');
 
