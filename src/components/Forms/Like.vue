@@ -59,7 +59,7 @@ const { data: user } = await useApi(UsersApi, 'usersMeRetrieve')();
 
 if(likedEvents.value != undefined){
   for ( const e of likedEvents.value) {
-    if (e.user == user.value.id) {
+    if (e.user.username == user.value.username) {
       likeValue.value = true;
       counter.value--;
       break;
