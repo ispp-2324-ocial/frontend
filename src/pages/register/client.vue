@@ -180,7 +180,7 @@ async function createAcc() : Promise<void> {
         'imageB64': image?.value ?? '', //Cambiar
         'name': form.value.name,
         'identification_document': form.value.dni,
-        'type_client': form.value.category, //OcialClientDetail.value.category,
+        'type_client': form.value.category,
         'default_latitude': 0,
         'default_longitude':0
       }
