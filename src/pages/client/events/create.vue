@@ -57,6 +57,12 @@
           <div class="error">
             {{ getError('category') }}
           </div>
+          <div
+            v-if="subsEnum[2] == currentSubscription.typeSubscription">
+            <Checkbox v-model="form.highlighted ">
+              {{ $t('highlight') }}
+            </Checkbox>
+          </div>
           <div>
             <input
               type="file"
@@ -88,12 +94,16 @@ import * as L from 'leaflet';
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
 import { z } from 'zod';
-import { CategoryEnum , EventApi } from '@/api';
+import { CategoryEnum , EventApi, TypeSubscriptionEnum, SubscriptionApi } from '@/api';
 import { useApi } from '@/composables/apis';
 import { useValidation } from '@/composables/use-validation';
 import { toBase64 } from '@/utils/data-manipulation';
 
 const { t } = useI18n();
+
+const { data : currentSubscription } = await useApi(SubscriptionApi, 'subscriptionRetrieve')(() => ({}));
+const subsEnum = [TypeSubscriptionEnum.Free, TypeSubscriptionEnum.Basic, TypeSubscriptionEnum.Pro ];
+
 
 const validationSchema = z.object({
   place: z.string().min(1, t('placeRequired')),
@@ -125,7 +135,8 @@ const form = ref({
   capacity: 1,
   category: CategoryEnum.Sports,
   latitude: -999,
-  longitude: -999
+  longitude: -999,
+  highlighted: false
 });
 
 const parseableCapacity = computed({
@@ -170,7 +181,7 @@ async function createE() : Promise<void> {
         category: form.value.category,
         latitude: form.value.latitude,
         longitude: form.value.longitude,
-        highlighted: false,
+        highlighted: form.value.highlighted,
         ocialClient: {
           name: 'a',
           defaultLatitude: 0,
