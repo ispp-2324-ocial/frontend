@@ -75,7 +75,8 @@ export default defineConfig(({ mode }): UserConfig => {
     ],
     test: {
       include: ['tests/unit/**/*.ts'],
-      environment: 'happy-dom'
+      environment: 'happy-dom',
+      watch: false
     },
     build: {
       /**
