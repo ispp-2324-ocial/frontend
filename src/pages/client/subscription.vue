@@ -88,6 +88,7 @@ const { data : currentSubscription } = await useApi(SubscriptionApi, 'subscripti
 const subsEnum = [TypeSubscriptionEnum.Free, TypeSubscriptionEnum.Basic, TypeSubscriptionEnum.Pro ];
 const payEnum = [PaymentsCreateCheckoutSessionCreateTypeEnum.Basic, PaymentsCreateCheckoutSessionCreateTypeEnum.Pro];
 const router = useRouter();
+const subscriptionRoute = '/client/subscription';
 
 /**
  * Función para el planFree
@@ -96,7 +97,7 @@ async function planFree() : Promise<void> {
   if (subsEnum[0] != currentSubscription.value.typeSubscription) {
     await useApi(PaymentsApi, 'paymentsCancelDestroy')();
 
-    await router.push('/client/subscription');
+    await router.push(subscriptionRoute);
   }
 };
 
@@ -107,7 +108,7 @@ async function planBasic() : Promise<void> {
   if (subsEnum[2] == currentSubscription.value.typeSubscription) {
     await useApi(PaymentsApi, 'paymentsCancelDestroy')();
 
-    await router.push('/client/subscription');
+    await router.push(subscriptionRoute);
   } else if (subsEnum[0] == currentSubscription.value.typeSubscription) {
     const { data: paymentUrl } = await useApi(PaymentsApi, 'paymentsCreateCheckoutSessionCreate')(() => ({
       type: payEnum[0] }));
@@ -123,7 +124,7 @@ async function planPro() : Promise<void> {
   if (subsEnum[1] == currentSubscription.value.typeSubscription) {
     await useApi(PaymentsApi, 'paymentsCancelDestroy')();
 
-    await router.push('/client/subscription');
+    await router.push(subscriptionRoute);
   } else if (subsEnum[0] == currentSubscription.value.typeSubscription) {
     const { data: paymentUrl } = await useApi(PaymentsApi, 'paymentsCreateCheckoutSessionCreate')(() => ({
       type: payEnum[1] }));
