@@ -9,64 +9,46 @@
       type="checkbox"
       class="hidden" />
     <IMdiHeartOutline
-      v-if="!likeValue"
+      v-if="!isFavorite"
       class="heart-outline" />
     <IMdiHeart
       v-else
       class="heart-outline" />
     <p class="elemento">
-      {{ likeValue ? counter+1 : counter }}
+      {{ isFavorite ? event.likes + 1 : event.likes }}
     </p>
   </div>
 </template>
 
 <script setup lang="ts">
-import { computed, ref } from 'vue';
-import { useRoute } from 'vue-router/auto';
+import { computed, shallowRef } from 'vue';
 import { useApi } from '@/composables/apis';
-import { EventApi, UsersApi } from '@/api';
+import { auth } from '@/store/auth';
+import { EventApi, type Event } from '@/api';
 
-const isHovered = ref(false);
-const likeValue = ref(false);
-const route = useRoute('/details/[id]');
+const props = defineProps<{
+  event: Event
+}>();
 
-const methodToExecute = ref<'eventLikeCreate' | 'eventLikeDestroy' | undefined>();
+const isHovered = shallowRef(false);
+
+const methodToExecute = shallowRef<'eventLikeCreate' | 'eventLikeDestroy' | undefined>();
 const { data: like } = await useApi(EventApi, methodToExecute, { skipCache: { request: true }, globalLoading: false })(() => ({
-  id: Number(route.params.id),
-  like: {
-    event: 0,
-    user: 0
-  }
+  id: Number(props.event.id)
+}));
+
+const { data: likedEvents } = await useApi(EventApi, 'eventLikeList')(() => ({
+  id: Number(props.event.id)
 }));
 
 const isFavorite = computed({
   get() {
-    return Boolean(like.value);
+    return like.value ? Boolean(like.value) : likedEvents.value.some((l) => l.user.username === auth.user.value?.username);
   },
-  set() {
-    methodToExecute.value = likeValue.value ? 'eventLikeDestroy' : 'eventLikeCreate';
-    likeValue.value = ! likeValue.value;
+  set(newVal: boolean) {
+    methodToExecute.value = newVal ? 'eventLikeCreate' : 'eventLikeDestroy';
   }
 });
-
-const { data: likedEvents } = await useApi(EventApi, 'eventLikeList')(() => ({
-  id: Number(route.params.id)
-}));
-
-const counter = ref(likedEvents.value ? likedEvents.value.length : 0);
-
-const { data: user } = await useApi(UsersApi, 'usersMeRetrieve')();
-
-if(likedEvents.value != undefined){
-  for ( const e of likedEvents.value) {
-    if (e.user.username == user.value.username) {
-      likeValue.value = true;
-      counter.value--;
-      break;
-    }
-  }
-}
-
 </script>
 
 <style scoped>

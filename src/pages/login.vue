@@ -87,7 +87,7 @@ async function Login() : Promise<void> {
       }
     }));
 
-    auth.authenticate(form.value.username, UserCreated.value.user.is_client, UserCreated.value.token);
+    auth.authenticate(UserCreated.value);
     await router.replace('/');
 
   } else {
@@ -113,7 +113,7 @@ const callback = async (response : GoogleResponseObject): Promise<void> => {
     }
   }));
 
-  auth.authenticate(UserCreated.value.user.username, UserCreated.value.user.is_client, UserCreated.value.token);
+  auth.authenticate(UserCreated.value);
   await router.push('/');
 };
 

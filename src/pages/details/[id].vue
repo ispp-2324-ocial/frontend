@@ -54,7 +54,7 @@
                 <b>{{ $t('¡Dale like!') }}</b>
               </p>
               <p>
-                <Like />
+                <Like :event="eventDetail" />
               </p>
               <Boton
                 style="margin-bottom: 1rem"
