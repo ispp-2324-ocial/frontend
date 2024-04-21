@@ -1,5 +1,7 @@
 <template>
-  <RDropdownMenuRoot v-model:open="toggleState">
+  <RDropdownMenuRoot
+    v-model:open="toggleState"
+    :modal="false">
     <RDropdownMenuTrigger>
       <slot name="trigger" />
       <RDropdownMenuContent
@@ -8,37 +10,84 @@
         :side-offset="5">
         <RDropdownMenuLabel> {{ $t('Filtra por:') }}</RDropdownMenuLabel>
         <RDropdownMenuSeparator />
-        <RDropdownMenuItem>
-          <RDropdownMenuCheckboxItem v-model:checked="checkboxCategory">
+        <div>
+          <div class="flex align-center font-bold">
             {{ $t('Categoría') }}
-          </RDropdownMenuCheckboxItem>
-        </RDropdownMenuItem>
-        <RDropdownMenuItem>
-          <RDropdownMenuCheckboxItem v-model:checked="checkboxDate">
+          </div>
+          <SelectCategory
+            v-model="form.category"
+            class="border ml-2"
+            @click.stop />
+        </div>
+        <div>
+          <div class="font-bold justify-center">
             {{ $t('Fecha') }}
-          </RDropdownMenuCheckboxItem>
-        </RDropdownMenuItem>
-        <RDropdownMenuItem>
-          <RDropdownMenuCheckboxItem v-model:checked="checkboxDistance">
-            {{ $t('Distancia') }}
-          </RDropdownMenuCheckboxItem>
-        </RDropdownMenuItem>
-        <RDropdownMenuItem>
-          <RDropdownMenuCheckboxItem v-model:checked="checkboxLikes">
+          </div>
+          <BaseInput 
+            v-model="form.date"
+            tipo="datetime-local"
+            @click.stop />
+        </div>
+        <div>
+          <div class="font-bold justify-center">
+          {{ $t('Distancia') }}
+          </div>
+          <Slider 
+            v-model="form.distance"
+            @click.stop />
+        </div>
+        <div>
+          <div class="font-bold justify-center">
             {{ $t('Likes') }}
-          </RDropdownMenuCheckboxItem>
-        </RDropdownMenuItem>
+          </div>
+          <Checkbox 
+            v-model="form.likes"
+            @click.stop />
+        </div>
+        <div>
+          <div class="font-bold justify-center">
+          {{ $t('Destacados') }}
+          </div>
+          <Checkbox
+            v-model="form.highlighted"
+            @click.stop />
+        </div>
       </RDropdownMenuContent>
     </RDropdownMenuTrigger>
   </RDropdownMenuRoot>
 </template>
 
 <script setup lang="ts">
-import { shallowRef } from 'vue';
+import { ref, watch } from 'vue';
+import type { CategoryEnum } from '@/api';
 
-const toggleState = defineModel<boolean>();
-const checkboxCategory = shallowRef(false);
-const checkboxDate = shallowRef(false);
-const checkboxDistance = shallowRef(false);
-const checkboxLikes = shallowRef(false);
+const emit = defineEmits<{
+  update: [filters: ConfigurationParameters];
+}>();
+
+const toggleState = ref<boolean>();
+
+export interface ConfigurationParameters{
+  category?: CategoryEnum;
+  date?: string;
+  distance?: string;
+  likes: boolean;
+  highlighted: boolean;
+}
+
+const current_date = new Date();
+const form = ref({
+  category: undefined,
+  date: new Date(current_date.getTime() - (current_date.getTimezoneOffset() * 60_000)).toJSON().slice(0,16),
+  distance: undefined,
+  likes: false,
+  highlighted: false
+});
+
+watch(form, () => {
+  if (form.value) {
+    emit('update', form.value);
+  }
+}
+);
 </script>
