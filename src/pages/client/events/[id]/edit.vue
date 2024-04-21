@@ -65,6 +65,12 @@
           {{ getError('category') }}
         </div>
         <div
+          v-if="subsEnum[2] == currentSubscription.typeSubscription">
+          <Checkbox v-model="form.highlighted ">
+            {{ $t('highlight') }}
+          </Checkbox>
+        </div>
+        <div
           id="map"
           style="height: 300px;" />
         <div />
@@ -89,11 +95,14 @@ import * as L from 'leaflet';
 import { useRoute, useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
 import { z } from 'zod';
-import { CategoryEnum , EventApi } from '@/api';
-import { useEvent } from '@/composables/apis';
+import { CategoryEnum , EventApi, TypeSubscriptionEnum, SubscriptionApi } from '@/api';
+import { useEvent, useApi } from '@/composables/apis';
 import { useValidation } from '@/composables/use-validation';
 
 const { t } = useI18n();
+
+const { data : currentSubscription } = await useApi(SubscriptionApi, 'subscriptionRetrieve')(() => ({}));
+const subsEnum = [TypeSubscriptionEnum.Free, TypeSubscriptionEnum.Basic, TypeSubscriptionEnum.Pro ];
 
 const validationSchema = z.object({
   place: z.string().min(1, t('placeRequired')),
@@ -170,16 +179,16 @@ async function editE() : Promise<void> {
     await useEvent(EventApi, 'eventPartialUpdate')(() => ({
       id: Number(route.params.id),
       eventCreate: {
-        'name': form.value.name,
-        'place': form.value.place,
-        'description': form.value.description,
-        'timeStart': form.value.timeStart,
-        'timeEnd' : form.value.timeEnd,
-        'capacity': form.value.capacity,
-        'category': form.value.category,
-        'latitude': form.value.latitude,
-        'longitude': form.value.longitude,
-        'highlighted': form.value.highlighted,
+        name: form.value.name,
+        place: form.value.place,
+        description: form.value.description,
+        timeStart: form.value.timeStart,
+        timeEnd : form.value.timeEnd,
+        capacity: form.value.capacity,
+        category: form.value.category,
+        latitude: form.value.latitude,
+        longitude: form.value.longitude,
+        highlighted: form.value.highlighted,
         ocialClient: {
           name: 'a',
           defaultLatitude: 0,
