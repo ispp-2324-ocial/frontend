@@ -63,8 +63,9 @@ const imageUrl = computed(() => isImage(props.item) ? "https://s3.backend.ocial.
 }
 
 .blurhash-image {
-  width: 20%;
-  max-width: 200px;
+  width: 30%;
+  max-width: 220px;
+  min-width: 90px;
   margin: 16px
 }
 </style>
