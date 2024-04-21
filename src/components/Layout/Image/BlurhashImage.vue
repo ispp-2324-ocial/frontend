@@ -54,7 +54,7 @@ function isImage(obj: unknown): obj is Image {
 }
 
 const hash = computed(() => isImage(props.item) ? props.item.blurhash : props.item?.image?.blurhash);
-const imageUrl = computed(() => isImage(props.item) ? "https://s3.backend.ocial.es" + props.item.image : props.item?.image?.image);
+const imageUrl = computed(() => isImage(props.item) ? 'https://s3.backend.ocial.es' + props.item.image : props.item?.image?.image);
 </script>
 
 <style scoped>
