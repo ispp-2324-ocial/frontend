@@ -1,5 +1,3 @@
-<!-- TODO: Arreglar -->
-<!-- eslint-disable vue/require-v-for-key -->
 <template>
   <Ondas />
   <div>
@@ -77,7 +75,6 @@
         <div class="error">
           {{ getError('latitude') }}
         </div>
-        <!-- TODO: añadir checkbox para highlight-->
       </form>
     </div>
     <Boton
@@ -188,12 +185,7 @@ async function editE() : Promise<void> {
         category: form.value.category,
         latitude: form.value.latitude,
         longitude: form.value.longitude,
-        highlighted: form.value.highlighted,
-        ocialClient: {
-          name: 'a',
-          defaultLatitude: 0,
-          defaultLongitude: 0
-        }
+        highlighted: form.value.highlighted
       }
     }));
     await router.push('/');
