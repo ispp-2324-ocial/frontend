@@ -96,6 +96,7 @@ import { CategoryEnum , EventApi, TypeSubscriptionEnum, SubscriptionApi } from '
 import { useApi } from '@/composables/apis';
 import { useValidation } from '@/composables/use-validation';
 import { toBase64 } from '@/utils/data-manipulation';
+import { useToast } from '@/composables/use-toast';
 
 const { t } = useI18n();
 
@@ -171,7 +172,7 @@ async function createE() : Promise<void> {
   await validate();
 
   if (isValid.value) {
-    await useApi(EventApi, 'eventCreateCreate')(() => ({
+    const { response } = await useApi(EventApi, 'eventCreateCreate')(() => ({
       eventCreate: {
         imageB64: image?.value ?? '',
         name: form.value.name,
@@ -187,7 +188,17 @@ async function createE() : Promise<void> {
       }
     }));
 
-    await router.push('/');
+    if (response.value?.request.status === 201) {
+      await router.push('/');
+    } else {
+      const data = JSON.parse(response.value?.request.response);
+
+      if (data.error) {
+        useToast(data.error, 'error');
+      } else {
+        useToast('Error desconocido', 'error');
+      }
+    }
   } else {
     scrolltoError('.p-invalid', 24);
   }
