@@ -82,18 +82,11 @@ function setMarkers(markers: Event[]): void {
     for (const event of markers) {
       const category = event.category ?? CategoryEnum.Sports;
       const customIconUrl = categoryIconMap[category] ?? Azul;
-      let customIcon = icon({
-        iconUrl: customIconUrl,
-        iconSize: [22, 30],
+      const customIcon = icon({
+        iconUrl: event.highlighted ? Dorado : customIconUrl,
+        iconSize: event.highlighted ? [30, 42] : [22, 30],
         iconAnchor: [11, 6]
       });
-
-      if (event.highlighted) {
-        customIcon = icon({
-          iconUrl: Dorado,
-          iconSize: [30, 42],
-          iconAnchor: [11, 6] });
-      }
 
       // Crear un objeto Popup y asociarlo al marcador
       const popup = new Popup();
