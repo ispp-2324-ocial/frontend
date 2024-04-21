@@ -56,8 +56,8 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router/auto';
-import { EventApi } from '@/api';
-import { useEvent } from '@/composables/apis';
+import { EventApi, UsersApi } from '@/api';
+import { useApi, useEvent } from '@/composables/apis';
 import { parseDate } from '@/utils/data-manipulation';
 
 const router = useRouter();
