@@ -25,8 +25,10 @@
     "lint-fix": "eslint . --fix --ignore-path .gitignore --max-warnings=0 --cache --cache-location node_modules/.cache/eslint",
     "prod": "npm run build && npm run serve",
     "typecheck": "vue-tsc",
-    "test": "npm run e2e-test && npm run unit-test",
-    "e2e-test": "true",
+    "test": "npm run unit-test && npm run e2e-test-setup && npm run e2e-test",
+    "e2e-test": "playwright test",
+    "e2e-test-setup": "playwright install --with-deps && playwright install msedge && playwright install chrome",
+    "e2e-test-record": "playwright codegen",
     "unit-test": "vitest"
   },
   "dependencies": {
@@ -54,6 +56,7 @@
     "@iconify/json": "2.2.188",
     "@intlify/eslint-plugin-vue-i18n": "3.0.0-next.4",
     "@intlify/unplugin-vue-i18n": "4.0.0",
+    "@playwright/test": "1.43.1",
     "@rollup/plugin-virtual": "3.0.2",
     "@stylistic/eslint-plugin": "1.6.2",
     "@types/geojson": "7946.0.14",
