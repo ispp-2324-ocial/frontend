@@ -89,7 +89,7 @@ import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
 import { z } from 'zod';
 import { CategoryEnum , EventApi } from '@/api';
-import { useEvent } from '@/composables/apis';
+import { useApi } from '@/composables/apis';
 import { useValidation } from '@/composables/use-validation';
 import { toBase64 } from '@/utils/data-manipulation';
 
@@ -159,7 +159,7 @@ async function createE() : Promise<void> {
 
   if (isValid.value) {
 
-    await useEvent(EventApi, 'eventCreateCreate')(() => ({
+    const { response: r } = await useApi(EventApi, 'eventCreateCreate')(() => ({
       eventCreate: {
         imageB64: image?.value ?? '',
         name: form.value.name,

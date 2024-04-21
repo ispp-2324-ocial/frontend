@@ -42,20 +42,20 @@ withDefaults(
   width: 70%;
   font-weight: bold;
   padding: 2%;
-  font-size: clamp(14px, 4vw, 18px);
+  font-size: clamp(14px, 3.5vw, 18px);
   justify-content: left;
   text-align: left;
   align-items: center;
   display: flex;
   margin-left: 3vw;
-  margin-right: -6vw;
+  margin-right: -4vw;
 }
 .row:after {
   content: "";
   display: table;
   clear: both;
-  }
-.plan{
+}
+.plan {
   border: solid 1px #0e4791;
   background-color: rgb(255, 255, 255);
   border-radius: 25px;
