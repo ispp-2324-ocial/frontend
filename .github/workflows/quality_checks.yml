@@ -155,6 +155,7 @@ jobs:
       - lint
       - typecheck
       - build
+      - test
 
     steps:
       - name: Save PR context
