@@ -95,6 +95,7 @@ import { z } from 'zod';
 import { CategoryEnum , EventApi, TypeSubscriptionEnum, SubscriptionApi } from '@/api';
 import { useEvent, useApi } from '@/composables/apis';
 import { useValidation } from '@/composables/use-validation';
+import { useToast } from '@/composables/use-toast';
 
 const { t } = useI18n();
 
@@ -177,7 +178,7 @@ async function editE() : Promise<void> {
   await validate();
 
   if (isValid.value) {
-    await useEvent(EventApi, 'eventPartialUpdate')(() => ({
+    const { response } = await useEvent(EventApi, 'eventPartialUpdate')(() => ({
       id: Number(route.params.id),
       patchedEventCreate: {
         name: form.value.name,
@@ -192,7 +193,18 @@ async function editE() : Promise<void> {
         highlighted: form.value.highlighted
       }
     }));
-    await router.push('/');
+
+    if (response.value?.request.status === 201) {
+      await router.push('/');
+    } else {
+      const data = JSON.parse(response.value?.request.response);
+
+      if (data.error) {
+        useToast(data.error, 'error');
+      } else {
+        useToast('Error desconocido', 'error');
+      }
+    }
   } else {
     scrolltoError('.p-invalid', 24);
   }

@@ -88,6 +88,7 @@ import { z } from 'zod';
 import { useValidation } from '@/composables/use-validation';
 import { UsersApi } from '@/api';
 import { useApi } from '@/composables/apis';
+import { useToast } from '@/composables/use-toast';
 
 const { t } = useI18n();
 
@@ -127,7 +128,7 @@ async function createAcc() : Promise<void> {
   await validate();
 
   if (isValid.value) {
-    await useApi(UsersApi, 'usersUserRegisterCreate')(() => ({
+    const { response } = await useApi(UsersApi, 'usersUserRegisterCreate')(() => ({
       ocialUserCreate: {
         'password': form.value.password,
         'email': form.value.email,
@@ -135,7 +136,21 @@ async function createAcc() : Promise<void> {
       }
     }));
 
-    await router.push('/login');
+    if (response.value?.request.status === 201) {
+      await router.push('/login');
+    } else {
+      const data = JSON.parse(response.value?.request.response);
+
+      if (data.error) {
+        useToast(data.error, 'error');
+      } else if (data.errors) {
+        const errors = Object.values(data.errors).join(', ');
+
+        useToast(errors, 'error');
+      } else {
+        useToast('Error desconocido', 'error');
+      }
+    }
   } else {
     scrolltoError('.p-invalid', 24);
   }

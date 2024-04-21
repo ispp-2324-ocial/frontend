@@ -116,6 +116,7 @@ import { UsersApi, TypeClientEnum } from '@/api';
 import { useApi } from '@/composables/apis';
 import { useValidation } from '@/composables/use-validation';
 import { toBase64 } from '@/utils/data-manipulation';
+import { useToast } from '@/composables/use-toast';
 
 const { t } = useI18n();
 
@@ -179,7 +180,7 @@ async function createAcc() : Promise<void> {
   await validate();
 
   if (isValid.value) {
-    await useApi(UsersApi, 'usersClientRegisterCreate')(() => ({
+    const { response } = await useApi(UsersApi, 'usersClientRegisterCreate')(() => ({
       ocialClientCreate: {
         'password': form.value.password,
         'email': form.value.email,
@@ -194,7 +195,21 @@ async function createAcc() : Promise<void> {
     }));
 
     // Autenticar al cliente
-    await router.push('/login');
+    if (response.value?.request.status === 201) {
+      await router.push('/login');
+    } else {
+      const data = JSON.parse(response.value?.request.response);
+
+      if (data.error) {
+        useToast(data.error, 'error');
+      } else if (data.errors) {
+        const errors = Object.values(data.errors).join(', ');
+
+        useToast(errors, 'error');
+      } else {
+        useToast('Error desconocido', 'error');
+      }
+    }
 
   } else {
     scrolltoError('.p-invalid', 24);
