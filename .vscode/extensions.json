@@ -11,7 +11,8 @@
     "ryanluker.vscode-coverage-gutters",
     "yoavbls.pretty-ts-errors",
     "SonarSource.sonarlint-vscode",
-    "antfu.unocss"
+    "antfu.unocss",
+    "ms-playwright.playwright"
   ],
   "unwantedRecommendations": [
     "octref.vetur",
