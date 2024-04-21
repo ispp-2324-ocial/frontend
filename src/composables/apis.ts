@@ -16,7 +16,7 @@ import AxiosPlugin from '@/plugins/remote/axios';
  */
 import { network } from '@/store';
 import { apiStore } from '@/store/api';
-import { isArray, isNil, isUndef } from '@/utils/validation';
+import { isArray, isAxiosError, isNil, isUndef } from '@/utils/validation';
 import type { BaseAPI } from '@/api/base';
 import { Configuration, type Event } from '@/api';
 
@@ -103,6 +103,17 @@ function startLoading(loading: Ref<boolean | undefined> | undefined, global: boo
 }
 
 /**
+ * Establece la respuesta de Axios en el responseRef
+ */
+function handleAxiosResponse<T extends new (...args: any[]) => BaseAPI, K extends FunctionKeys<InstanceType<T>>>(
+  r: Awaited<ReturnType<KeyedFunction<InstanceType<T>, K>>>,
+  responseRef: ShallowRef<BetterOmit<Awaited<ReturnType<KeyedFunction<InstanceType<T>, K>>>, 'data'> | undefined>): void {
+  delete r.data;
+
+  responseRef.value = r as BetterOmit<Awaited<ReturnType<KeyedFunction<InstanceType<T>, K>>>, 'data'>;
+}
+
+/**
  * Finaliza el estado de carga del composable, también desmontando el
  * indicador de carga global si es necesario.
  *
@@ -159,9 +170,12 @@ async function resolveAndAdd<T extends new (...args: any[]) => BaseAPI, K extend
       }
     }
 
-    delete response.data;
-    responseRef.value = response;
-  } catch {
+    handleAxiosResponse(response, responseRef);
+  } catch (error) {
+    if (isAxiosError(error)) {
+      handleAxiosResponse(error.response as Awaited<ReturnType<KeyedFunction<InstanceType<T>, K>>>, responseRef);
+    }
+
     if (!isNil(loadingRef)) {
       loadingRef.value = undefined;
     }
@@ -274,8 +288,8 @@ function _sharedInternalLogic<T extends new (...args: any[]) => BaseAPI, K exten
 
       return new Promise((resolve) => {
         scope.run(() => {
-          watch(isCached, () => {
-            if (isCached.value && !ops.skipCache.request) {
+          watch([isCached, response], () => {
+            if ((isCached.value && !ops.skipCache.request) || !isNil(response.value)) {
               scope.stop();
               resolve({ loading, data, response });
             }
