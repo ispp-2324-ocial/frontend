@@ -69,9 +69,7 @@
               <span class="highlight">{{ $t('eventosIlimitados') }}</span><br />
               {{ $t('edicionEventos') }}<br />
               <span class="highlight">{{ $t('prioridad') }}</span>&nbsp;{{ $t('soporte24h') }}<br />
-              <span class="highlight">{{ $t('eventosDestacados') }}<br />
-                {{ $t('envioNotificaciones') }}<br />
-                {{ $t('funcionesAvanzadas') }}</span>
+              <span class="highlight">{{ $t('eventosDestacados') }}</span>
             </template>
           </Suscripcion>
         </div>
@@ -81,6 +79,7 @@
 </template>
 
 <script setup lang="ts">
+import { useRouter } from 'vue-router/auto';
 import { SubscriptionApi, PaymentsApi, TypeSubscriptionEnum, PaymentsCreateCheckoutSessionCreateTypeEnum } from '@/api';
 import { useApi } from '@/composables/apis';
 import Star from '@/assets/images/star.png';
@@ -88,7 +87,7 @@ import Star from '@/assets/images/star.png';
 const { data : currentSubscription } = await useApi(SubscriptionApi, 'subscriptionRetrieve')(() => ({}));
 const subsEnum = [TypeSubscriptionEnum.Free, TypeSubscriptionEnum.Basic, TypeSubscriptionEnum.Pro ];
 const payEnum = [PaymentsCreateCheckoutSessionCreateTypeEnum.Basic, PaymentsCreateCheckoutSessionCreateTypeEnum.Pro];
-
+const router = useRouter();
 
 /**
  * Función para el planFree
@@ -96,6 +95,8 @@ const payEnum = [PaymentsCreateCheckoutSessionCreateTypeEnum.Basic, PaymentsCrea
 async function planFree() : Promise<void> {
   if (subsEnum[0] != currentSubscription.value.typeSubscription) {
     await useApi(PaymentsApi, 'paymentsCancelDestroy')();
+
+    await router.push('/client/subscription');
   }
 };
 
@@ -105,11 +106,13 @@ async function planFree() : Promise<void> {
 async function planBasic() : Promise<void> {
   if (subsEnum[2] == currentSubscription.value.typeSubscription) {
     await useApi(PaymentsApi, 'paymentsCancelDestroy')();
+
+    await router.push('/client/subscription');
   } else if (subsEnum[0] == currentSubscription.value.typeSubscription) {
     const { data: paymentUrl } = await useApi(PaymentsApi, 'paymentsCreateCheckoutSessionCreate')(() => ({
       type: payEnum[0] }));
 
-    window.open(String(paymentUrl), '_blank');
+    window.open(String(paymentUrl.value.redirect_url), '_blank');
   }
 };
 
@@ -119,14 +122,15 @@ async function planBasic() : Promise<void> {
 async function planPro() : Promise<void> {
   if (subsEnum[1] == currentSubscription.value.typeSubscription) {
     await useApi(PaymentsApi, 'paymentsCancelDestroy')();
+
+    await router.push('/client/subscription');
   } else if (subsEnum[0] == currentSubscription.value.typeSubscription) {
     const { data: paymentUrl } = await useApi(PaymentsApi, 'paymentsCreateCheckoutSessionCreate')(() => ({
       type: payEnum[1] }));
 
-    window.open(String(paymentUrl), '_blank');
+    window.open(String(paymentUrl.value.redirect_url), '_blank');
   }
 };
-
 </script>
 
 <style scoped>

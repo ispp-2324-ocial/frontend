@@ -55,16 +55,18 @@
     <div
       class="mb-7"
       style="width: 100%;">
-      <div
-        v-if="loggedClient.is_client">
-        <Boton
-          type="rounded-blue"
-          style="margin-top: 1%; display: flex;"
-          @click="router.push(`/client/events/${route.params.id}/edit`)">
-          <p>
-            {{ $t('editarEvento') }}
-          </p>
-        </Boton>
+      <div v-if="loggedClient.is_client">
+        <div
+          v-if="subsEnum[0] != currentSubscription.typeSubscription">
+          <Boton
+            type="rounded-blue"
+            style="margin-top: 1%; display: flex;"
+            @click="router.push(`/client/events/${route.params.id}/edit`)">
+            <p>
+              {{ $t('editarEvento') }}
+            </p>
+          </Boton>
+        </div>
         <Boton
           type="rounded-red"
           style="margin-top: 3%; display: flex;"
@@ -81,10 +83,13 @@
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
-import { EventApi, CategoryEnum, UsersApi } from '@/api';
+import { EventApi, CategoryEnum, UsersApi, TypeSubscriptionEnum, SubscriptionApi } from '@/api';
 import { useEvent, useApi } from '@/composables/apis';
 
 const route = useRoute('/client/events/[id]/');
+
+const { data : currentSubscription } = await useApi(SubscriptionApi, 'subscriptionRetrieve')(() => ({}));
+const subsEnum = [TypeSubscriptionEnum.Free, TypeSubscriptionEnum.Basic, TypeSubscriptionEnum.Pro ];
 
 const router = useRouter();
 

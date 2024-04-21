@@ -135,8 +135,6 @@ async function createAcc() : Promise<void> {
       }
     }));
 
-    console.log(r.value); //Sigue sin pasar por aqui y no puedo comprobar el error
-
     await router.push('/login');
   } else {
     scrolltoError('.p-invalid', 24);
