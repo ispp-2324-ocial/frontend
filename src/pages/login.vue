@@ -53,6 +53,7 @@ import { UsersApi } from '@/api';
 import { useApi } from '@/composables/apis';
 import { auth } from '@/store/auth';
 import { useValidation } from '@/composables/use-validation';
+import { useToast } from '@/composables/use-toast';
 
 const router = useRouter();
 
@@ -80,15 +81,27 @@ async function Login() : Promise<void> {
   await validate();
 
   if (isValid.value) {
-    const { data: UserCreated } = await useApi(UsersApi, 'usersLoginCreate')(() => ({
+    const { response } = await useApi(UsersApi, 'usersLoginCreate')(() => ({
       login: {
         'username': form.value.username,
         'password': form.value.password
       }
     }));
 
-    auth.authenticate(UserCreated.value);
-    await router.replace('/');
+    if (response.value?.request.status == 200) {
+      const data = JSON.parse(response.value.request.response);
+
+      auth.authenticate(data);
+      await router.replace('/');
+    } else {
+      const data = JSON.parse(response.value?.request.response);
+
+      if (data.error) {
+        useToast(data.error, 'error');
+      } else {
+        useToast('Error desconocido', 'error');
+      }
+    }
 
   } else {
     scrolltoError('.p-invalid', 24);
@@ -106,15 +119,27 @@ interface GoogleResponseObject {
   select_by: string;
 }
 
-const callback = async (response : GoogleResponseObject): Promise<void> => {
-  const { data: UserCreated } = await useApi(UsersApi, 'usersUserGoogleOauth2Create', { skipCache: { request: true } } )(() => ({
+const callback = async (googleresponse : GoogleResponseObject): Promise<void> => {
+  const { response } = await useApi(UsersApi, 'usersUserGoogleOauth2Create', { skipCache: { request: true } } )(() => ({
     googleSocialAuth: {
-      'auth_token': response.credential
+      'auth_token': googleresponse.credential
     }
   }));
 
-  auth.authenticate(UserCreated.value);
-  await router.push('/');
+  if (response.value?.request.status == 200) {
+    const data = JSON.parse(response.value.request.response);
+
+    auth.authenticate(data);
+    await router.replace('/');
+  } else {
+    const data = JSON.parse(response.value?.request.response);
+
+    if (data.error) {
+      useToast(data.error, 'error');
+    } else {
+      useToast('Error desconocido', 'error');
+    }
+  }
 };
 
 
