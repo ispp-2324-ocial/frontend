@@ -44,7 +44,7 @@ const { data: eventList } = await useEvent(EventApi, 'eventList')(() => ({
     timeStart: filters.value.time_start,
     timeEnd: filters.value.time_end,
     /**
-     * TODO - latitude: navigator.geolocation.watchPosition((position) => position.coords.latitude),
+     * TODO: latitude: navigator.geolocation.watchPosition((position) => position.coords.latitude),
      * longitude: navigator.geolocation.watchPosition((position) => position.coords.longitude),
      * radius:  filters.value?.distance ? Number(filters.value.distance) : undefined,
      */
