@@ -119,6 +119,7 @@ import { useValidation } from '@/composables/use-validation';
 import { toBase64 } from '@/utils/data-manipulation';
 import { useToast } from '@/composables/use-toast';
 import { isObj } from '@/utils/validation';
+import { auth } from '@/store/auth';
 
 const { t } = useI18n();
 
@@ -182,7 +183,7 @@ async function createAcc() : Promise<void> {
   await validate();
 
   if (isValid.value) {
-    const { response } = await useApi(UsersApi, 'usersClientRegisterCreate')(() => ({
+    const { data: UserCreated, response } = await useApi(UsersApi, 'usersClientRegisterCreate')(() => ({
       ocialClientCreate: {
         'password': form.value.password,
         'email': form.value.email,
@@ -198,7 +199,8 @@ async function createAcc() : Promise<void> {
 
     // Autenticar al cliente
     if (response.value?.status == 201) {
-      await router.replace('/login');
+      auth.authenticate(UserCreated.value);
+      await router.replace('/');
     } else if (isObj(response.value?.request) &&
     'response' in response.value.request
     ) {
