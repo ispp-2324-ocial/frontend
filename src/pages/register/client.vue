@@ -118,7 +118,7 @@ import { useApi } from '@/composables/apis';
 import { useValidation } from '@/composables/use-validation';
 import { toBase64 } from '@/utils/data-manipulation';
 import { useToast } from '@/composables/use-toast';
-import { isObj } from '@/utils/validation';
+import { isNil, isObj } from '@/utils/validation';
 import { auth } from '@/store/auth';
 
 const { t } = useI18n();
@@ -198,11 +198,11 @@ async function createAcc() : Promise<void> {
     }));
 
     // Autenticar al cliente
-    if (response.value?.status == 201) {
-      auth.authenticate(UserCreated.value);
-      await router.replace('/');
-    } else if (isObj(response.value?.request) &&
-    'response' in response.value.request
+    if (
+      !isNil(response.value?.status) &&
+      response.value.status >= 400 &&
+      isObj(response.value?.request) &&
+      'response' in response.value.request
     ) {
       const casted = destr<ErrorPayload>(response.value.request.response);
 
@@ -211,8 +211,11 @@ async function createAcc() : Promise<void> {
       } else {
         const { t } = useI18n();
 
-        useToast(t('Error desconocido'), 'error');
+        useToast(t('ErrorDesconocido'), 'error');
       }
+    } else {
+      auth.authenticate(UserCreated.value);
+      await router.replace('/');
     }
 
   } else {

@@ -57,7 +57,7 @@ import { useApi } from '@/composables/apis';
 import { auth } from '@/store/auth';
 import { useValidation } from '@/composables/use-validation';
 import { useToast } from '@/composables/use-toast';
-import { isObj } from '@/utils/validation';
+import { isNil, isObj } from '@/utils/validation';
 
 const router = useRouter();
 
@@ -92,11 +92,10 @@ async function Login() : Promise<void> {
       }
     }));
 
-    if (response.value?.status == 200) {
-      auth.authenticate(UserCreated.value);
-      await router.replace('/');
-    } else if (isObj(response.value?.request) &&
-    'response' in response.value.request
+    if (!isNil(response.value?.status) &&
+      response.value.status >= 400 &&
+      isObj(response.value?.request) &&
+      'response' in response.value.request
     ) {
       const casted = destr<ErrorPayload>(response.value.request.response);
 
@@ -105,8 +104,11 @@ async function Login() : Promise<void> {
       } else {
         const { t } = useI18n();
 
-        useToast(t('Error desconocido'), 'error');
+        useToast(t('ErrorDesconocido'), 'error');
       }
+    } else {
+      auth.authenticate(UserCreated.value);
+      await router.replace('/');
     }
   } else {
     scrolltoError('.p-invalid', 24);
@@ -131,11 +133,11 @@ const callback = async (googleresponse : GoogleResponseObject): Promise<void> =>
     }
   }));
 
-  if (api_response.value?.status == 200) {
-    auth.authenticate(UserCreated.value);
-    await router.replace('/');
-  } else if (isObj(api_response.value?.request) &&
-  'response' in api_response.value.request
+  if (
+    !isNil(api_response.value?.status) &&
+    api_response.value.status >= 400 &&
+    isObj(api_response.value?.request) &&
+    'response' in api_response.value.request
   ) {
     const casted = destr<ErrorPayload>(api_response.value.request.response);
 
@@ -144,8 +146,11 @@ const callback = async (googleresponse : GoogleResponseObject): Promise<void> =>
     } else {
       const { t } = useI18n();
 
-      useToast(t('Error desconocido'), 'error');
+      useToast(t('ErrorDesconocido'), 'error');
     }
+  } else {
+    auth.authenticate(UserCreated.value);
+    await router.replace('/');
   }
 };
 
