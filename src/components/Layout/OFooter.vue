@@ -9,21 +9,30 @@
         <OImg
           class="icon"
           alt="Logo Ocial"
-          :src="Ocial_Clear" />
+          :src="Ocial_Icon" />
       </Boton>
       <Boton
+        v-if="loggedClient.is_client"
+        @click="router.push('/client/events/create')">
+        <OImg
+          class="icon"
+          alt="Mapa Claro"
+          :src="Create_Icon" />
+      </Boton>
+      <Boton
+        v-else
         @click="router.push('/')">
         <OImg
           class="icon"
           alt="Mapa Claro"
-          :src="Map_Clear" />
+          :src="Map_Icon" />
       </Boton>
       <Boton
         @click="router.push('/profile')">
         <OImg
           class="icon"
           alt="Human Blue"
-          :src="Human" />
+          :src="Human_Icon" />
       </Boton>
     </div>
   </footer>
@@ -31,11 +40,16 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router/auto';
-import Human from '@/assets/images/Human_Clear.png';
-import Map_Clear from '@/assets/images/Map_Clear.png';
-import Ocial_Clear from '@/assets/images/Ocial_Clear.png';
+import { useApi } from '@/composables/apis';
+import { UsersApi } from '@/api';
+import Human_Icon from '@/assets/images/Human_Clear.png';
+import Map_Icon from '@/assets/images/Map_Clear.png';
+import Create_Icon from '@/assets/images/Create_Clear.png';
+import Ocial_Icon from '@/assets/images/Ocial_Clear.png';
 
 const router = useRouter();
+
+const { data: loggedClient } = await useApi(UsersApi, 'usersMeRetrieve')();
 </script>
 
 <style scoped>
