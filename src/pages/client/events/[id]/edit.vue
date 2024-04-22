@@ -92,10 +92,12 @@ import * as L from 'leaflet';
 import { useRoute, useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
 import { z } from 'zod';
+import destr from 'destr';
 import { CategoryEnum , EventApi, TypeSubscriptionEnum, SubscriptionApi } from '@/api';
 import { useEvent, useApi } from '@/composables/apis';
 import { useValidation } from '@/composables/use-validation';
 import { useToast } from '@/composables/use-toast';
+import { isObj } from '@/utils/validation';
 
 const { t } = useI18n();
 
@@ -194,13 +196,15 @@ async function editE() : Promise<void> {
       }
     }));
 
-    if (response.value?.request.status === 201) {
+    if (response.value?.status === 201) {
       await router.push('/');
-    } else {
-      const data = JSON.parse(response.value?.request.response);
+    } else if (isObj(response.value?.request) &&
+    'response' in response.value.request
+    ) {
+      const casted = destr<ErrorPayload>(response.value.request.response);
 
-      if (data.error) {
-        useToast(data.error, 'error');
+      if ('error' in casted) {
+        useToast(casted.error, 'error');
       } else {
         useToast('Error desconocido', 'error');
       }

@@ -85,10 +85,12 @@ import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
 import { z } from 'zod';
+import destr from 'destr';
 import { useValidation } from '@/composables/use-validation';
 import { UsersApi } from '@/api';
 import { useApi } from '@/composables/apis';
 import { useToast } from '@/composables/use-toast';
+import { isObj } from '@/utils/validation';
 
 const { t } = useI18n();
 
@@ -136,17 +138,15 @@ async function createAcc() : Promise<void> {
       }
     }));
 
-    if (response.value?.request.status === 201) {
-      await router.push('/login');
-    } else {
-      const data = JSON.parse(response.value?.request.response);
+    if (response.value?.status == 201) {
+      await router.replace('/');
+    } else if (isObj(response.value?.request) &&
+    'response' in response.value.request
+    ) {
+      const casted = destr<ErrorPayload>(response.value.request.response);
 
-      if (data.error) {
-        useToast(data.error, 'error');
-      } else if (data.errors) {
-        const errors = Object.values(data.errors).join(', ');
-
-        useToast(errors, 'error');
+      if ('error' in casted) {
+        useToast(casted.error, 'error');
       } else {
         useToast('Error desconocido', 'error');
       }
