@@ -77,6 +77,7 @@
   "mapRequired": "La posición es obligatoria",
   "medio": "6.99€/mes",
   "nameRequired": "El nombre es obligatorio",
+  "noEsTuEvento": "No eres el creador de este evento, no estás autorizado para editarlo.",
   "noTienesCuenta": "¿Aún no tienes cuenta?",
   "nuevoEvento": "Nuevo Evento",
   "organiza:": "Organiza:",
