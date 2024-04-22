@@ -9,10 +9,10 @@
               class="ml-3"
               style="text-align: center; width: 100%;">
               <Title>
-                {{ loggedDjangoUser.username }}
+                {{ auth.user.value!.username }}
               </Title>
               <p class="elemento">
-                <b>{{ $t('email:') }}</b> {{ loggedDjangoUser.email }}
+                <b>{{ $t('email:') }}</b> {{ auth.user.value!.email }}
               </p>
             </div>
           </div>
@@ -62,13 +62,9 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router/auto';
-import { useApi } from '@/composables/apis';
-import { UsersApi } from '@/api';
 import { auth } from '@/store/auth';
 
 const router = useRouter();
-
-const { data: loggedDjangoUser } = await useApi(UsersApi, 'usersMeRetrieve')();
 </script>
 
 <style scoped>

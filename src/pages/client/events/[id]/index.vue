@@ -55,7 +55,7 @@
     <div
       class="mb-7"
       style="width: 100%;">
-      <div v-if="loggedClient.is_client">
+      <div v-if="auth.isClient.value">
         <div
           v-if="subsEnum[0] != currentSubscription.typeSubscription">
           <Boton
@@ -83,13 +83,18 @@
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
-import { EventApi, CategoryEnum, UsersApi, TypeSubscriptionEnum, SubscriptionApi } from '@/api';
+import { auth } from '@/store/auth';
+import { EventApi, CategoryEnum, TypeSubscriptionEnum, SubscriptionApi } from '@/api';
 import { useEvent, useApi } from '@/composables/apis';
 
 const route = useRoute('/client/events/[id]/');
 
 const { data : currentSubscription } = await useApi(SubscriptionApi, 'subscriptionRetrieve')(() => ({}));
-const subsEnum = [TypeSubscriptionEnum.Free, TypeSubscriptionEnum.Basic, TypeSubscriptionEnum.Pro ];
+const subsEnum = [
+  TypeSubscriptionEnum.Free,
+  TypeSubscriptionEnum.Basic,
+  TypeSubscriptionEnum.Pro
+];
 
 const router = useRouter();
 
@@ -99,9 +104,13 @@ const { data: eventDetail } = await useEvent(EventApi, 'eventRetrieve')(() => ({
   'id': Number(route.params.id)
 }));
 
-const { data: loggedClient } = await useApi(UsersApi, 'usersMeRetrieve')();
-
-const cateEnum = [CategoryEnum.Sports, CategoryEnum.Music, CategoryEnum.Markets, CategoryEnum.RelaxActivities, CategoryEnum.LiveConcert];
+const cateEnum = [
+  CategoryEnum.Sports,
+  CategoryEnum.Music,
+  CategoryEnum.Markets,
+  CategoryEnum.RelaxActivities,
+  CategoryEnum.LiveConcert
+];
 
 const categorias = computed(() =>
   [t('categoryDeporte'),
