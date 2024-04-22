@@ -46,14 +46,14 @@
               @click.stop />
           </div>
         </div>
-        <div>
+        <!-- <div>
           <div class="title">
           {{ $t('Distancia') }}
           </div>
           <Slider
             v-model="form.distance"
             @click.stop />
-        </div>
+        </div> -->
         <div>
           <div class="title">
             {{ $t('Likes') }}
@@ -108,11 +108,10 @@ watch(form, () => {
   if (form.value) {
     emit('update', form.value);
   }
-}
-);
+}, { deep: true });
 </script>
 
-<style>
+<style scoped>
 .title{
   font-weight: bold;
   justify-content: center;
