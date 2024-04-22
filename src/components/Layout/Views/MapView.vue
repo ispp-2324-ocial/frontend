@@ -21,7 +21,7 @@
   </OHeader>
   <div class="h-full">
     <LMap
-      :markers="events" />
+      :markers="events ?? []" />
   </div>
 </template>
 
@@ -33,20 +33,26 @@ import type { ConfigurationParameters } from '@/components/Forms/Dropdown.vue';
 
 const filters = ref<ConfigurationParameters>();
 
-// eslint-disable @typescript-eslint/no-unsafe-member-access
+/**
+ * Los tipos exportados de archivos .vue no son reconocidos por el parseador de ESLint,
+ * por lo que es seguro desactivar estas reglas aquí - ferferga
+ */
+/* eslint-disable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment */
 const { data: eventList } = await useEvent(EventApi, 'eventList')(() => ({
   ...(filters.value ? {
     category: filters.value.category,
     timeStart: filters.value.time_start,
     timeEnd: filters.value.time_end,
-    // latitude: navigator.geolocation.watchPosition((position) => position.coords.latitude),
-    // longitude: navigator.geolocation.watchPosition((position) => position.coords.longitude),
-    // radius:  filters.value?.distance ? Number(filters.value.distance) : undefined,
+    /*
+     * Latitude: navigator.geolocation.watchPosition((position) => position.coords.latitude),
+     * longitude: navigator.geolocation.watchPosition((position) => position.coords.longitude),
+     * radius:  filters.value?.distance ? Number(filters.value.distance) : undefined,
+     */
     liked: Boolean(filters.value.likes),
     highlighted: Boolean(filters.value.highlighted)
   } : {})
 }));
-// eslint-enable @typescript-eslint/no-unsafe-member-access
+/* eslint-enable @typescript-eslint/no-unsafe-member-access, @typescript-eslint/no-unsafe-assignment */
 
 const search = ref('');
 
