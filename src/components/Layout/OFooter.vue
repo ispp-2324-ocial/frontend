@@ -20,7 +20,7 @@
           :src="Create_Icon" />
       </Boton>
       <Boton
-        v-if="!loggedClient.is_client"
+        v-else
         @click="router.push('/')">
         <OImg
           class="icon"
