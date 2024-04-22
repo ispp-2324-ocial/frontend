@@ -101,8 +101,8 @@ import { useValidation } from '@/composables/use-validation';
 
 const { t } = useI18n();
 
-const { data : currentSubscription } = await useApi(SubscriptionApi, 'subscriptionRetrieve')(() => ({}));
-const subsEnum = [TypeSubscriptionEnum.Free, TypeSubscriptionEnum.Basic, TypeSubscriptionEnum.Pro ];
+const { data : currentSubscription } = await useApi(SubscriptionApi, 'subscriptionRetrieve')();
+const subsEnum = [TypeSubscriptionEnum.Free, TypeSubscriptionEnum.Basic, TypeSubscriptionEnum.Pro];
 
 const validationSchema = z.object({
   place: z.string().min(1, t('placeRequired')),
@@ -176,7 +176,7 @@ async function editE() : Promise<void> {
   await validate();
 
   if (isValid.value) {
-    await useApi(EventApi, 'eventPartialUpdate')(() => ({
+    await useEvent(EventApi, 'eventPartialUpdate')(() => ({
       id: Number(route.params.id),
       patchedEventCreate: {
         name: form.value.name,
