@@ -60,15 +60,7 @@
         </div>
         <div>
           <div class="title">
-            {{ $t('Likes') }}
-          </div>
-          <Checkbox
-            v-model="form.likes"
-            @click.stop />
-        </div>
-        <div>
-          <div class="title">
-            {{ $t('Destacados') }}
+          {{ $t('Destacados') }}
           </div>
           <Checkbox
             v-model="form.highlighted"
@@ -94,7 +86,6 @@ export interface ConfigurationParameters{
   time_start?: string;
   time_end?: string;
   distance?: string;
-  likes: boolean;
   highlighted: boolean;
 }
 
@@ -104,7 +95,6 @@ const form = ref({
   time_start: new Date(current_date.getTime() - (current_date.getTimezoneOffset() * 60_000)).toJSON().slice(0,16),
   time_end: undefined,
   distance: undefined,
-  likes: false,
   highlighted: false
 });
 
