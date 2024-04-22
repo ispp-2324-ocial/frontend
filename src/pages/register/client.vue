@@ -209,7 +209,9 @@ async function createAcc() : Promise<void> {
       if ('error' in casted) {
         useToast(casted.error, 'error');
       } else {
-        useToast('Error desconocido', 'error');
+        const { t } = useI18n();
+
+        useToast(t('Error desconocido'), 'error');
       }
     }
 
