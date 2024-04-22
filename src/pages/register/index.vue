@@ -91,6 +91,7 @@ import { UsersApi } from '@/api';
 import { useApi } from '@/composables/apis';
 import { useToast } from '@/composables/use-toast';
 import { isObj } from '@/utils/validation';
+import { auth } from '@/store/auth';
 
 const { t } = useI18n();
 
@@ -130,7 +131,7 @@ async function createAcc() : Promise<void> {
   await validate();
 
   if (isValid.value) {
-    const { response } = await useApi(UsersApi, 'usersUserRegisterCreate')(() => ({
+    const { data: UserCreated, response } = await useApi(UsersApi, 'usersUserRegisterCreate')(() => ({
       ocialUserCreate: {
         'password': form.value.password,
         'email': form.value.email,
@@ -139,6 +140,7 @@ async function createAcc() : Promise<void> {
     }));
 
     if (response.value?.status == 201) {
+      auth.authenticate(UserCreated.value);
       await router.replace('/');
     } else if (isObj(response.value?.request) &&
     'response' in response.value.request
