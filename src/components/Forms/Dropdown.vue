@@ -98,7 +98,7 @@ const current_date = new Date();
 const form = ref({
   category: undefined,
   time_start: new Date(current_date.getTime() - (current_date.getTimezoneOffset() * 60_000)).toJSON().slice(0,16),
-  time_end: new Date(current_date.getTime() - (current_date.getTimezoneOffset() * 60_000)).toJSON().slice(0,16),
+  time_end: undefined,
   distance: undefined,
   likes: false,
   highlighted: false

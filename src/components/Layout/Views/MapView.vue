@@ -33,18 +33,24 @@ import type { ConfigurationParameters } from '@/components/Forms/Dropdown.vue';
 
 const filters = ref<ConfigurationParameters>();
 
+console.log('Filtros antes: ' + filters.value);
+
 // eslint-disable @typescript-eslint/no-unsafe-member-access
-const { data: eventList } = await useEvent(EventApi, 'eventList')(() => ({
-  category: filters.value?.category ? String(filters.value.category) : undefined,
-  timeStart: filters.value?.time_start ? String(filters.value.time_start) : undefined,
-  timeEnd: filters.value?.time_end ? String(filters.value.time_end) : undefined,
-  // latitude: navigator.geolocation.watchPosition((position) => position.coords.latitude),
-  // longitude: navigator.geolocation.watchPosition((position) => position.coords.longitude),
-  radius: filters.value?.distance ? Number(filters.value.distance) : undefined,
-  liked: filters.value?.likes ? Boolean(filters.value.likes) : undefined,
-  highlighted: filters.value?.highlighted ? Boolean(filters.value.highlighted) : undefined
-}));
+const { data: eventList } = await useEvent(EventApi, 'eventList')(() => {
+  return filters.value ? {
+    category: filters.value.category ?? undefined,
+    timeStart: filters.value.time_start ?? undefined,
+    timeEnd: filters.value.time_end ?? undefined,
+    // latitude: navigator.geolocation.watchPosition((position) => position.coords.latitude),
+    // longitude: navigator.geolocation.watchPosition((position) => position.coords.longitude),
+    radius: filters.value.distance ? Number(filters.value.distance) : undefined,
+    liked: filters.value.likes ? Boolean(filters.value.likes) : undefined,
+    highlighted: filters.value.highlighted ? Boolean(filters.value.highlighted) : undefined
+  } : {};
+});
 // eslint-enable @typescript-eslint/no-unsafe-member-access
+
+console.log('Filtros despues: ' + filters.value);
 
 const search = ref('');
 
