@@ -1,0 +1,3 @@
+interface ErrorPayload {
+  error: string;
+}

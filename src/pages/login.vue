@@ -49,11 +49,13 @@ import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
 import { z } from 'zod';
+import destr from 'destr';
 import { UsersApi } from '@/api';
 import { useApi } from '@/composables/apis';
 import { auth } from '@/store/auth';
 import { useValidation } from '@/composables/use-validation';
 import { useToast } from '@/composables/use-toast';
+import { isObj } from '@/utils/validation';
 
 const router = useRouter();
 
@@ -81,28 +83,27 @@ async function Login() : Promise<void> {
   await validate();
 
   if (isValid.value) {
-    const { response } = await useApi(UsersApi, 'usersLoginCreate')(() => ({
+    const { data: UserCreated, response } = await useApi(UsersApi, 'usersLoginCreate')(() => ({
       login: {
         'username': form.value.username,
         'password': form.value.password
       }
     }));
 
-    if (response.value?.request.status == 200) {
-      const data = JSON.parse(response.value.request.response);
-
-      auth.authenticate(data);
+    if (response.value?.status == 200) {
+      auth.authenticate(UserCreated.value);
       await router.replace('/');
-    } else {
-      const data = JSON.parse(response.value?.request.response);
+    } else if (isObj(response.value?.request) &&
+    'response' in response.value.request
+    ) {
+      const casted = destr<ErrorPayload>(response.value.request.response);
 
-      if (data.error) {
-        useToast(data.error, 'error');
+      if ('error' in casted) {
+        useToast(casted.error, 'error');
       } else {
         useToast('Error desconocido', 'error');
       }
     }
-
   } else {
     scrolltoError('.p-invalid', 24);
   }
@@ -120,22 +121,22 @@ interface GoogleResponseObject {
 }
 
 const callback = async (googleresponse : GoogleResponseObject): Promise<void> => {
-  const { response } = await useApi(UsersApi, 'usersUserGoogleOauth2Create', { skipCache: { request: true } } )(() => ({
+  const { data: UserCreated, response: api_response } = await useApi(UsersApi, 'usersUserGoogleOauth2Create', { skipCache: { request: true } } )(() => ({
     googleSocialAuth: {
       'auth_token': googleresponse.credential
     }
   }));
 
-  if (response.value?.request.status == 200) {
-    const data = JSON.parse(response.value.request.response);
-
-    auth.authenticate(data);
+  if (api_response.value?.status == 200) {
+    auth.authenticate(UserCreated.value);
     await router.replace('/');
-  } else {
-    const data = JSON.parse(response.value?.request.response);
+  } else if (isObj(api_response.value?.request) &&
+  'response' in api_response.value.request
+  ) {
+    const casted = destr<ErrorPayload>(api_response.value.request.response);
 
-    if (data.error) {
-      useToast(data.error, 'error');
+    if ('error' in casted) {
+      useToast(casted.error, 'error');
     } else {
       useToast('Error desconocido', 'error');
     }
