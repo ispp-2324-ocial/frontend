@@ -43,12 +43,9 @@ const { data: eventList } = await useEvent(EventApi, 'eventList')(() => ({
     category: filters.value.category,
     timeStart: filters.value.time_start,
     timeEnd: filters.value.time_end,
-    /*
-     * Latitude: navigator.geolocation.watchPosition((position) => position.coords.latitude),
-     * longitude: navigator.geolocation.watchPosition((position) => position.coords.longitude),
-     * radius:  filters.value?.distance ? Number(filters.value.distance) : undefined,
-     */
-    liked: Boolean(filters.value.likes),
+    // latitude: navigator.geolocation.watchPosition((position) => position.coords.latitude),
+    // longitude: navigator.geolocation.watchPosition((position) => position.coords.longitude),
+    // radius:  filters.value?.distance ? Number(filters.value.distance) : undefined,
     highlighted: Boolean(filters.value.highlighted)
   } : {})
 }));
