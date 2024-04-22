@@ -73,7 +73,7 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-import type { CategoryEnum } from '@/api';
+// import type { CategoryEnum } from '@/api';
 
 const emit = defineEmits<{
   update: [filters: ConfigurationParameters];
@@ -81,8 +81,17 @@ const emit = defineEmits<{
 
 const toggleState = ref<boolean>();
 
+// Hay que cambiar la API para que LiveConcert y RelaxActivities funcionen. Arreglar en refactor.
+enum tempCategoryEnum {
+  Sports = 'Sports',
+  Music = 'Music',
+  Markets = 'Markets',
+  RelaxActivities = 'Relax%20activities',
+  LiveConcert = 'Live%20concert'
+}
+
 export interface ConfigurationParameters{
-  category?: CategoryEnum;
+  category?: tempCategoryEnum;
   time_start?: string;
   time_end?: string;
   distance?: string;
@@ -114,7 +123,7 @@ watch(form, () => {
 .selector{
   border: solid 1px #0e4791;
   background-color: rgb(255, 255, 255);
-  border-radius: 25px;
+  border-radius: 15px;
   margin: auto;
   height: 6vh;
   justify-content: center;
