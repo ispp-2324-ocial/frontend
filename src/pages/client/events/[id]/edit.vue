@@ -196,6 +196,7 @@ const { validate, isValid, getError, scrolltoError } = useValidation(validationS
 });
 
 /**
+ * TODO: Refactorizar esto en un middleware apropiado. - ferferga (assigned: @horgarler)
  * Esta función sirve para redirigir, ya que los otros métodos
  * interfieren en una redirección base.
  */
