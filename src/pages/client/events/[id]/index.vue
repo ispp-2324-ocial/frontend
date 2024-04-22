@@ -55,7 +55,7 @@
     <div
       class="mb-7"
       style="width: 100%;">
-      <div v-if="auth.isClient.value">
+      <div v-if="auth.user.value?.username == eventDetail.creator.username">
         <div
           v-if="subsEnum[0] != currentSubscription.typeSubscription">
           <Boton

@@ -1,6 +1,6 @@
 <template>
   <Ondas />
-  <div>
+  <div v-if="auth.user.value?.username == eventDetail.creator.username">
     <Title style="margin-top: 10%;">
       {{ $t('editarEvento') }}
     </Title>
@@ -84,6 +84,32 @@
       {{ $t('guardarCambios') }}
     </Boton>
   </div>
+  <div v-else>
+    <div class="texto">
+      <Title>
+        {{ t('noEsTuEvento') }}
+      </Title>
+    </div>
+    <div class="texto">
+      <p style="margin-top: -8vh; color: red; font-size: 15vw; font-weight: bolder;">
+        {{ t('crossIcon') }}
+      </p>
+    </div>
+    <div
+      style="justify-content: center; display: flex;"
+      @click="redirect()">
+      <Boton
+        type="rounded-blue"
+        class="ocial-button"
+        style="width: 70%; padding-top: 1vh; padding-bottom: 1vh;">
+        <div>
+          <p>
+            {{ $t('volver') }}
+          </p>
+        </div>
+      </Boton>
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -93,6 +119,7 @@ import { useRoute, useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
 import { z } from 'zod';
 import destr from 'destr';
+import { auth } from '@/store/auth';
 import { CategoryEnum , EventApi, TypeSubscriptionEnum, SubscriptionApi } from '@/api';
 import { useEvent, useApi } from '@/composables/apis';
 import { useValidation } from '@/composables/use-validation';
@@ -167,6 +194,16 @@ const parseableCapacity = computed({
 const { validate, isValid, getError, scrolltoError } = useValidation(validationSchema, form, {
   mode: 'lazy'
 });
+
+/**
+ * TODO: Refactorizar esto en un middleware apropiado. - ferferga (assigned: @horgarler)
+ * Esta función sirve para redirigir, ya que los otros métodos
+ * interfieren en una redirección base.
+ */
+async function redirect() : Promise<void> {
+  await router.replace('/event');
+  window.location.reload();
+}
 
 /**
  * Esta función guarda la información en la base de datos y luego redirige a otra vista
@@ -273,5 +310,13 @@ onMounted(() => {
   font-size: 14px;
   color: red;
   margin-top: 4px;
+}
+
+.texto {
+  margin: 15% 10% 10% 10%;
+  display:flex;
+  justify-content: center;
+  text-align: center;
+  align-items: center;
 }
 </style>

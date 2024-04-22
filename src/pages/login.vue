@@ -25,7 +25,9 @@
     <p class="message">
       {{ $t('soloUsuarios') }}
     </p>
-    <GoogleLogin :callback="callback" />
+    <GoogleLogin
+      :callback="callback"
+      style="display: flex; justify-content: center;" />
 
     <p
       class="message">
