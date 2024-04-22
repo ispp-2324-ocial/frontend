@@ -77,6 +77,7 @@
   "mapRequired": "The position is required",
   "medio": "6.99€/month",
   "nameRequired": "The name is required",
+  "noEsTuEvento": "You are not the creator of this event, you are not authorized to edit it.",
   "noTienesCuenta": "Don't have an account?",
   "nuevoEvento": "New Event",
   "organiza:": "Organize:",
