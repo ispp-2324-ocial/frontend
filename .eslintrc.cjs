@@ -4,10 +4,6 @@ const CI_environment = process.env.CI ? 0 : 1;
 const commonTSAndVueConfig = {
   extends: ['plugin:@typescript-eslint/recommended-requiring-type-checking'],
   rules: {
-    /**
-     * TODO: Investigar por qué esta regla reporta falsos positivos
-     */
-    '@typescript-eslint/no-misused-promises': 'off',
     '@typescript-eslint/consistent-type-exports': 'error',
     '@typescript-eslint/no-redundant-type-constituents': 'off'
   }

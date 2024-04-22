@@ -326,8 +326,8 @@ function _sharedInternalLogic<T extends new (...args: any[]) => BaseAPI, K exten
      * sobrecargarlo durante el renderizado.
      */
     if (isCached.value) {
-      window.setTimeout(async () => {
-        await run({ isRefresh: true });
+      window.setTimeout(() => {
+        void run({ isRefresh: true });
       });
     }
 
