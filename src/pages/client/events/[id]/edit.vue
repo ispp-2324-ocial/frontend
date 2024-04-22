@@ -124,7 +124,7 @@ import { CategoryEnum , EventApi, TypeSubscriptionEnum, SubscriptionApi } from '
 import { useEvent, useApi } from '@/composables/apis';
 import { useValidation } from '@/composables/use-validation';
 import { useToast } from '@/composables/use-toast';
-import { isObj } from '@/utils/validation';
+import { isNil, isObj } from '@/utils/validation';
 
 const { t } = useI18n();
 
@@ -233,10 +233,11 @@ async function editE() : Promise<void> {
       }
     }));
 
-    if (response.value?.status === 201) {
-      await router.push('/');
-    } else if (isObj(response.value?.request) &&
-    'response' in response.value.request
+    if (
+      !isNil(response.value?.status) &&
+      response.value.status >= 400 &&
+      isObj(response.value?.request) &&
+      'response' in response.value.request
     ) {
       const casted = destr<ErrorPayload>(response.value.request.response);
 
@@ -245,8 +246,10 @@ async function editE() : Promise<void> {
       } else {
         const { t } = useI18n();
 
-        useToast(t('Error desconocido'), 'error');
+        useToast(t('ErrorDesconocido'), 'error');
       }
+    } else {
+      await router.push('/');
     }
   } else {
     scrolltoError('.p-invalid', 24);
