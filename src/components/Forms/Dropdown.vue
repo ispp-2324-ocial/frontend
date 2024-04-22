@@ -23,8 +23,9 @@
           <div class="title">
             {{ $t('Fecha') }}
           </div>
-          <div class="flex row" 
-               style="align-items: center;">
+          <div
+            class="flex row"
+            style="align-items: center;">
             <div class="justify-left col-3 date-left">
               {{ $t('Desde') }}
             </div>
@@ -34,8 +35,9 @@
               tipo="datetime-local"
               @click.stop />
           </div>
-          <div class="flex row mt-2" 
-               style="align-items: center;">
+          <div
+            class="flex row mt-2"
+            style="align-items: center;">
             <div class="justify-left col-3 date-left">
               {{ $t('Hasta') }}
             </div>
@@ -46,25 +48,27 @@
               @click.stop />
           </div>
         </div>
-        <!-- <div>
+        <!-- TODO: Backend requiere la ubicación del usuario para que funcione,
+        reimplementar cuando se complete: https://github.com/ispp-2324-ocial/frontend/issues/114 -->
+        <div v-if="false">
           <div class="title">
-          {{ $t('Distancia') }}
+            {{ $t('Distancia') }}
           </div>
           <Slider
             v-model="form.distance"
             @click.stop />
-        </div> -->
+        </div>
         <div>
           <div class="title">
             {{ $t('Likes') }}
           </div>
-          <Checkbox 
+          <Checkbox
             v-model="form.likes"
             @click.stop />
         </div>
         <div>
           <div class="title">
-          {{ $t('Destacados') }}
+            {{ $t('Destacados') }}
           </div>
           <Checkbox
             v-model="form.highlighted"
@@ -137,5 +141,5 @@ watch(form, () => {
   width: 90%;
   margin-right: 1vw;
   justify-content: center;
-} 
+}
 </style>
