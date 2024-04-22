@@ -155,7 +155,13 @@ const router = useRouter();
 
 const image = shallowRef<string>();
 
-const cateEnum = [TypeClientEnum.Artist, TypeClientEnum.BarRestaurant, TypeClientEnum.EventsAndConcerts, TypeClientEnum.LocalGuide, TypeClientEnum.SmallBusiness];
+const cateEnum = [
+  TypeClientEnum.Artist,
+  TypeClientEnum.BarRestaurant,
+  TypeClientEnum.EventsAndConcerts,
+  TypeClientEnum.LocalGuide,
+  TypeClientEnum.SmallBusiness
+];
 
 const categorias = computed(() =>
   [t('categoryArtist'),

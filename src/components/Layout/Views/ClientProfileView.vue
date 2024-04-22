@@ -10,24 +10,24 @@
                 class="ml-3"
                 style="text-align: center; width: 100%;">
                 <Title>
-                  {{ loggedClient.name }}
+                  {{ auth.user.value!.name }}
                 </Title>
                 <div class="flex justify-center items-center pt-12">
                   <BlurhashImage
-                    :item="loggedClient.image"
+                    :item="auth.user.value!.image"
                     class="center" />
                 </div>
                 <p class="elemento">
-                  <b>{{ loggedClient.username }}</b>
+                  <b>{{ auth.user.value!.username }}</b>
                 </p>
                 <p class="elemento">
-                  <b>{{ $t('email:') }}</b> {{ loggedClient.email }}
+                  <b>{{ $t('email:') }}</b> {{ auth.user.value!.email }}
                 </p>
                 <p class="elemento">
                   <b>{{ $t('organiza:') }} </b> <span
                     v-for="(category,indice) in cateEnum"
                     :key="category">
-                    <span v-if="category == loggedClient.type_client">
+                    <span v-if="category == auth.user.value!.type_client">
                       {{ categorias[indice] }}
                     </span>
                   </span>
@@ -102,17 +102,19 @@ import { useRouter } from 'vue-router/auto';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { auth } from '@/store/auth';
-import { useApi } from '@/composables/apis';
-import { UsersApi, TypeClientEnum } from '@/api';
-
+import { TypeClientEnum } from '@/api';
 
 const router = useRouter();
 
 const { t } = useI18n();
 
-const { data: loggedClient } = await useApi(UsersApi, 'usersMeRetrieve')();
-
-const cateEnum = [TypeClientEnum.Artist, TypeClientEnum.BarRestaurant, TypeClientEnum.EventsAndConcerts, TypeClientEnum.LocalGuide, TypeClientEnum.SmallBusiness];
+const cateEnum = [
+  TypeClientEnum.Artist,
+  TypeClientEnum.BarRestaurant,
+  TypeClientEnum.EventsAndConcerts,
+  TypeClientEnum.LocalGuide,
+  TypeClientEnum.SmallBusiness
+];
 
 const categorias = computed(() =>
   [t('categoryArtist'),

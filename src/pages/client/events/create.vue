@@ -100,7 +100,11 @@ import { toBase64 } from '@/utils/data-manipulation';
 const { t } = useI18n();
 
 const { data : currentSubscription } = await useApi(SubscriptionApi, 'subscriptionRetrieve')();
-const subsEnum = [TypeSubscriptionEnum.Free, TypeSubscriptionEnum.Basic, TypeSubscriptionEnum.Pro];
+const subsEnum = [
+  TypeSubscriptionEnum.Free,
+  TypeSubscriptionEnum.Basic,
+  TypeSubscriptionEnum.Pro
+];
 
 
 const validationSchema = z.object({
