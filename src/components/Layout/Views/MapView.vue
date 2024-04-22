@@ -26,14 +26,12 @@
 </template>
 
 <script setup lang="ts">
-import { ref, computed, watch } from 'vue';
+import { ref, computed } from 'vue';
 import { useEvent } from '@/composables/apis';
 import { EventApi } from '@/api';
 import type { ConfigurationParameters } from '@/components/Forms/Dropdown.vue';
 
 const filters = ref<ConfigurationParameters>();
-
-console.log('Filtros antes: ' + filters.value);
 
 // eslint-disable @typescript-eslint/no-unsafe-member-access
 const { data: eventList } = await useEvent(EventApi, 'eventList')(() => ({
@@ -49,12 +47,6 @@ const { data: eventList } = await useEvent(EventApi, 'eventList')(() => ({
   } : {})
 }));
 // eslint-enable @typescript-eslint/no-unsafe-member-access
-
-watch(filters, () => {
-  if (filters.value) {
-    console.log('Filtros despues: ', filters.value);
-  }
-});
 
 const search = ref('');
 
