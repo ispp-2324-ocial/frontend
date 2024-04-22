@@ -12,7 +12,7 @@
           :src="Ocial_Icon" />
       </Boton>
       <Boton
-        v-if="loggedClient.is_client"
+        v-if="auth.isClient.value"
         @click="router.push('/client/events/create')">
         <OImg
           class="icon"
@@ -40,16 +40,13 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router/auto';
-import { useApi } from '@/composables/apis';
-import { UsersApi } from '@/api';
+import { auth } from '@/store/auth';
 import Human_Icon from '@/assets/images/Human_Clear.png';
 import Map_Icon from '@/assets/images/Map_Clear.png';
 import Create_Icon from '@/assets/images/Create_Clear.png';
 import Ocial_Icon from '@/assets/images/Ocial_Clear.png';
 
 const router = useRouter();
-
-const { data: loggedClient } = await useApi(UsersApi, 'usersMeRetrieve')();
 </script>
 
 <style scoped>

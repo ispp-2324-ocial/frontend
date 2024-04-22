@@ -56,16 +56,15 @@
 
 <script setup lang="ts">
 import { useRouter } from 'vue-router/auto';
-import { EventApi, UsersApi } from '@/api';
-import { useApi, useEvent } from '@/composables/apis';
+import { auth } from '@/store/auth';
+import { EventApi } from '@/api';
+import { useEvent } from '@/composables/apis';
 import { parseDate } from '@/utils/data-manipulation';
 
 const router = useRouter();
 
-const { data: user } = await useApi(UsersApi, 'usersMeRetrieve')();
-
 const { data: eventList } = await useEvent(EventApi, 'eventClientList')(() => ({
-  'username': String(user.value.username)
+  'username': String(auth.user.value!.username)
 }));
 
 /**

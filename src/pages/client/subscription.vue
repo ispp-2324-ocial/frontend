@@ -85,8 +85,15 @@ import { useApi } from '@/composables/apis';
 import Star from '@/assets/images/star.png';
 
 const { data : currentSubscription } = await useApi(SubscriptionApi, 'subscriptionRetrieve')(() => ({}));
-const subsEnum = [TypeSubscriptionEnum.Free, TypeSubscriptionEnum.Basic, TypeSubscriptionEnum.Pro ];
-const payEnum = [PaymentsCreateCheckoutSessionCreateTypeEnum.Basic, PaymentsCreateCheckoutSessionCreateTypeEnum.Pro];
+const subsEnum = [
+  TypeSubscriptionEnum.Free,
+  TypeSubscriptionEnum.Basic,
+  TypeSubscriptionEnum.Pro
+];
+const payEnum = [
+  PaymentsCreateCheckoutSessionCreateTypeEnum.Basic,
+  PaymentsCreateCheckoutSessionCreateTypeEnum.Pro
+];
 const router = useRouter();
 const subscriptionRoute = '/client/subscription';
 

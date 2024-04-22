@@ -99,7 +99,11 @@ import { useValidation } from '@/composables/use-validation';
 const { t } = useI18n();
 
 const { data : currentSubscription } = await useApi(SubscriptionApi, 'subscriptionRetrieve')();
-const subsEnum = [TypeSubscriptionEnum.Free, TypeSubscriptionEnum.Basic, TypeSubscriptionEnum.Pro];
+const subsEnum = [
+  TypeSubscriptionEnum.Free,
+  TypeSubscriptionEnum.Basic,
+  TypeSubscriptionEnum.Pro
+];
 
 const validationSchema = z.object({
   place: z.string().min(1, t('placeRequired')),
@@ -194,7 +198,13 @@ async function editE() : Promise<void> {
   }
 };
 
-const cateEnum = [CategoryEnum.Sports, CategoryEnum.Music, CategoryEnum.Markets, CategoryEnum.RelaxActivities, CategoryEnum.LiveConcert];
+const cateEnum = [
+  CategoryEnum.Sports,
+  CategoryEnum.Music,
+  CategoryEnum.Markets,
+  CategoryEnum.RelaxActivities,
+  CategoryEnum.LiveConcert
+];
 
 const categorias = computed(() =>
   [t('categoryDeporte'),

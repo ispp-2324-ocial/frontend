@@ -84,7 +84,13 @@ const { data: eventDetail } = await useEvent(EventApi, 'eventRetrieve')(() => ({
   'id': Number(route.params.id)
 }));
 
-const cateEnum = [CategoryEnum.Sports, CategoryEnum.Music, CategoryEnum.Markets, CategoryEnum.RelaxActivities, CategoryEnum.LiveConcert];
+const cateEnum = [
+  CategoryEnum.Sports,
+  CategoryEnum.Music,
+  CategoryEnum.Markets,
+  CategoryEnum.RelaxActivities,
+  CategoryEnum.LiveConcert
+];
 
 const categorias = computed(() =>
   [t('categoryDeporte'),
