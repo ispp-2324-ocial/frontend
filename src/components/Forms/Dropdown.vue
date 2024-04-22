@@ -60,7 +60,7 @@
         </div>
         <div>
           <div class="title">
-          {{ $t('Destacados') }}
+            {{ $t('Destacados') }}
           </div>
           <Checkbox
             v-model="form.highlighted"
@@ -73,7 +73,6 @@
 
 <script setup lang="ts">
 import { ref, watch } from 'vue';
-// import type { CategoryEnum } from '@/api';
 
 const emit = defineEmits<{
   update: [filters: ConfigurationParameters];
