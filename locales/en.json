@@ -7,6 +7,7 @@
   "Distancia": "Distance",
   "EndDate:": "Ends:",
   "Error al obtener la ubicación": "Error at finding your location",
+  "Error desconocido": "Unknown error",
   "EventMustEndBeforeADay": "The event should not last more than one day",
   "EventMustStartBeforeEnd": "The event must start before it ends",
   "EventMustStartInFuture": "The event must start in the future",
