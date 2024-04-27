@@ -188,7 +188,7 @@ async function createAcc() : Promise<void> {
         'password': form.value.password,
         'email': form.value.email,
         'username': form.value.username,
-        'imageB64': image?.value ?? '', //Cambiar
+        'image_B64': image?.value ?? '',
         'name': form.value.name,
         'identification_document': form.value.dni,
         'type_client': form.value.category,
