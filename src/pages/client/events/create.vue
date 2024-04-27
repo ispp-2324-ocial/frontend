@@ -93,7 +93,9 @@ import { useRouter } from 'vue-router/auto';
 import { useI18n } from 'vue-i18n';
 import { z } from 'zod';
 import destr from 'destr';
+import { icon } from 'leaflet';
 import { CategoryEnum , EventApi, TypeSubscriptionEnum, SubscriptionApi } from '@/api';
+import Azul from '@/assets/pin/Pin_Azul.png';
 import { useApi } from '@/composables/apis';
 import { useValidation } from '@/composables/use-validation';
 import { toBase64 } from '@/utils/data-manipulation';
@@ -233,6 +235,12 @@ let marker: L.Marker | undefined;
 onMounted(() => {
   map = L.map('map').setView([37.393, -5.984], 12); // Initial map center (Sevilla)
 
+  const customIcon = icon({
+    iconUrl: Azul,
+    iconSize:  [22, 30],
+    iconAnchor: [11, 30]
+  });
+
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© OpenStreetMap contributors'
   }).addTo(map);
@@ -242,7 +250,7 @@ onMounted(() => {
       map.removeLayer(marker);
     }
 
-    marker = L.marker(e.latlng).addTo(map);
+    marker = L.marker(e.latlng, { icon: customIcon }).addTo(map);
     form.value.latitude = e.latlng.lat;
     form.value.longitude = e.latlng.lng;
   });
