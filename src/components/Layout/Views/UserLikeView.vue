@@ -28,7 +28,7 @@
                   {{ $t('Fecha Inicio') }}: {{ parseDate(event.timeStart) }}
                 </p>
                 <p class="tiempo final">
-                  {{ $t('Fecha Final') }}: {{ parseDate(event.timeStart) }}
+                  {{ $t('Fecha Final') }}: {{ parseDate(event.timeEnd) }}
                 </p>
                 <p class="lugar">
                   {{ $t('lugar', { place: event.place } ) }}

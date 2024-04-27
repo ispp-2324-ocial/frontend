@@ -57,6 +57,7 @@ const router = useRouter();
   width: 100%;
   transform: translateY(0%);
   z-index: 1004;
+  margin-top: 3%;
 }
 
 :deep(.icon) {
