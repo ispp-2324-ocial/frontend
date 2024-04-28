@@ -115,8 +115,10 @@
 import { useRouter } from 'vue-router/auto';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
+import { Vue3SimpleAlert } from 'vue3-simple-alert';
 import { auth } from '@/store/auth';
 import { TypeClientEnum } from '@/api';
+
 
 const router = useRouter();
 
