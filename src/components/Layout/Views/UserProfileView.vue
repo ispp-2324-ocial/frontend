@@ -57,16 +57,20 @@
       </Boton>
     </div>
   </div>
+
   <div
     style="justify-content: center; display: flex;"
-    @click="'user.delete'">
+    @click="deleteButtonMessage()">
+    <label for="delete-user-button">
+      {{ $t('eliminarCuenta') }}
+    </label>
     <Boton
       type="rounded-red"
       class="ocial-button"
       style="width: 80%; padding-top: 1vh; padding-bottom: 1vh;">
       <div>
         <p>
-          {{ $t('eliminar cuenta') }}
+          {{ $t('eliminarCuenta') }}
         </p>
       </div>
     </Boton>
@@ -75,8 +79,20 @@
 
 
 <script setup lang="ts">
+import Swal from 'sweetalert2';
 import { useRouter } from 'vue-router/auto';
 import { auth } from '@/store/auth';
+
+/**
+ * Esta función se encarga de preguntar al usuario si quiere borrar su cuenta con un mensaje
+ */
+async function deleteButtonMessage() : Promise<void> {
+  await Swal.fire({
+    title: 'The Internet?',
+    text: 'That thing is still around?',
+    icon: 'question'
+  });
+}
 
 const router = useRouter();
 </script>
