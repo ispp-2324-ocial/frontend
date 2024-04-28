@@ -95,15 +95,14 @@
     </div>
   </div>
   <div
-    style="justify-content: center; display: flex;"
-    @click="'user.delete'">
+    style="justify-content: center; display: flex;">
     <Boton
       type="rounded-red"
       class="ocial-button"
       style="width: 80%; padding-top: 1vh; padding-bottom: 1vh;">
       <div>
         <p>
-          {{ $t('eliminar cuenta') }}
+          {{ $t('eliminarCuenta') }}
         </p>
       </div>
     </Boton>
@@ -115,7 +114,6 @@
 import { useRouter } from 'vue-router/auto';
 import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
-import { Vue3SimpleAlert } from 'vue3-simple-alert';
 import { auth } from '@/store/auth';
 import { TypeClientEnum } from '@/api';
 
