@@ -57,6 +57,20 @@
       </Boton>
     </div>
   </div>
+  <div
+    style="justify-content: center; display: flex;"
+    @click="'user.delete'">
+    <Boton
+      type="rounded-red"
+      class="ocial-button"
+      style="width: 80%; padding-top: 1vh; padding-bottom: 1vh;">
+      <div>
+        <p>
+          {{ $t('eliminar cuenta') }}
+        </p>
+      </div>
+    </Boton>
+  </div>
 </template>
 
 
