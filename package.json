@@ -44,13 +44,13 @@
     "inter-ui": "4.0.2",
     "leaflet": "1.9.4",
     "lodash-es": "4.17.21",
-    "radix-vue": "1.7.1",
-    "vue": "3.4.24",
-    "vue-i18n": "9.13.0",
+    "radix-vue": "1.7.3",
+    "vue": "3.4.26",
+    "vue-i18n": "9.13.1",
     "vue-router": "4.3.2",
     "vue3-google-login": "2.0.26",
     "vue3-toastify": "0.2.1",
-    "zod": "3.23.0"
+    "zod": "3.23.4"
   },
   "devDependencies": {
     "@iconify/json": "2.2.188",
