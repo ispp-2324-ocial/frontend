@@ -95,7 +95,8 @@
     </div>
   </div>
   <div
-    style="justify-content: center; display: flex;">
+    style="justify-content: center; display: flex;"
+    @click="deleteAccountMessage">
     <Boton
       type="rounded-red"
       class="ocial-button"
@@ -116,7 +117,7 @@ import { computed } from 'vue';
 import { useI18n } from 'vue-i18n';
 import { auth } from '@/store/auth';
 import { TypeClientEnum } from '@/api';
-
+import { deleteAccountMessage } from '@/composables/use-delete-account-alert';
 
 const router = useRouter();
 
