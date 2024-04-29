@@ -1,13 +1,13 @@
 import Swal from 'sweetalert2';
-import { useI18n } from 'vue-i18n';
+import { i18n } from '@/plugins/i18n';
 import { auth } from '@/store/auth';
-
-const { t } = useI18n();
 
 /**
  * Esta función se encarga de preguntar al usuario si quiere borrar su cuenta con un mensaje
  */
 export async function deleteAccountMessage() : Promise<void> {
+  const { t } = i18n;
+
   await Swal.fire({
     title: t('deleteAccountMessageTitle'),
     text: t('deleteAccountMessageText'),
