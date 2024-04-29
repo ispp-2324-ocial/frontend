@@ -9,10 +9,10 @@
               class="ml-3"
               style="text-align: center; width: 100%;">
               <Title>
-                {{ auth.user.value!.username }}
+                {{ auth.user.value?.username }}
               </Title>
               <p class="elemento">
-                <b>{{ $t('email:') }}</b> {{ auth.user.value!.email }}
+                <b>{{ $t('email:') }}</b> {{ auth.user.value?.email }}
               </p>
             </div>
           </div>
@@ -60,10 +60,7 @@
 
   <div
     style="justify-content: center; display: flex;"
-    @click="deleteButtonMessage()">
-    <label for="delete-user-button">
-      {{ $t('eliminarCuenta') }}
-    </label>
+    @click="deleteAccountMessage">
     <Boton
       type="rounded-red"
       class="ocial-button"
@@ -80,21 +77,41 @@
 
 <script setup lang="ts">
 import Swal from 'sweetalert2';
+import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router/auto';
 import { auth } from '@/store/auth';
+
+const { t } = useI18n();
+const router = useRouter();
 
 /**
  * Esta función se encarga de preguntar al usuario si quiere borrar su cuenta con un mensaje
  */
-async function deleteButtonMessage() : Promise<void> {
+async function deleteAccountMessage() : Promise<void> {
   await Swal.fire({
-    title: 'The Internet?',
-    text: 'That thing is still around?',
-    icon: 'question'
+    title: t('deleteAccountMessageTitle'),
+    text: t('deleteAccountMessageText'),
+    icon: 'warning',
+    showCancelButton: true,
+    confirmButtonColor: '#910e38',
+    cancelButtonColor: '#0e4781',
+    confirmButtonText: t('deleteAccountMessageConfirm'),
+    cancelButtonText: t('deleteAccountMessageCancel')
+  }).then(async (res) => {
+    if (res.isConfirmed) {
+      await Swal.fire({
+        title: t('deleteAccountMessageConfirmedTitle'),
+        text: t('deleteAccountMessageConfirmedText'),
+        icon: 'success'
+      });
+      auth.logout();
+
+      return 'Account deleted';
+    } else {
+      return 'Account deletion cancelled';
+    }
   });
 }
-
-const router = useRouter();
 </script>
 
 <style scoped>
