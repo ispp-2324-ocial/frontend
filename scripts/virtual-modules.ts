@@ -47,7 +47,7 @@ const dfnsExports = localeNames
  */
 const commit_available = !Number(process.env.IS_STABLE) && Boolean(process.env.COMMIT_HASH);
 const commit_hash = commit_available && `'${process.env.COMMIT_HASH}'` || undefined;
-const base_url = process.env.BASE_URL ? `'${process.env.BASE_URL}'` : 'https://s3.backend.ocial.es';
+const base_url = process.env.BASE_URL ? `'${process.env.BASE_URL}'` : 'https://ppl.backend.ocial.es';
 
 /**
  * Date-fns exporta todos los idiomas ingleses con variantes, por lo que tenemos que añadir el emparejamiento a mano
