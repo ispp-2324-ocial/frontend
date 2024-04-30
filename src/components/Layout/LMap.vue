@@ -5,7 +5,7 @@
     v-bind="$attrs" />
   <Teleport
     v-if="selectedEvent"
-    to=".leaflet-popup-content-wrapper">
+    :to="`.leaflet-popup_event-${selectedEvent.id} .leaflet-popup-content-wrapper`">
     <div class="popup">
       <strong>{{ t('Evento') }}:</strong> {{ selectedEvent.name }}<br />
       <strong>{{ t('Lugar') }}:</strong> {{ selectedEvent.place }}<br />
@@ -89,7 +89,9 @@ function setMarkers(markers: Event[]): void {
       });
 
       // Crear un objeto Popup y asociarlo al marcador
-      const popup = new Popup();
+      const popup = new Popup({
+        className: `leaflet-popup_event-${event.id}`
+      });
       const mapMarker = marker([event.latitude, event.longitude], { icon: customIcon });
 
       mapMarker.addEventListener('popupopen', () => {
@@ -154,6 +156,7 @@ function createMapLayer(): void {
  */
 function disposeMarkers(): void {
   if (!isNil(userMarker)) {
+    userMarker.clearAllEventListeners();
     userMarker.remove();
   }
 
@@ -170,6 +173,7 @@ function disposeMarkers(): void {
  */
 function disposePopups(): void {
   for (const [,popup] of mapPopups) {
+    popup.clearAllEventListeners();
     popup.remove();
   }
 
@@ -181,6 +185,7 @@ function disposePopups(): void {
  */
 function disposeMap(): void {
   if (mapInstance.value) {
+    mapInstance.value.clearAllEventListeners();
     mapInstance.value.remove();
     mapInstance.value = undefined;
   }
@@ -206,7 +211,8 @@ function dispose(): void {
 }
 
 /**
- * This is needed so the map is redrawn after a transition or window size change
+ * Se necesita esto para que el mapa se redibuje después de una transición
+ * o el cambio de tamaño de la ventana
  */
 function redraw(): void {
   window.setTimeout(() => {
