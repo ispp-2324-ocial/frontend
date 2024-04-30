@@ -173,6 +173,7 @@ function disposeMarkers(): void {
  */
 function disposePopups(): void {
   for (const [,popup] of mapPopups) {
+    popup.close();
     popup.clearAllEventListeners();
     popup.remove();
   }
@@ -236,6 +237,8 @@ watch(mapContainer, () => {
  * Este watch trackea los markers si cambian y se actualizan si es así.
  */
 watch([mapInstance, ():typeof props.markers => props.markers], ([, newMarkers]) => {
+  selectedEventId.value = undefined;
+  disposePopups();
   disposeMarkers();
   setMarkers(newMarkers);
   redraw();
