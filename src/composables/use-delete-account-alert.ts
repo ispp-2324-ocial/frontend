@@ -1,6 +1,8 @@
 import Swal from 'sweetalert2';
 import { i18n } from '@/plugins/i18n';
 import { auth } from '@/store/auth';
+import { UsersApi } from '@/api';
+import { useApi } from '@/composables/apis';
 
 /**
  * Esta función se encarga de preguntar al usuario si quiere borrar su cuenta con un mensaje
@@ -24,6 +26,7 @@ export async function deleteAccountMessage() : Promise<void> {
         text: t('deleteAccountMessageConfirmedText'),
         icon: 'success'
       });
+      await useApi(UsersApi, 'usersMeDeleteDestroy')();
       auth.logout();
 
       return 'Account deleted';
