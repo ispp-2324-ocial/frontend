@@ -10,7 +10,7 @@ import { useApi } from '@/composables/apis';
 export async function deleteAccountMessage() : Promise<void> {
   const { t } = i18n;
 
-  await Swal.fire({
+  const alert = await Swal.fire({
     title: t('deleteAccountMessageTitle'),
     text: t('deleteAccountMessageText'),
     icon: 'warning',
@@ -19,19 +19,15 @@ export async function deleteAccountMessage() : Promise<void> {
     cancelButtonColor: '#0e4781',
     confirmButtonText: t('deleteAccountMessageConfirm'),
     cancelButtonText: t('deleteAccountMessageCancel')
-  }).then(async (res) => {
-    if (res.isConfirmed) {
-      await Swal.fire({
-        title: t('deleteAccountMessageConfirmedTitle'),
-        text: t('deleteAccountMessageConfirmedText'),
-        icon: 'success'
-      });
-      await useApi(UsersApi, 'usersMeDeleteDestroy')();
-      auth.logout();
-
-      return 'Account deleted';
-    } else {
-      return 'Account deletion cancelled';
-    }
   });
+
+  if (alert.isConfirmed) {
+    await Swal.fire({
+      title: t('deleteAccountMessageConfirmedTitle'),
+      text: t('deleteAccountMessageConfirmedText'),
+      icon: 'success'
+    });
+    await useApi(UsersApi, 'usersMeDeleteDestroy')();
+    auth.logout();
+  }
 }

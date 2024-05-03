@@ -27,7 +27,7 @@ import 'inter-ui/inter-variable.css';
 import '@unocss/reset/tailwind.css';
 import '@/assets/styles/global.css';
 import 'virtual:uno.css';
-import 'sweetalert2/src/sweetalert2.scss';
+import 'sweetalert2/dist/sweetalert2.css';
 
 /**
  * - PLUGINS DE VUE Y DIRECTIVAS -
