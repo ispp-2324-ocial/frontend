@@ -95,12 +95,12 @@
     </div>
   </div>
   <div
-    style="justify-content: center; display: flex;"
-    @click="deleteAccountMessage">
+    style="justify-content: center; display: flex;">
     <Boton
       type="rounded-red"
       class="ocial-button"
-      style="width: 80%; padding-top: 1vh; padding-bottom: 1vh;">
+      style="width: 80%; padding-top: 1vh; padding-bottom: 1vh;"
+      @click="deleteAccountMessage">
       <div>
         <p>
           {{ $t('eliminarCuenta') }}
