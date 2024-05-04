@@ -1,117 +1,111 @@
 import { expect, test } from '@playwright/test';
 
-test.describe('Testing del login y register de usuario', () =>{
+test.describe('Testing del login y register de usuario', () => {
   test('Se registra correctamente', async ({ page }) => {
-    await page.goto('http://localhost:3000/#/register');
-    await page.getByPlaceholder('Username', { exact: true }).fill('ererereeewewerrereererewewre');
-    await page.getByPlaceholder('E-mail', { exact: true }).fill('rererrerrreeewrereereereeere@gmail.com');
-    await page.getByPlaceholder('Password', { exact: true }).fill('Baloncesto02');
-    await page.getByPlaceholder('Confirm password', { exact: true }).fill('Baloncesto02');
+    const baseUrl = 'http://localhost:3000/#/';
+    const uniqueIdentifier = Date.now(); // Using timestamp as a unique identifier
+
+    // Generate unique username, email, and password
+    const username = `user_${uniqueIdentifier}`;
+    const email = `user_${uniqueIdentifier}@gmail.com`;
+    const password = 'ocialpass';
+
+    // Navigate to registration page and fill in registration form
+    await page.goto(baseUrl + 'register');
+    await page.getByPlaceholder('Username', { exact: true }).fill(username);
+    await page.getByPlaceholder('E-mail', { exact: true }).fill(email);
+    await page.getByPlaceholder('Password', { exact: true }).fill(password);
+    await page.getByPlaceholder('Confirm password', { exact: true }).fill(password);
     await page.getByRole('checkbox').click();
     await page.getByRole('button', { name: 'Create' }).click();
+    await page.waitForTimeout(6000);
 
-    await page.waitForTimeout(5000);
+    // Ensure registration was successful
+    expect(page.url()).toBe(baseUrl);
 
-    const url = page.url();
-
-    expect(url).toBe('http://localhost:3000/#/');
-
-    // Navega a la página de perfil
-    await page.goto('http://localhost:3000/#/profile');
-
-    // Haz clic en el botón 'Log out'
+    // Navigate to profile page and log out
+    await page.goto(baseUrl + 'profile');
     await page.getByRole('button', { name: 'Logout' }).click();
+    await page.waitForTimeout(3000);
 
-    // Espera a que la página se redirija a la página de inicio de sesión
-    await page.waitForTimeout(5000);
-
-    // Rellena los campos de nombre de usuario y contraseña
-    await page.getByPlaceholder('Username', { exact: true }).fill('ererereeewewerrereererewewre');
-    await page.getByPlaceholder('Password', { exact: true }).fill('Baloncesto02');
-
-    // Haz clic en el botón 'Log in'
+    // Log in with the registered user
+    await page.goto(baseUrl + 'login');
+    await page.getByPlaceholder('Username', { exact: true }).fill(username);
+    await page.getByPlaceholder('Password', { exact: true }).fill(password);
     await page.getByRole('button', { name: 'Log in' }).click();
+    await page.waitForTimeout(3000);
 
-    // Espera a que la página se redirija después de iniciar sesión
-    await page.waitForTimeout(5000);
+    // Ensure login was successful
+    expect(page.url()).toBe(baseUrl);
 
-    const loginUrl = page.url();
-
-    // Comprueba si la URL de la página es la esperada después de iniciar sesión
-    expect(loginUrl).toBe('http://localhost:3000/#/');
-
-    await page.goto('http://localhost:3000/#/profile');
-
+    // Delete the user account
+    await page.goto(baseUrl + 'profile');
     await page.getByRole('button', { name: 'Delete Account' }).click();
-
-    await page.waitForTimeout(2000);
-
     await page.getByRole('button', { name: 'Yes, delete my account' }).click();
-
-    await page.waitForTimeout(2000);
-
     await page.getByRole('button', { name: 'OK' }).click();
-
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(1000);
   });
 });
 
-test.describe('Testing del login y register de cliente', () =>{
+/**
+ * Generates a random ID number with a valid letter
+ */
+function generateID() : string {
+  const numbers = Math.random().toString(9).slice(2, 10);
+  const letters = 'TRWAGMYFPDXBNJZSQVHLCKE';
+  const letter = letters.charAt(Number.parseInt(numbers) % 23);
+
+  return `${numbers}${letter}`;
+}
+
+test.describe('Testing del login y register de cliente', () => {
   test('Se registra correctamente', async ({ page }) => {
-    await page.goto('http://localhost:3000/#/register/client');
-    await page.getByPlaceholder('Username', { exact: true }).fill('ococoococo');
-    await page.getByPlaceholder('Name', { exact: true }).fill('Fermin Trujillo');
-    await page.getByPlaceholder('E-mail', { exact: true }).fill('clirererereente@gmail.com');
-    await page.getByPlaceholder('ID / VAT', { exact: true }).fill('77933508P');
-    await page.getByPlaceholder('Password', { exact: true }).fill('Baloncesto02');
-    await page.getByPlaceholder('Confirm password', { exact: true }).fill('Baloncesto02');
+    const baseUrl = 'http://localhost:3000/#/';
+    const uniqueIdentifier = Date.now(); // Using timestamp as a unique identifier
+
+    // Generate unique username, name, email, idVat, and password
+    const username = `client_${uniqueIdentifier}`;
+    const name = `Client Name_${uniqueIdentifier}`;
+    const email = `client_${uniqueIdentifier}@gmail.com`;
+    const idVat = generateID();
+    const password = 'ocialpass';
+
+    // Navigate to client registration page and fill in registration form
+    await page.goto(baseUrl + 'register/client');
+    await page.getByPlaceholder('Username', { exact: true }).fill(username);
+    await page.getByPlaceholder('Name', { exact: true }).fill(name);
+    await page.getByPlaceholder('E-mail', { exact: true }).fill(email);
+    await page.getByPlaceholder('ID / VAT', { exact: true }).fill(idVat);
+    await page.getByPlaceholder('Password', { exact: true }).fill(password);
+    await page.getByPlaceholder('Confirm password', { exact: true }).fill(password);
     await page.getByRole('checkbox').click();
     await page.getByRole('button', { name: 'Create' }).click();
+    await page.waitForTimeout(6000);
 
-    await page.waitForTimeout(5000);
+    // Ensure registration was successful
+    expect(page.url()).toBe(baseUrl);
 
-    const url = page.url();
-
-    expect(url).toBe('http://localhost:3000/#/');
-
-    // Navega a la página de perfil
-    await page.goto('http://localhost:3000/#/profile');
-
-    // Haz clic en el botón 'Log out'
+    // Navigate to profile page and log out
+    await page.goto(baseUrl + 'profile');
     await page.getByRole('button', { name: 'Logout' }).click();
+    await page.waitForTimeout(3000);
 
-    // Espera a que la página se redirija a la página de inicio de sesión
-    await page.waitForTimeout(5000);
-
-    // Rellena los campos de nombre de usuario y contraseña
-    await page.getByPlaceholder('Username', { exact: true }).fill('ococoococo');
-    await page.getByPlaceholder('Password', { exact: true }).fill('Baloncesto02');
-
-    // Haz clic en el botón 'Log in'
+    // Log in with the registered client
+    await page.goto(baseUrl + 'login');
+    await page.getByPlaceholder('Username', { exact: true }).fill(username);
+    await page.getByPlaceholder('Password', { exact: true }).fill(password);
     await page.getByRole('button', { name: 'Log in' }).click();
+    await page.waitForTimeout(3000);
 
-    // Espera a que la página se redirija después de iniciar sesión
-    await page.waitForTimeout(5000);
+    // Ensure login was successful
+    expect(page.url()).toBe(baseUrl);
 
-    const loginUrl = page.url();
-
-    // Comprueba si la URL de la página es la esperada después de iniciar sesión
-    expect(loginUrl).toBe('http://localhost:3000/#/');
-
-    await page.goto('http://localhost:3000/#/profile');
-
+    // Delete the client account
+    await page.goto(baseUrl + 'profile');
     await page.getByRole('button', { name: 'Delete Account' }).click();
-
-    await page.waitForTimeout(2000);
-
     await page.getByRole('button', { name: 'Yes, delete my account' }).click();
-
-    await page.waitForTimeout(2000);
-
     await page.getByRole('button', { name: 'OK' }).click();
-
-    await page.waitForTimeout(5000);
+    await page.waitForTimeout(1000);
   });
 });
-
 
