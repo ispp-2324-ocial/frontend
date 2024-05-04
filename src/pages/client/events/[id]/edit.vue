@@ -116,9 +116,9 @@
 import { ref, computed, onMounted } from 'vue';
 import * as L from 'leaflet';
 import { useRoute, useRouter } from 'vue-router/auto';
-import { useI18n } from 'vue-i18n';
 import { z } from 'zod';
 import destr from 'destr';
+import { i18n } from '@/plugins/i18n';
 import { auth } from '@/store/auth';
 import { CategoryEnum , EventApi, TypeSubscriptionEnum, SubscriptionApi } from '@/api';
 import { useEvent, useApi } from '@/composables/apis';
@@ -126,7 +126,7 @@ import { useValidation } from '@/composables/use-validation';
 import { useToast } from '@/composables/use-toast';
 import { isNil, isObj } from '@/utils/validation';
 
-const { t } = useI18n();
+const { t } = i18n;
 
 const { data : currentSubscription } = await useApi(SubscriptionApi, 'subscriptionRetrieve')();
 const subsEnum = [
@@ -244,7 +244,7 @@ async function editE() : Promise<void> {
       if ('error' in casted) {
         useToast(casted.error, 'error');
       } else {
-        const { t } = useI18n();
+        const { t } = i18n;
 
         useToast(t('ErrorDesconocido'), 'error');
       }

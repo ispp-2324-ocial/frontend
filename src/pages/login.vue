@@ -49,9 +49,9 @@
 import { GoogleLogin } from 'vue3-google-login';
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router/auto';
-import { useI18n } from 'vue-i18n';
 import { z } from 'zod';
 import destr from 'destr';
+import { i18n } from '@/plugins/i18n';
 import { UsersApi } from '@/api';
 import { useApi } from '@/composables/apis';
 import { auth } from '@/store/auth';
@@ -61,7 +61,7 @@ import { isNil, isObj } from '@/utils/validation';
 
 const router = useRouter();
 
-const { t } = useI18n();
+const { t } = i18n;
 
 const validationSchema = z.object({
   username: z.string().min(1, t('usernameRequired')), //The username is required
@@ -102,7 +102,7 @@ async function Login() : Promise<void> {
       if ('error' in casted) {
         useToast(casted.error, 'error');
       } else {
-        const { t } = useI18n();
+        const { t } = i18n;
 
         useToast(t('ErrorDesconocido'), 'error');
       }
@@ -144,7 +144,7 @@ const callback = async (googleresponse : GoogleResponseObject): Promise<void> =>
     if ('error' in casted) {
       useToast(casted.error, 'error');
     } else {
-      const { t } = useI18n();
+      const { t } = i18n;
 
       useToast(t('ErrorDesconocido'), 'error');
     }

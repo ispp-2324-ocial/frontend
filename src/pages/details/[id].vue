@@ -75,7 +75,7 @@
 <script setup lang="ts">
 import { useRoute } from 'vue-router/auto';
 import { computed } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { i18n } from '@/plugins/i18n';
 import { EventApi, CategoryEnum } from '@/api';
 import { useEvent } from '@/composables/apis';
 
@@ -86,7 +86,7 @@ const cateEnum = [
   CategoryEnum.RelaxActivities,
   CategoryEnum.LiveConcert
 ];
-const { t } = useI18n();
+const { t } = i18n;
 const categorias = computed(() =>
   [t('categoryDeporte'),
    t('categoryMusica'),

@@ -28,12 +28,12 @@
 
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router/auto';
+import { i18n } from '@/plugins/i18n';
 
 const router = useRouter();
 
-const { t } = useI18n();
+const { t } = i18n;
 </script>
 
 <style scoped>

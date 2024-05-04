@@ -83,9 +83,9 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { useRouter } from 'vue-router/auto';
-import { useI18n } from 'vue-i18n';
 import { z } from 'zod';
 import destr from 'destr';
+import { i18n } from '@/plugins/i18n';
 import { useValidation } from '@/composables/use-validation';
 import { UsersApi } from '@/api';
 import { useApi } from '@/composables/apis';
@@ -93,7 +93,7 @@ import { useToast } from '@/composables/use-toast';
 import { isNil, isObj } from '@/utils/validation';
 import { auth } from '@/store/auth';
 
-const { t } = useI18n();
+const { t } = i18n;
 
 const validationSchema = z.object({
   username: z.string().min(1, t('usernameRequired')),
@@ -150,7 +150,7 @@ async function createAcc() : Promise<void> {
       if ('error' in casted) {
         useToast(casted.error, 'error');
       } else {
-        const { t } = useI18n();
+        const { t } = i18n;
 
         useToast(t('ErrorDesconocido'), 'error');
       }
