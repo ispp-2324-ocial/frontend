@@ -12,7 +12,7 @@ COPY api /app/api
 WORKDIR /app
 
 # Install dependencies
-RUN npm ci --no-audit --ignore-scripts
+RUN npm ci --no-audit
 
 # Build client
 RUN npm run build
