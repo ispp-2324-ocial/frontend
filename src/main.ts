@@ -6,10 +6,12 @@
 
 import { createApp } from 'vue';
 import vue3GoogleLogin from 'vue3-google-login';
+import { registerSW } from 'virtual:pwa-register';
 import Root from '@/App.vue';
 import { hideDirective } from '@/plugins/directives';
 import { vuePlugin as i18n } from '@/plugins/i18n';
 import { router } from '@/plugins/router';
+
 /**
  * TODO: Eliminar de aquí una vez se importe el store
  * en alguna parte del código.
@@ -28,6 +30,8 @@ import '@unocss/reset/tailwind.css';
 import '@/assets/styles/global.css';
 import 'virtual:uno.css';
 import 'sweetalert2/dist/sweetalert2.css';
+
+registerSW({ immediate: true });
 
 /**
  * - PLUGINS DE VUE Y DIRECTIVAS -
