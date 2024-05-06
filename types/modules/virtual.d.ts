@@ -1,3 +1,6 @@
+/// <reference types="vite-plugin-pwa/vue" />
+/// <reference types="vite-plugin-pwa/client" />
+
 declare module 'virtual:locales/date-fns' {
   import * as locales from 'date-fns/locale';
 

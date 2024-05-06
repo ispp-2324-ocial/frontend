@@ -17,6 +17,7 @@ import UnoCSS from 'unocss/vite';
 import Components from 'unplugin-vue-components/vite';
 import VueRouter from 'unplugin-vue-router/vite';
 import { defineConfig, type UserConfig } from 'vite';
+import { VitePWA } from 'vite-plugin-pwa';
 import { apiRoot, entrypoints, localeFilesFolder, srcRoot } from './scripts/paths';
 import { UnpluginVueRouterSyncImportFix } from './scripts/transforms';
 import virtualModules from './scripts/virtual-modules';
@@ -71,7 +72,22 @@ export default defineConfig(({ mode }): UserConfig => {
         forceStringify: true,
         include: localeFilesFolder
       }),
-      UnpluginVueRouterSyncImportFix()
+      UnpluginVueRouterSyncImportFix(),
+      VitePWA({
+        injectManifest: {
+          globPatterns: ['**/**.*']
+        },
+        registerType: 'autoUpdate',
+        manifest: {
+          theme_color: '#3e80d7'
+        },
+        pwaAssets: {
+          image: 'public/icon.png'
+        },
+        workbox: {
+          cleanupOutdatedCaches: true
+        }
+      })
     ],
     test: {
       include: ['tests/unit/**/*.ts'],
