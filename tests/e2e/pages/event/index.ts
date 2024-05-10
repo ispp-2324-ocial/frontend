@@ -5,10 +5,10 @@ test.beforeEach(async ({ page }) => {
 });
 
 test.describe('Testing para crear eventos', () =>{
-  test('Se registra correctamente', async ({ page }) => {
+  test('Crear un evento desde cliente', async ({ page }) => {
     await page.goto('http://localhost:3000/#/login');
-    await page.getByPlaceholder('Username', { exact: true }).fill('ocial1234578');
-    await page.getByPlaceholder('Password', { exact: true }).fill('Baloncesto02');
+    await page.getByPlaceholder('Username', { exact: true }).fill('edupizlop');
+    await page.getByPlaceholder('Password', { exact: true }).fill('baloncesto');
     await page.getByRole('button', { name: 'Log in' }).click();
 
     await page.waitForTimeout(5000);
@@ -17,29 +17,47 @@ test.describe('Testing para crear eventos', () =>{
 
     const h1Text = await page.$eval('h1', element => element.textContent);
 
-    expect(h1Text).toBe('ocial1234578');
+    expect(h1Text).toBe('edupizlop');
+
+    await page.goto('http://localhost:3000/#/client/events/create');
+
+    await page.getByPlaceholder('Name of the Event', { exact: true }).fill('chipiona');
+    await page.getByPlaceholder('Place', { exact: true }).fill('Chipiona');
+    await page.getByPlaceholder('Description', { exact: true }).fill('estamo en japó');
+    await page.getByRole('date', { exact: true }).fill('20/06/2024');
+    await page.getByRole('date', { exact: true }).fill('20/06/2024');
+    await page.getByPlaceholder('Capacity', { exact: true }).fill('5');
+    //Click en algun sitio del mapa
+    await page.getByRole('button', { name: 'Create Event' }).click();
 
     await page.goto('http://localhost:3000/#/event');
 
-    await page.getByRole('button', { name: 'Create New Event' }).click();
+    await page.waitForTimeout(5000);
+
+    expect(page.$eval('p', element => element.textContent)).toBe('chipiona');
+    //Comprobar que el texto es el del nombre del evento
+
+    await page.getByRole('button', { name: 'Event Details' }).click();//Boton para ir a los detalles
 
     await page.waitForTimeout(5000);
 
-    expect(page.url()).toBe('http://localhost:3000/#/client/events/create');
 
-    const url = page.url();
+    await page.getByRole('button', { name: 'Delete Event' }).click();
 
-    expect(url).toBe('http://localhost:3000/#/');
+
+    await page.goto('http://localhost:3000/#/profile');
+
+    await page.getByRole('button', { name: 'Log out' }).click();
 
   });
 });
 
 
 test.describe('Testing para darle like a eventos', () =>{
-  test('Se registra correctamente', async ({ page }) => {
+  test('Un usuario le da like a un evento', async ({ page }) => {
     await page.goto('http://localhost:3000/#/login');
     await page.getByPlaceholder('Username', { exact: true }).fill('ocial1234578');
-    await page.getByPlaceholder('Password', { exact: true }).fill('Baloncesto02');
+    await page.getByPlaceholder('Password', { exact: true }).fill('Baloncesto02'); //Logearte como usuario
     await page.getByRole('button', { name: 'Log in' }).click();
 
     await page.waitForTimeout(5000);
@@ -75,7 +93,7 @@ test.describe('Testing para darle like a eventos', () =>{
 });
 
 test.describe('Testing para los filtros', () =>{
-  test('Se registra correctamente', async ({ page }) => {
+  test('Los filtros funcionan correctamente', async ({ page }) => {
     await page.goto('http://localhost:3000/#/login');
     await page.getByPlaceholder('Username', { exact: true }).fill('ocial1234578');
     await page.getByPlaceholder('Password', { exact: true }).fill('Baloncesto02');
