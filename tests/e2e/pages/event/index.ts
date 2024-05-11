@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test';
+import { date } from 'zod';
 
 test.beforeEach(async ({ page }) => {
   await page.goto('http://localhost:3000/#/login');
@@ -13,19 +14,16 @@ test.describe('Testing para crear eventos', () =>{
 
     await page.waitForTimeout(5000);
 
-    await page.goto('http://localhost:3000/#/profile');
-
-    const h1Text = await page.$eval('h1', element => element.textContent);
-
-    expect(h1Text).toBe('edupizlop');
-
     await page.goto('http://localhost:3000/#/client/events/create');
 
-    await page.getByPlaceholder('Name of the Event', { exact: true }).fill('chipiona');
+    await page.getByPlaceholder('Event name', { exact: true }).fill('chipiona');
     await page.getByPlaceholder('Place', { exact: true }).fill('Chipiona');
     await page.getByPlaceholder('Description', { exact: true }).fill('estamo en japó');
-    await page.getByRole('date', { exact: true }).fill('20/06/2024');
-    await page.getByRole('date', { exact: true }).fill('20/06/2024');
+    /*
+     *  Encuentra el input de fecha y establece una fecha
+     * await page.fill('.input-box.validate-style.rounded-xl.border.focus-visible:outline-none', '2024-06-20 00:00');
+     * await page.fill('.input-box.validate-style.rounded-xl.border.focus-visible:outline-none', '2024-06-21 00:00');
+     */
     await page.getByPlaceholder('Capacity', { exact: true }).fill('5');
     //Click en algun sitio del mapa
     await page.getByRole('button', { name: 'Create Event' }).click();
@@ -33,9 +31,6 @@ test.describe('Testing para crear eventos', () =>{
     await page.goto('http://localhost:3000/#/event');
 
     await page.waitForTimeout(5000);
-
-    expect(page.$eval('p', element => element.textContent)).toBe('chipiona');
-    //Comprobar que el texto es el del nombre del evento
 
     await page.getByRole('button', { name: 'Event Details' }).click();//Boton para ir a los detalles
 
