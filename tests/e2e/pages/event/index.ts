@@ -1,3 +1,5 @@
+/* eslint-disable import/no-nodejs-modules */
+import { randomBytes } from 'node:crypto';
 import { expect, test } from '@playwright/test';
 
 test.skip('Testing de creación de eventos', () =>{
@@ -54,7 +56,8 @@ test.describe('Testing para darle like a eventos', () =>{
 
     // Click on a randomly selected event marker icon
     const markerIcons = await page.$$('.leaflet-marker-icon');
-    const randomIndex = Math.floor(Math.random() * markerIcons.length);
+    const randomFloat = randomBytes(4).readUInt32LE(0) / 0xFF_FF_FF_FF;
+    const randomIndex = Math.floor(randomFloat * markerIcons.length);
     const randomMarkerIcon = markerIcons[randomIndex];
 
     // Get bounding box of the marker icon

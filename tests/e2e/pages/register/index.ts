@@ -1,3 +1,5 @@
+/* eslint-disable import/no-nodejs-modules */
+import { randomBytes } from 'node:crypto';
 import { expect, test } from '@playwright/test';
 
 test.describe('Testing del login y register de usuario', () => {
@@ -8,7 +10,7 @@ test.describe('Testing del login y register de usuario', () => {
     // Generate unique username, email, and password
     const username = `user_${uniqueIdentifier}`;
     const email = `user_${uniqueIdentifier}@gmail.com`;
-    const password = 'ocialpass';
+    const password = `ocialpass_${uniqueIdentifier}`;
 
     // Navigate to registration page and fill in registration form
     await page.goto(baseUrl + 'register');
@@ -51,7 +53,8 @@ test.describe('Testing del login y register de usuario', () => {
  * Generates a random ID number with a valid letter
  */
 function generateID() : string {
-  const numbers = Math.random().toString(9).slice(2, 10);
+  const randomFloat = randomBytes(4).readUInt32LE(0) / 0xFF_FF_FF_FF;
+  const numbers = randomFloat.toString(9).slice(2, 10);
   const letters = 'TRWAGMYFPDXBNJZSQVHLCKE';
   const letter = letters.charAt(Number.parseInt(numbers) % 23);
 
@@ -68,7 +71,7 @@ test.describe('Testing del login y register de cliente', () => {
     const name = `Client Name_${uniqueIdentifier}`;
     const email = `client_${uniqueIdentifier}@gmail.com`;
     const idVat = generateID();
-    const password = 'ocialpass';
+    const password = `ocialpass_${uniqueIdentifier}`;
 
     // Navigate to client registration page and fill in registration form
     await page.goto(baseUrl + 'register/client');
