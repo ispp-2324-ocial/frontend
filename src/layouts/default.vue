@@ -19,7 +19,14 @@ watch([windowWidth, windowHeight, footerRef], () => {
   const el = footerRef.value?.$el as HTMLElement;
 
   if (el) {
-    window.document.documentElement.style.setProperty(footerCssVarKey, `${el.clientHeight}px`);
+    /**
+     * Necesario puesto que el DOM aplaza el cálculo de la dimensión de los items con translate y fixed
+     */
+    window.requestAnimationFrame(() => {
+      window.setTimeout(() => {
+        window.document.documentElement.style.setProperty(footerCssVarKey, window.getComputedStyle(el).height);
+      });
+    });
   }
 });
 
@@ -33,5 +40,6 @@ onUnmounted(() => {
   flex-direction: column;
   flex-wrap: nowrap;
   height: calc(100vh - var(--o-footer-height)) !important;
+  margin-bottom: var(--o-footer-height) !important;
 }
 </style>
