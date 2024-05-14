@@ -32,6 +32,7 @@
 
 <script setup lang="ts">
 import { computed } from 'vue';
+import { base_url } from 'virtual:url';
 import type { Event, Image } from '@/api';
 import { isObj, isNil } from '@/utils/validation';
 
@@ -54,7 +55,7 @@ function isImage(obj: unknown): obj is Image {
 }
 
 const hash = computed(() => isImage(props.item) ? props.item.blurhash : props.item?.image?.blurhash);
-const imageUrl = computed(() => isImage(props.item) ? 'https://s3.backend.ocial.es' + props.item.image : props.item?.image?.image);
+const imageUrl = computed(() => isImage(props.item) ? `${base_url}${props.item.image}` : props.item?.image?.image);
 </script>
 
 <style scoped>
