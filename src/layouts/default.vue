@@ -40,6 +40,6 @@ onUnmounted(() => {
   flex-direction: column;
   flex-wrap: nowrap;
   height: calc(100vh - var(--o-footer-height)) !important;
-  margin-bottom: var(--o-footer-height) !important;
+  margin-bottom: 70vh !important;
 }
 </style>
