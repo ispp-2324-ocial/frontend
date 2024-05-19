@@ -90,10 +90,10 @@
 import { ref, computed, onMounted, shallowRef } from 'vue';
 import * as L from 'leaflet';
 import { useRouter } from 'vue-router/auto';
-import { useI18n } from 'vue-i18n';
 import { z } from 'zod';
 import destr from 'destr';
 import { icon } from 'leaflet';
+import { i18n } from '@/plugins/i18n';
 import { CategoryEnum , EventApi, TypeSubscriptionEnum, SubscriptionApi } from '@/api';
 import Azul from '@/assets/pin/Pin_Azul.png';
 import { useApi } from '@/composables/apis';
@@ -102,7 +102,7 @@ import { toBase64 } from '@/utils/data-manipulation';
 import { useToast } from '@/composables/use-toast';
 import { isNil, isObj } from '@/utils/validation';
 
-const { t } = useI18n();
+const { t } = i18n;
 
 const { data : currentSubscription } = await useApi(SubscriptionApi, 'subscriptionRetrieve')();
 const subsEnum = [
@@ -203,7 +203,7 @@ async function createE() : Promise<void> {
       if ('error' in casted) {
         useToast(casted.error, 'error');
       } else {
-        const { t } = useI18n();
+        const { t } = i18n;
 
         useToast(t('ErrorDesconocido'), 'error');
       }

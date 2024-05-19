@@ -114,14 +114,14 @@
 <script setup lang="ts">
 import { useRouter } from 'vue-router/auto';
 import { computed } from 'vue';
-import { useI18n } from 'vue-i18n';
+import { i18n } from '@/plugins/i18n';
 import { auth } from '@/store/auth';
 import { TypeClientEnum } from '@/api';
 import { deleteAccountMessage } from '@/composables/use-delete-account-alert';
 
 const router = useRouter();
 
-const { t } = useI18n();
+const { t } = i18n;
 
 const cateEnum = [
   TypeClientEnum.Artist,

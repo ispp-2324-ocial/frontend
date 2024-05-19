@@ -82,7 +82,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { useRoute, useRouter } from 'vue-router/auto';
-import { useI18n } from 'vue-i18n';
+import { i18n } from '@/plugins/i18n';
 import { auth } from '@/store/auth';
 import { EventApi, CategoryEnum, TypeSubscriptionEnum, SubscriptionApi } from '@/api';
 import { useEvent, useApi } from '@/composables/apis';
@@ -98,7 +98,7 @@ const subsEnum = [
 
 const router = useRouter();
 
-const { t } = useI18n();
+const { t } = i18n;
 
 const { data: eventDetail } = await useEvent(EventApi, 'eventRetrieve')(() => ({
   'id': Number(route.params.id)

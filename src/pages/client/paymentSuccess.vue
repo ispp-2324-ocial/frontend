@@ -28,8 +28,8 @@
 
 
 <script setup lang="ts">
-import { useI18n } from 'vue-i18n';
 import { useRouter } from 'vue-router/auto';
+import { i18n } from '@/plugins/i18n';
 import { SubscriptionApi } from '@/api';
 import { useApi } from '@/composables/apis';
 
@@ -37,7 +37,7 @@ const router = useRouter();
 
 const { data : currentSubscription } = await useApi(SubscriptionApi, 'subscriptionRetrieve')(() => ({}));
 
-const { t } = useI18n();
+const { t } = i18n;
 </script>
 
 <style scoped>

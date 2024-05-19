@@ -29,8 +29,8 @@
 import { onBeforeUnmount, shallowRef, watch, computed } from 'vue';
 import 'leaflet/dist/leaflet.css';
 import { map, icon, marker, tileLayer, type Marker, Popup } from 'leaflet';
-import { useI18n } from 'vue-i18n';
 import { usePermission } from '@vueuse/core';
+import { i18n } from '@/plugins/i18n';
 import { parseDate } from '@/utils/data-manipulation';
 import { CategoryEnum, type Event } from '@/api';
 import Azul from '@/assets/pin/Pin_Azul.png';
@@ -46,7 +46,7 @@ import { windowHeight, windowWidth } from '@/store';
 
 const props = defineProps<{ markers: Event[] }>();
 const locationAccess = usePermission('geolocation');
-const { t } = useI18n();
+const { t } = i18n;
 
 const TILE_LAYER_URL = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
 
