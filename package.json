@@ -32,9 +32,9 @@
     "unit-test": "vitest"
   },
   "dependencies": {
-    "@vueuse/components": "10.9.0",
-    "@vueuse/core": "10.9.0",
-    "axios": "1.6.8",
+    "@vueuse/components": "10.10.0",
+    "@vueuse/core": "10.10.0",
+    "axios": "1.7.2",
     "blurhash": "2.0.5",
     "comlink": "4.4.1",
     "date-fns": "3.6.0",
@@ -44,14 +44,14 @@
     "inter-ui": "4.0.2",
     "leaflet": "1.9.4",
     "lodash-es": "4.17.21",
-    "radix-vue": "1.7.3",
-    "sweetalert2": "11.4.8",
-    "vue": "3.4.26",
+    "radix-vue": "1.8.3",
+    "sweetalert2": "11.11.1",
+    "vue": "3.4.27",
     "vue-i18n": "9.13.1",
-    "vue-router": "4.3.2",
+    "vue-router": "4.3.3",
     "vue3-google-login": "2.0.26",
     "vue3-toastify": "0.2.1",
-    "zod": "3.23.4"
+    "zod": "3.23.8"
   },
   "devDependencies": {
     "@iconify/json": "2.2.188",
